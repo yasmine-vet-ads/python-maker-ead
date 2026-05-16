@@ -13,7 +13,7 @@ A experiência culmina no **Python Show**, uma sabatina interativa com design no
 ## 🚀 Como Acessar (Sem Instalação)
 O projeto está hospedado 100% na nuvem e pronto para uso em qualquer navegador.
 
-👉 **[CLIQUE AQUI PARA ACESSAR A PLATAFORMA ONLINE](COLOQUE_SEU_LINK_DO_RENDER_AQUI)**
+👉 **[CLIQUE AQUI PARA ACESSAR A PLATAFORMA ONLINE]([COLOQUE_SEU_LINK_DO_RENDER_AQUI](https://python-maker-ead.onrender.com)**
 
 > **⚠️ Nota sobre o carregamento:** > Como a aplicação está hospedada na camada gratuita do *Render*, o servidor entra em modo de hibernação (sleep) após um período de inatividade para economizar recursos. **O primeiro acesso pode levar cerca de 40 a 50 segundos para "acordar" a plataforma.** Agradeço a compreensão!
 
