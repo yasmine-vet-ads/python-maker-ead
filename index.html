@@ -148,7 +148,17 @@
             background: #059669;
             box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
         }
-        
+        .btn-show-direto {
+            background: linear-gradient(135deg, var(--accent), #d97706);
+            color: #111827;
+            margin-top: 0;
+            white-space: nowrap;
+            box-shadow: 0 10px 20px -10px rgba(245, 158, 11, 0.8);
+        }
+        .btn-show-direto:hover {
+            background: linear-gradient(135deg, #fbbf24, var(--accent));
+            box-shadow: 0 14px 24px -12px rgba(245, 158, 11, 0.9);
+        }        
         /* ==================== CONTROLO DE TELAS (VIEWS) ==================== */
         .view { display: none; animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         .view.active { display: block; }
@@ -216,7 +226,8 @@
         @media (max-width: 768px) {
             .container { padding: 24px; }
             .header-institucional { flex-direction: column; text-align: center; gap: 16px; }
-            .header-institucional > div { flex-direction: column; }}
+            .header-institucional > div { flex-direction: column; }
+            .btn-show-direto { width: 100%; }}
          /* ==================== INTERFACE GAME: PYTHON SHOW ==================== */
 	        #btn-som { 
  	            display: none;
@@ -429,7 +440,8 @@
     gap:14px;
     flex-wrap:nowrap;
 ">
-
+ <button class="btn btn-show-direto" onclick="irParaPythonShow()" title="Abrir a prova final Python Show">🎙️ Python Show</button>
+	
     <!-- LOGO IFRS -->
   <img src="static/ifrs.png"
      alt="IFRS"
@@ -942,6 +954,16 @@ while True:
     </div>
 
     <script>
+		        // -------------------------------------------------------------
+        // UTILITÁRIOS GERAIS
+        // -------------------------------------------------------------
+        function safeConfetti(options) {
+            if (typeof confetti === 'function') {
+                confetti(options);
+            }
+        }
+
+
         // -------------------------------------------------------------
         // LOGICA EAD - MÓDULOS 1 AO 4
         // -------------------------------------------------------------
@@ -957,7 +979,7 @@ while True:
                 feedback.innerText = "✅ Resposta Correta! Você absorveu o conhecimento.";
                 feedback.style.color = "#34d399";
                 document.getElementById(`btn-next-${modNum}`).style.display = "inline-block";
-                confetti({ particleCount: 30, spread: 40, origin: { y: 0.8 } });
+                safeConfetti({ particleCount: 30, spread: 40, origin: { y: 0.8 } });
             } else {
                 btnEl.classList.add('wrong');
                 feedback.innerHTML = "❌ Resposta Incorreta. Leia a teoria e tente novamente.<br><button class='btn' onclick='resetQuiz("+modNum+")' style='padding:8px 15px; margin-top:10px;'>Tentar Novamente 🔄</button>";
@@ -1036,8 +1058,14 @@ function navegarParaModulo(numeroModulo) {
 
         function irParaPythonShow() {
             document.getElementById('main-container').style.display = 'none';
+			document.getElementById('layout-certificado').style.display = 'none'
             document.getElementById('game-container').style.display = 'block';
             document.getElementById('btn-som').style.display = 'block';
+			mudarTelaShow('screen-start');
+
+            if (window.location.pathname !== '/python-show') {
+                window.history.replaceState({}, '', '/python-show');
+            }
 
             if (somPronto && player && typeof player.playVideo === 'function') {
                 try {
@@ -1062,15 +1090,25 @@ function navegarParaModulo(numeroModulo) {
                 player.pauseVideo();
             }
             resetarJogo();
+			if (window.location.pathname === '/python-show') {
+                window.history.replaceState({}, '', '/');
+            }
             document.getElementById('main-container').scrollTo(0,0);
         }
 
         // -------------------------------------------------------------
         // LÓGICA DE ÁUDIO DO JOGO 
         // -------------------------------------------------------------
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const BrowserAudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
-        function initAudio() { if (!audioCtx) audioCtx = new AudioContext(); }
+        function initAudio() {
+            if (!audioCtx && BrowserAudioContext) {
+                audioCtx = new BrowserAudioContext();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
 
         function acionarBotaoSom() {
     if (somHabilitado) {
@@ -1208,17 +1246,33 @@ function navegarParaModulo(numeroModulo) {
         function dispararConfetes() {
             var duration = 4 * 1000; var end = Date.now() + duration;
             (function frame() {
-                confetti({ particleCount: 6, angle: 60, spread: 60, origin: { x: 0 }, colors: ['#eab308', '#ffffff', '#34d399', '#3b82f6'] });
-                confetti({ particleCount: 6, angle: 120, spread: 60, origin: { x: 1 }, colors: ['#eab308', '#ffffff', '#34d399', '#3b82f6'] });
+                safeConfetti({ particleCount: 6, angle: 60, spread: 60, origin: { x: 0 }, colors: ['#eab308', '#ffffff', '#34d399', '#3b82f6'] });
+                safeConfetti({ particleCount: 6, angle: 120, spread: 60, origin: { x: 1 }, colors: ['#eab308', '#ffffff', '#34d399', '#3b82f6'] });
                 if (Date.now() < end) requestAnimationFrame(frame);
             }());
         }
 
-        function resetarJogo() { mudarTelaShow('screen-start'); }
+        function resetarJogo() {
+            perguntaAtual = 0;
+            acertos = 0;
+            respondido = false;
+            document.getElementById('progress-fill-game').style.width = "0%";
+            document.getElementById('grid-alternativas').innerHTML = "";
+            document.getElementById('texto-pergunta').innerText = "Carregando pergunta...";
+            document.getElementById('question-counter').innerText = `Pergunta 1 de ${bancoPerguntas.length}`;
+            mudarTelaShow('screen-start');
+        }
 
         // -------------------------------------------------------------
         // CERTIFICADO FINAL APÓS O JOGO
         // -------------------------------------------------------------
+		document.addEventListener('DOMContentLoaded', () => {
+            if (window.location.pathname === '/python-show') {
+                irParaPythonShow();
+            }
+        });
+
+
         function emitirCertificado() {
             const nome = document.getElementById('nome-estudante').value.trim();
             if (nome === "") { alert("Por favor, digite seu nome para emitir o documento!"); return; }
