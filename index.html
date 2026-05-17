@@ -2,398 +2,693 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introdução Prática ao Python | IFRS Veranópolis</title>
+    <title>Curso Interativo - Introdução à Python</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        :root { 
-            --primary: #2563eb; --bg: #020617; --card: #0f172a; --text: #f8fafc; 
-            --accent: #eab308; --success: #10b981; --danger: #ef4444; 
-            --ifrs-green: #32a041; --ifrs-red: #e30613;
-        }
-
-        * { box-sizing: border-box; }
-        body { 
-            font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); 
-            margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; 
-            min-height: 100vh;
-        }
-
-        /* HEADER INSTITUCIONAL */
-        header { 
-            width: 100%; max-width: 900px; background: white; border-radius: 12px; 
-            padding: 15px 30px; display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5); margin-bottom: 25px;
-        }
-        .logo-ifrs { height: 60px; }
-        .course-badge { background: var(--ifrs-green); color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-
-        /* NAVEGAÇÃO */
-        .nav-tabs { 
-            display: flex; width: 100%; max-width: 900px; gap: 10px; margin-bottom: 10px; 
-        }
-        .tab { 
-            flex: 1; padding: 12px; border: none; border-radius: 8px 8px 0 0; 
-            background: #1e293b; color: #94a3b8; cursor: pointer; font-weight: 600; 
-            font-size: 13px; transition: 0.3s;
-        }
-        .tab.active { background: var(--ifrs-green); color: white; }
-
-        /* CONTAINER DE CONTEÚDO */
-        .content-card { 
-            background: var(--card); width: 100%; max-width: 900px; padding: 40px; 
-            border-radius: 0 0 12px 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
-            margin-bottom: 40px; border: 1px solid #1e293b;
-        }
-
-        .view { display: none; }
-        .view.active { display: block; animation: fadeIn 0.5s ease; }
+        :root { --primary: #2563eb; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --accent: #eab308; --success: #10b981; --danger: #ef4444; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow-x: hidden; }
+        
+        /* ==================== CSS DA PLATAFORMA EAD ==================== */
+        .container { background: var(--card); width: 100%; max-width: 900px; padding: 40px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative; overflow-y: auto; max-height: 90vh; }
+        
+        h1 { color: var(--accent); text-align: center; font-size: 28px; margin-bottom: 5px; text-shadow: 0 0 10px rgba(234, 179, 8, 0.3); }
+        h2 { color: #93c5fd; font-size: 22px; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-top: 30px; }
+        h3 { color: #cbd5e1; font-size: 18px; margin-top: 25px; }
+        p, li { color: #94a3b8; line-height: 1.6; font-size: 16px; }
+        .highlight { color: var(--accent); font-weight: bold; }
+        
+        pre.inline-code { background: #020617; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); overflow-x: auto; color: #34d399; font-family: monospace; font-size: 14px; }
+        
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; margin-top: 20px; text-align: center; }
+        .btn:hover { background: #1d4ed8; transform: translateY(-2px); }
+        .btn:disabled { background: #475569; cursor: not-allowed; transform: none; }
+        .btn-success { background: var(--success); }
+        .btn-success:hover { background: #059669; }
+        
+        .view { display: none; animation: fadeIn 0.4s ease; }
+        .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* TIPOGRAFIA */
-        h1 { font-size: 28px; font-weight: 800; color: var(--accent); margin: 0 0 20px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        h2 { font-size: 22px; color: #93c5fd; border-left: 5px solid var(--ifrs-green); padding-left: 15px; margin: 30px 0 20px; }
-        p { line-height: 1.7; color: #cbd5e1; }
-        .highlight { color: var(--accent); font-weight: 600; }
+        .quiz-box { background: #0f172a; padding: 25px; border-radius: 10px; border: 2px dashed #475569; margin-top: 30px; }
+        .quiz-question { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: white; }
+        .option-btn { display: block; width: 100%; background: #334155; color: white; border: 2px solid #475569; padding: 12px; margin-bottom: 10px; border-radius: 6px; text-align: left; cursor: pointer; font-size: 15px; transition: 0.2s; }
+        .option-btn:hover { border-color: var(--accent); background: #475569; }
+        .option-btn.correct { background: var(--success) !important; border-color: #059669 !important; }
+        .option-btn.wrong { background: var(--danger) !important; border-color: #b91c1c !important; }
+        .feedback { font-weight: bold; margin-top: 15px; display: none; }
 
-        /* CÓDIGO E EXPLICAÇÃO */
-        pre { 
-            background: #020617; padding: 20px; border-radius: 10px; 
-            color: #34d399; font-family: 'Consolas', monospace; font-size: 14px; 
-            overflow-x: auto; border: 1px solid #1e293b; margin: 20px 0;
-        }
-        .explanation-box { 
-            background: #1e293b; padding: 20px; border-radius: 10px; 
-            border-left: 4px solid var(--primary); margin: 15px 0;
-        }
-        .explanation-box li { margin-bottom: 10px; color: #e2e8f0; font-size: 14px; }
+        .wokwi-mockup { background: #1e1e1e; border-radius: 8px; overflow: hidden; border: 1px solid #444; margin: 20px 0; }
+        .wokwi-header { background: #2d2d2d; padding: 10px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #111; }
+        .wokwi-dot { width: 12px; height: 12px; border-radius: 50%; background: #ef4444; }
+        .wokwi-dot:nth-child(2) { background: #eab308; }
+        .wokwi-dot:nth-child(3) { background: #10b981; }
+        .wokwi-body { display: flex; height: 500px; flex-direction: row; }
+        @media (max-width: 768px) { .wokwi-body { flex-direction: column; height: auto; } .wokwi-canvas { height: 300px; } }
+        .wokwi-code { flex: 1; border-right: 1px solid #111; padding: 15px; background: #1e1e1e; color: #d4d4d4; font-family: 'Consolas', monospace; font-size: 11px; overflow-y: auto; line-height: 1.4; white-space: pre-wrap; }
+        .wokwi-canvas { flex: 1; background: #e5e5e5; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
 
-        /* QUIZ */
-        .quiz-container { background: #020617; padding: 30px; border-radius: 12px; border: 2px dashed #334155; margin-top: 40px; }
-        .option-btn { 
-            display: block; width: 100%; padding: 15px; background: #1e293b; 
-            border: 2px solid #334155; border-radius: 8px; color: white; 
-            text-align: left; cursor: pointer; margin-bottom: 12px; font-size: 15px; transition: 0.2s;
-        }
-        .option-btn:hover { border-color: var(--accent); background: #334155; }
-        .option-btn.correct { background: var(--success) !important; border-color: #065f46 !important; font-weight: bold; }
-        .option-btn.wrong { background: var(--danger) !important; border-color: #991b1b !important; }
+        .progress-container { margin-bottom: 30px; }
+        .progress-bar { width: 100%; height: 8px; background: #334155; border-radius: 4px; overflow: hidden; margin-top: 10px; }
+        .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.3s ease; }
 
-        .btn-action { 
-            background: var(--primary); color: white; border: none; padding: 15px 35px; 
-            border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; 
-            transition: 0.3s; margin-top: 20px; display: inline-block;
-        }
-        .btn-action:hover { transform: scale(1.05); filter: brightness(1.2); }
+        /* ==================== CSS DO PYTHON SHOW ==================== */
+        #btn-som { position: absolute; top: 20px; right: 20px; background: #10b981; color: white; border: 2px solid #059669; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; z-index: 100; transition: 0.2s; display: none; }
+        
+        #game-container { background: #1e293b; width: 680px; padding: 35px; border-radius: 16px; border: 3px solid #eab308; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); text-align: center; box-sizing: border-box; display: none; position: relative; z-index: 10; animation: fadeIn 0.5s ease; }
+        
+        .screen { animation: slideIn 0.4s ease forwards; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* WOKWI */
-        .wokwi-frame { 
-            display: flex; background: #1e1e1e; border-radius: 10px; overflow: hidden; 
-            border: 1px solid #444; height: 450px; margin: 25px 0;
-        }
-        .wokwi-code { flex: 1; padding: 15px; font-family: monospace; color: #d4d4d4; font-size: 12px; border-right: 1px solid #333; overflow-y: auto; }
-        .wokwi-canvas { flex: 1; background: #eee; display: flex; align-items: center; justify-content: center; }
+        .progress-bar-bg { width: 100%; background: #0f172a; height: 10px; border-radius: 5px; margin-bottom: 25px; overflow: hidden; }
+        .progress-bar-fill { width: 0%; height: 100%; background: #eab308; transition: width 0.3s ease; }
 
-        /* PYTHON SHOW */
-        #python-show-container { 
-            display: none; width: 100%; max-width: 800px; background: #1e293b; 
-            border: 4px solid var(--ifrs-green); border-radius: 20px; padding: 40px; text-align: center;
-        }
-        .silvio-avatar { height: 100px; animation: bounce 0.6s infinite alternate; }
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+        .quiz-layout-box { display: flex; gap: 20px; align-items: center; margin-bottom: 25px; }
+        .silvio-avatar { width: 100px; height: 100px; animation: falarBoneco 0.6s ease-in-out infinite alternate; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); flex-shrink: 0; }
+        @keyframes falarBoneco { 0% { transform: translateY(0) scaleY(1); } 100% { transform: translateY(-4px) scaleY(1.05); } }
 
-        /* CERTIFICADO */
-        #certificate-view { 
-            display: none; background: white; color: #1e293b; padding: 60px; 
-            border: 15px double #cbd5e1; width: 100%; max-width: 850px; text-align: center; position: relative;
-        }
-        .cert-name { 
-            font-size: 42px; font-weight: 800; color: var(--ifrs-green); 
-            margin: 30px 0; border-bottom: 3px solid #eee; text-transform: uppercase;
-        }
+        .pergunta-box { background: #0f172a; padding: 20px; border-radius: 8px; border: 1px solid #475569; font-size: 17px; font-weight: bold; flex-grow: 1; min-height: 70px; display: flex; align-items: center; justify-content: center; text-align: left; }
+        
+        .alternativas-grid { display: flex; flex-direction: column; gap: 12px; }
+        .btn-opcao { background: #334155; color: #f8fafc; border: 2px solid #475569; padding: 15px; text-align: left; font-size: 15px; font-weight: 500; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; outline: none; display: flex; align-items: center; }
+        .btn-opcao:hover { background: #475569; border-color: #eab308; transform: scale(1.01); box-shadow: 0 0 15px rgba(234, 179, 8, 0.2); }
+        .btn-opcao span { color: #eab308; font-weight: bold; margin-right: 12px; font-size: 18px; }
+        .btn-opcao.correct { background: #10b981 !important; border-color: #059669 !important; animation: pulseGlowGreen 0.3s ease 2; }
+        .btn-opcao.wrong { background: #ef4444 !important; border-color: #b91c1c !important; }
+        @keyframes pulseGlowGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 100% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); } }
 
-        footer { 
-            width: 100%; max-width: 900px; text-align: center; padding: 30px; 
-            border-top: 1px solid #1e293b; color: #64748b; font-size: 12px; line-height: 1.6;
-        }
+        .btn-principal { background: #2563eb; color: white; border: none; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; margin-top: 15px; }
+        .btn-principal:hover { background: #1d4ed8; }
+        .btn-secundario { background: #64748b; color: white; border: none; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; margin-top: 15px; margin-left: 10px; }
+        .btn-secundario:hover { background: #475569; }
+
+        .resultado-score { font-size: 48px; font-weight: bold; margin: 15px 0; }
+        .status-badge { display: inline-block; padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 20px; }
+        .passou { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+        .reprovou { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+
+        /* ==================== CSS DO CERTIFICADO ==================== */
+        .input-nome { width: 100%; max-width: 350px; padding: 12px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; font-size: 16px; margin: 15px auto; text-align: center; display: block; }
+        #layout-certificado { display: none; background: #1e293b; border: 4px double #eab308; padding: 45px; border-radius: 10px; text-align: center; color: #f8fafc; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7); animation: slideIn 0.5s ease; position: relative; z-index: 10; max-width: 650px; }
+        .cert-titulo { font-size: 26px; color: #eab308; font-weight: bold; letter-spacing: 1px; margin-bottom: 20px; }
+        .cert-nome { font-size: 32px; color: #34d399; font-weight: bold; margin: 25px auto; border-bottom: 2px dashed #475569; width: 85%; padding-bottom: 5px; font-family: 'Georgia', serif; }
     </style>
 </head>
 <body>
 
-    <header>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Instituto_Federal_Marca_2015.svg/1200px-Instituto_Federal_Marca_2015.svg.png" class="logo-ifrs" alt="Logo IFRS">
-        <div>
-            <div style="font-weight: 800; font-size: 18px; color: #000;">IFRS CAMPUS VERANÓPOLIS</div>
-            <div class="course-badge">ADS - 1º PERÍODO / INTRODUÇÃO À COMPUTAÇÃO</div>
+    <div id="youtube-player" style="position: absolute; top: -9999px; left: -9999px;"></div>
+    
+    <button id="btn-som" onclick="acionarBotaoSom()">🎵 Som: ON</button>
+
+    <div class="container" id="main-container">
+        <h1>🐍 CURSO DE INTRODUÇÃO À PYTHON</h1>
+        <p style="text-align: center; margin-top:0;">Trilha Completa + Avaliação Final</p>
+
+        <div class="progress-container">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; font-weight: bold;" id="prog-text">
+                <span>MÓDULO 1</span><span>MÓDULO 2</span><span>MÓDULO 3</span><span>MÓDULO 4</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progress-bar"></div></div>
         </div>
-    </header>
 
-    <div class="nav-tabs" id="nav-tabs">
-        <button class="tab active" onclick="showModule(1)">MÓDULO 1</button>
-        <button class="tab" onclick="showModule(2)">MÓDULO 2</button>
-        <button class="tab" onclick="showModule(3)">MÓDULO 3</button>
-        <button class="tab" onclick="showModule(4)">MÓDULO 4</button>
-    </div>
-
-    <div class="content-card" id="main-card">
         <div id="mod1" class="view active">
-            <h1>
-                <svg width="40" height="40" viewBox="0 0 448 512"><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-67.8 67.8H172.7c-5.8 0-10.2 4.8-10.2 10.3v8.1c0 10.2 4.8 10.2 10.2 10.2h141.6c46.2 0 73.1 24.5 73.1 73.7v3.5c0 47.1-31.7 75.1-79.4 75.1H195.8c-53.8 0-72.2-30.4-72.2-82.3V312c0-37 30.5-68 67.5-68h16.7c6 0 10.3-4.5 10.3-10.3v-2.2c0-6-4.5-10.2-10.3-10.2h-16.7c-48.4 0-88 39.6-88 88v85.3c0 66.1 36.3 102.3 93.9 102.3h110.8c56.3 0 91.9-38.6 91.9-95.2v-3.5c0-43.2-22.3-64.4-65.7-64.4H172.7c-2 0-3.4-1.4-3.4-3.4v-4.4c0-2.3 1.4-3.4 3.4-3.4h141.6c56.2 0 88.2-31.1 88.2-86.4v-46.1c.1-1.1-.3-15.6-2.7-27.1zM125.6 278.4V210c0-51.9 18.4-82.3 72.2-82.3h112.4c47.7 0 79.4 28 79.4 75.1v3.5c0 49.2-26.9 73.7-73.1 73.7H174.9c-5.4 0-10.2 0-10.2 10.2v8.1c0 5.5 4.4 10.3 10.2 10.3h105.7c36.6 0 67.8 31 67.8 67.8v47.4h40.1c31.1 0 45.7-23.3 53.4-54.2 2.4-11.5 2.8-26 2.7-27.1v-46.1c0-55.3-32-86.4-88.2-86.4H174.9c-2 0-3.4-1.1-3.4-3.4v-4.4c0-2 1.4-3.4 3.4-3.4h112.4c43.4 0 65.7-21.2 65.7-64.4v-3.5c0-56.6-35.6-95.2-91.9-95.2H153.1c-57.6 0-93.9 36.2-93.9 102.3V192c0 48.4 39.6 88 88 88h16.7c5.8 0 10.3-4.2 10.3-10.2v-2.2c0-5.8-4.3-10.3-10.3-10.3h-16.7c-37 0-67.5-31-67.5-68v-85.3c0-51.9 18.4-82.3 72.2-82.3h110.8c47.7 0 79.4 28 79.4 75.1v3.5c0 49.2-26.9 73.7-73.1 73.7H125.6z" fill="#3776ab"/></svg>
-                MÓDULO 1: PRIMEIROS PASSOS
-            </h1>
-            <p>Seja bem-vindo ao mundo da programação! Aprender Python é como aprender um novo idioma para dar ordens ao computador. Vamos começar criando um cadastro clínico simples para um pet:</p>
-            
-            <pre>
-nome_pet = "Bruce Brian"  # Criamos uma String (texto)
-idade = 5                 # Criamos um Inteiro (número)
-print("Paciente:", nome_pet, "| Idade:", idade, "anos")</pre>
-
-            <ul class="explanation-box">
-                <li><span class="highlight">Variáveis:</span> O sinal de <code>=</code> guarda o valor na memória.</li>
-                <li><span class="highlight">Saída:</span> A função <code>print()</code> exibe os dados para o usuário.</li>
+            <h2>Módulo 1: Primeiros Passos e o "Modo Pensar"</h2>
+            <p>Seja muito bem-vindo! Pense no código de programação como uma receita de bolo detalhada: o computador apenas lê linha por linha e executa exatamente o que você mandou.</p>
+            <h3>Por que Python?</h3>
+            <ul>
+                <li><span class="highlight">Sintaxe Limpa:</span> O código parece inglês fluente. É feito para humanos lerem sem esforço.</li>
+                <li><span class="highlight">Superpoderes de Mercado:</span> Ferramenta nº 1 para Inteligência Artificial (IA) e Internet das Coisas (IoT).</li>
             </ul>
-
-            <div class="quiz-container">
-                <div class="highlight">AVALIAÇÃO DE FIXAÇÃO:</div>
-                <p>No código acima, por que a idade 5 não usa aspas?</p>
-                <button class="option-btn" onclick="checkQuiz(1, this, false)">A) Porque esquecemos de colocar.</button>
-                <button class="option-btn" onclick="checkQuiz(1, this, true)">B) Porque números inteiros (int) não levam aspas em Python.</button>
-                <div id="next-btn-1" style="display:none; text-align: center;">
-                    <button class="btn-action" onclick="showModule(2)">Avançar para Módulo 2 ➔</button>
+            <h3>Conceitos Fundamentais</h3>
+            <p>O comando básico para mostrar qualquer informação na tela do computador é a função <span class="highlight">print()</span>:</p>
+            <pre class="inline-code">print("Olá, Mundo!")</pre>
+            <p>Variáveis funcionam como "caixinhas" com etiquetas na memória para guardar dados temporários. O Python identifica o tipo de dado sozinho:</p>
+            <ul>
+                <li><strong>String (str):</strong> Texto delimitado por aspas. Ex: <code>nome = "Rex"</code></li>
+                <li><strong>Inteiro (int):</strong> Números inteiros. Ex: <code>idade = 4</code></li>
+            </ul>
+            <div class="quiz-box">
+                <div class="quiz-question">Avaliação 1: Qual comando é utilizado para exibir uma mensagem na tela em Python?</div>
+                <div id="opts-1">
+                    <button class="option-btn" onclick="selectOption(1, this, false)">A) display("Texto")</button>
+                    <button class="option-btn" onclick="selectOption(1, this, true)">B) print("Texto")</button>
+                    <button class="option-btn" onclick="selectOption(1, this, false)">C) echo("Texto")</button>
                 </div>
+                <div id="feedback-1" class="feedback"></div>
+                <button class="btn btn-success" id="btn-next-1" style="display:none;" onclick="nextModule(2)">Avançar para Módulo 2 ➔</button>
             </div>
         </div>
 
         <div id="mod2" class="view">
-            <h1>MÓDULO 2: DECISÕES E REPETIÇÕES</h1>
-            <p>O computador pode tomar decisões sozinho usando o <code>if</code> (SE) e o <code>else</code> (SENÃO). Veja como detectar febre em um animal:</p>
-            
-            <pre>
+            <h2>Módulo 2: Tomando Decisões e Repetições</h2>
+            <p>Para darmos inteligência ao código, precisamos que ele tome decisões usando as estruturas <span class="highlight">if, elif, e else</span>. Lembre-se que o Python usa 4 espaços de recuo (indentação) para organizar os blocos.</p>
+            <pre class="inline-code">
 temperatura = 39.5
 if temperatura > 39.2:
-    print("O animal está com febre!")
+    print("O animal está com febre.")
 else:
-    print("Saúde normal.")</pre>
-
-            <ul class="explanation-box">
-                <li><span class="highlight">Indentação:</span> O espaço de 4 espaços à direita é obrigatório no Python para indicar que o comando está dentro do "if".</li>
-            </ul>
-
-            <div class="quiz-container">
-                <div class="highlight">AVALIAÇÃO DE FIXAÇÃO:</div>
-                <p>Qual comando o Python usa para repetir uma ação para cada item de uma lista?</p>
-                <button class="option-btn" onclick="checkQuiz(2, this, true)">A) loop 'for'</button>
-                <button class="option-btn" onclick="checkQuiz(2, this, false)">B) loop 'print'</button>
-                <div id="next-btn-2" style="display:none; text-align: center;">
-                    <button class="btn-action" onclick="showModule(3)">Avançar para Módulo 3 ➔</button>
+    print("Temperatura normal.")</pre>
+            <h3>Estruturas de Repetição (Loops) e Listas</h3>
+            <p>O loop <span class="highlight">for</span> repete um trecho de código um número definido de vezes. O loop <span class="highlight">while</span> repete enquanto uma condição for verdadeira.</p>
+            <p>Listas servem para guardar vários dados juntos usando colchetes <code>[]</code>. Exemplo: <code>sintomas = ["tosse", "febre"]</code>. Para adicionar itens, usamos o comando <code>append()</code>.</p>
+            <div class="quiz-box">
+                <div class="quiz-question">Avaliação 2: Como adicionamos um novo item ao final de uma lista existente?</div>
+                <div id="opts-2">
+                    <button class="option-btn" onclick="selectOption(2, this, false)">A) lista.add("item")</button>
+                    <button class="option-btn" onclick="selectOption(2, this, false)">B) lista.insert("item")</button>
+                    <button class="option-btn" onclick="selectOption(2, this, true)">C) lista.append("item")</button>
                 </div>
+                <div id="feedback-2" class="feedback"></div>
+                <button class="btn btn-success" id="btn-next-2" style="display:none;" onclick="nextModule(3)">Avançar para Módulo 3 ➔</button>
             </div>
         </div>
 
         <div id="mod3" class="view">
-            <h1>MÓDULO 3: FUNÇÕES E BIBLIOTECAS</h1>
-            <p>Funções são blocos que você escreve uma vez e usa em qualquer lugar. Usamos <code>def</code> para criá-las e <code>import</code> para trazer ferramentas prontas.</p>
-            
-            <pre>
-import time
-
-def calcular_dose(peso):
-    return peso * 0.5
-
-print("Calculando...")
-time.sleep(2) # Pausa de 2 segundos
-print("Dose recomendada:", calcular_dose(10), "mg")</pre>
-
-            <div class="quiz-container">
-                <div class="highlight">AVALIAÇÃO DE FIXAÇÃO:</div>
-                <p>Qual palavra-chave é usada para devolver o resultado de uma função para o programa principal?</p>
-                <button class="option-btn" onclick="checkQuiz(3, this, true)">A) return</button>
-                <button class="option-btn" onclick="checkQuiz(3, this, false)">B) send</button>
-                <div id="next-btn-3" style="display:none; text-align: center;">
-                    <button class="btn-action" onclick="showModule(4)">Avançar para Módulo 4 ➔</button>
+            <h2>Módulo 3: Organizando a Casa com Funções</h2>
+            <p>Funções são blocos autônomos que realizam tarefas específicas. Criamos uma função utilizando a palavra-chave <span class="highlight">def</span> e retornamos a resposta com <span class="highlight">return</span>.</p>
+            <pre class="inline-code">
+def calcular_imc(peso, altura):
+    imc = peso / (altura * altura)
+    return imc</pre>
+            <h3>O Ecossistema de Bibliotecas</h3>
+            <p>O Python possui ferramentas nativas prontas para uso. Ao usar o comando <span class="highlight">import</span>, você traz inteligência extra para o seu código. Por exemplo, <code>import time</code> permite criar pausas na execução do código.</p>
+            <div class="quiz-box">
+                <div class="quiz-question">Avaliação 3: Qual palavra-chave é obrigatória para começar a criar uma função própria no Python?</div>
+                <div id="opts-3">
+                    <button class="option-btn" onclick="selectOption(3, this, true)">A) def</button>
+                    <button class="option-btn" onclick="selectOption(3, this, false)">B) function</button>
+                    <button class="option-btn" onclick="selectOption(3, this, false)">C) create</button>
                 </div>
+                <div id="feedback-3" class="feedback"></div>
+                <button class="btn btn-success" id="btn-next-3" style="display:none;" onclick="nextModule(4)">Avançar para Módulo Final ➔</button>
             </div>
         </div>
 
         <div id="mod4" class="view">
-            <h1>MÓDULO 4: CULTURA MAKER E WOKWI</h1>
-            <p>A Cultura Maker prega o "Faça Você Mesmo". Usamos o <strong>Wokwi</strong> para simular circuitos reais de hardware controlados por Python. Veja o projeto do Semáforo:</p>
+            <h2>Módulo 4: Projeto Integrador Maker (Semáforo)</h2>
+            <p>Agora vamos sair da tela de texto e controlar o mundo real usando <span class="highlight">MicroPython</span> no simulador de placas <strong>Wokwi</strong>.</p>
             
-            <div class="wokwi-frame">
-                <div class="wokwi-code">from machine import Pin
-import time
+            <h3>🛠️ O que é a Cultura Maker?</h3>
+            <p>A Cultura Maker (o famoso "faça-você-mesmo") é um movimento global que encoraja as pessoas a criarem, consertarem e modificarem objetos e sistemas físicos usando tecnologia acessível. A ideia principal é que deixemos de ser apenas consumidores passivos de tecnologia para nos tornarmos criadores ativos!</p>
 
-led = Pin(32, Pin.OUT)
-while True:
-    led.value(1) # Liga
-    time.sleep(1)
-    led.value(0) # Desliga
-    time.sleep(1)</div>
-                <div class="wokwi-canvas">
-                    <svg width="150" height="150"><rect x="60" y="20" width="30" height="100" fill="#333" rx="5"/><circle cx="75" cy="40" r="10" fill="#ef4444"/><circle cx="75" cy="70" r="10" fill="#eab308"/><circle cx="75" cy="100" r="10" fill="#10b981"/></svg>
+            <h3>Entendendo a Lógica do Código</h3>
+            <ul>
+                <li><span class="highlight">Configuração (Setup):</span> Usamos <code>Pin(NUMERO, Pin.OUT)</code> para definir que o pino vai <em>enviar</em> energia e <code>Pin(NUMERO, Pin.IN)</code> para o botão, que vai <em>escutar</em> a entrada.</li>
+                <li><span class="highlight">O Loop Infinito (<code>while True:</code>):</span> Um semáforo nunca dorme! Este comando cria um laço contínuo.</li>
+                <li><span class="highlight">A Detecção (<code>if botao.value() == 0:</code>):</span> É o gatilho da travessia. O código fica "vigiando" o botão.</li>
+                <li><span class="highlight">O Efeito Pisca-Pisca (<code>for contador in range(1, 14):</code>):</span> Automatiza a repetição do piscar do sinal do pedestre.</li>
+            </ul>
+
+            <h3>🔌 Passo a Passo: Como Iniciar a Simulação no Wokwi</h3>
+            <ol style="background: #1e293b; padding: 20px 20px 20px 40px; border-left: 4px solid #eab308; border-radius: 8px;">
+                <li style="margin-bottom: 10px;">Acesse <strong><a href="https://wokwi.com" target="_blank" style="color: #60a5fa;">wokwi.com</a></strong>, role a página um pouco para baixo e clique em <strong>ESP32</strong> na aba MicroPython.</li>
+                <li style="margin-bottom: 10px;">No menu superior do simulador, use o botão azul <strong>"+" (Add a new part)</strong> para adicionar ao painel: 3 LEDs para os carros, 2 LEDs para os pedestres, resistores e 1 Botão (Pushbutton).</li>
+                <li style="margin-bottom: 10px;"><strong>A Magia dos Resistores:</strong> Um LED liga direto na placa queima na hora! Você deve usar um resistor em série com o negativo de cada LED para funcionar como um "pedágio" que estrangula a corrente e protege a luz.</li>
+                <li style="margin-bottom: 10px;"><strong>Montagem:</strong> Conecte a perna positiva de cada LED no seu respectivo pino do ESP32 (ex: Pino 32 para o Vermelho do carro). A perna negativa vai para o Terra (GND) passando pelo resistor.</li>
+                <li>Cole todo o código-fonte exibido abaixo na aba <code>main.py</code> do simulador e clique no botão verde de <strong>Play</strong> no Wokwi!</li>
+            </ol>
+
+            <div class="wokwi-mockup">
+                <div class="wokwi-header">
+                    <div class="wokwi-dot"></div><div class="wokwi-dot"></div><div class="wokwi-dot"></div>
+                    <span style="color:#aaa; font-size:12px; font-family:sans-serif; margin-left:5px;">main.py - Código Fonte</span>
+                </div>
+                <div class="wokwi-body">
+                    <div class="wokwi-code"><span style="color:#c586c0;">from</span> machine <span style="color:#c586c0;">import</span> Pin
+<span style="color:#c586c0;">import</span> time
+
+<span style="color:#6a9955;"># Definindo os pinos</span>
+sinalVmCarro = Pin(32, Pin.OUT)
+sinalAmCarro = Pin(25, Pin.OUT)
+sinalVdCarro = Pin(33, Pin.OUT)
+sinalVmPedestre = Pin(21, Pin.OUT)
+sinalVdPedestre = Pin(22, Pin.OUT)
+botao = Pin(18, Pin.IN)
+
+contagem = 13
+
+<span style="color:#6a9955;"># Setup Inicial</span>
+sinalVmCarro.value(0)
+sinalAmCarro.value(0)
+sinalVdCarro.value(0)
+sinalVmPedestre.value(0)
+sinalVdPedestre.value(0)
+<span style="color:#dcdcaa;">print</span>(<span style="color:#ce9178;">"LIBERADO PARA O MOTORISTA"</span>)
+
+<span style="color:#c586c0;">while True</span>:
+    sinalVdCarro.value(1)
+    sinalVmPedestre.value(1)
+    
+    <span style="color:#c586c0;">if</span> botao.value() == 0:
+        <span style="color:#dcdcaa;">print</span>(<span style="color:#ce9178;">"ATENÇÃO MOTORISTA, PREFERENCIA DO PEDESTRE"</span>)
+        time.sleep(2)
+        
+        sinalVdCarro.value(0)
+        sinalAmCarro.value(1)
+        time.sleep(2)
+        
+        sinalAmCarro.value(0)
+        sinalVmCarro.value(1)
+        sinalVmPedestre.value(0)
+        sinalVdPedestre.value(1)
+        time.sleep(5)
+        
+        <span style="color:#c586c0;">for</span> contador <span style="color:#c586c0;">in</span> <span style="color:#dcdcaa;">range</span>(1, 14):
+            sinalVdPedestre.value(1)
+            time.sleep(0.5)
+            sinalVdPedestre.value(0)
+            time.sleep(0.5)
+            contagem -= 1
+            
+        sinalVmCarro.value(0)
+        contagem = 13
+        
+    time.sleep(0.1)</div>
+                    
+                    <div class="wokwi-canvas">
+                        <svg viewBox="0 0 500 400" width="100%" height="100%">
+                            <rect x="20" y="220" width="460" height="130" fill="#444" rx="4"/>
+                            <rect x="20" y="240" width="460" height="2" fill="#ef4444" opacity="0.8"/> 
+                            <rect x="20" y="325" width="460" height="2" fill="#2563eb" opacity="0.8"/> 
+                            <pattern id="holes" x="30" y="250" width="15" height="15" patternUnits="userSpaceOnUse">
+                                <circle cx="2" cy="2" r="1.5" fill="#222"/>
+                            </pattern>
+                            <rect x="30" y="250" width="440" height="70" fill="url(#holes)"/>
+                            
+                            <g transform="translate(250, 40)">
+                                <rect x="0" y="0" width="80" height="120" fill="#222" rx="4"/>
+                                <rect x="20" y="20" width="40" height="40" fill="#333" stroke="#555" stroke-width="1"/>
+                                <text x="25" y="45" fill="#aaa" font-size="10" font-family="monospace">ESP32</text>
+                                <rect x="30" y="115" width="20" height="8" fill="#555"/>
+                                <circle cx="5" cy="20" r="2.5" fill="#eab308"/> 
+                                <circle cx="5" cy="40" r="2.5" fill="#eab308"/> 
+                                <circle cx="5" cy="60" r="2.5" fill="#eab308"/> 
+                                <circle cx="75" cy="20" r="2.5" fill="#eab308"/> 
+                                <circle cx="75" cy="40" r="2.5" fill="#eab308"/> 
+                                <circle cx="75" cy="60" r="2.5" fill="#eab308"/> 
+                                <circle cx="75" cy="80" r="2.5" fill="#eab308"/> 
+                            </g>
+
+                            <path d="M 255 60 L 60 60 L 60 210" fill="none" stroke="#ef4444" stroke-width="2"/>
+                            <path d="M 255 100 L 90 100 L 90 210" fill="none" stroke="#eab308" stroke-width="2"/>
+                            <path d="M 255 80 L 120 80 L 120 210" fill="none" stroke="#10b981" stroke-width="2"/>
+                            <path d="M 325 80 L 370 80 L 370 210" fill="none" stroke="#ef4444" stroke-width="2"/>
+                            <path d="M 325 100 L 400 100 L 400 210" fill="none" stroke="#10b981" stroke-width="2"/>
+                            <path d="M 325 120 L 450 120 L 450 250" fill="none" stroke="#10b981" stroke-width="2"/>
+                            <path d="M 325 60 L 340 60 L 340 180 L 10 180 L 10 325 L 20 325" fill="none" stroke="#111" stroke-width="2.5"/>
+
+                            <circle cx="60" cy="210" r="8" fill="#ef4444" stroke="#555" stroke-width="2"/>
+                            <rect x="58" y="260" width="4" height="20" fill="#dca570"/>
+                            <path d="M 60 280 L 60 325" stroke="#111" stroke-width="2"/> 
+
+                            <circle cx="90" cy="210" r="8" fill="#eab308" stroke="#555" stroke-width="2"/>
+                            <rect x="88" y="260" width="4" height="20" fill="#dca570"/>
+                            <path d="M 90 280 L 90 325" stroke="#111" stroke-width="2"/>
+
+                            <circle cx="120" cy="210" r="8" fill="#10b981" stroke="#555" stroke-width="2"/>
+                            <rect x="118" y="260" width="4" height="20" fill="#dca570"/>
+                            <path d="M 120 280 L 120 325" stroke="#111" stroke-width="2"/>
+
+                            <circle cx="370" cy="210" r="8" fill="#ef4444" stroke="#555" stroke-width="2"/>
+                            <rect x="368" y="260" width="4" height="20" fill="#dca570"/>
+                            <path d="M 370 280 L 370 325" stroke="#111" stroke-width="2"/>
+
+                            <circle cx="400" cy="210" r="8" fill="#10b981" stroke="#555" stroke-width="2"/>
+                            <rect x="398" y="260" width="4" height="20" fill="#dca570"/>
+                            <path d="M 400 280 L 400 325" stroke="#111" stroke-width="2"/>
+
+                            <rect x="440" y="250" width="20" height="20" fill="#ddd" rx="2" stroke="#888" stroke-width="1"/>
+                            <circle cx="450" cy="260" r="6" fill="#2563eb"/>
+                            <rect x="425" y="260" width="4" height="20" fill="#dca570"/>
+                            <path d="M 427 280 L 427 325" stroke="#111" stroke-width="2"/>
+                            <path d="M 440 260 L 429 260" stroke="#888" stroke-width="1.5"/> 
+                        </svg>
+                    </div>
                 </div>
             </div>
 
-            <p style="font-size: 13px;"><b>Dica Maker:</b> Nunca esqueça os <strong>Resistores</strong> em série com os LEDs para evitar que eles queimem por excesso de energia!</p>
-
-            <div class="quiz-container">
-                <div class="highlight">AVALIAÇÃO FINAL:</div>
-                <p>No MicroPython, qual comando mantém o circuito sendo verificado em um ciclo infinito?</p>
-                <button class="option-btn" onclick="checkQuiz(4, this, true)">A) while True:</button>
-                <button class="option-btn" onclick="checkQuiz(4, this, false)">B) loop Infinity:</button>
-                <div id="next-btn-4" style="display:none; text-align: center;">
-                    <button class="btn-action" style="background:var(--accent); color:#000;" onclick="startPythonShow()">➔ IR PARA O PYTHON SHOW (PROVA FINAL) 🎙️</button>
+            <div class="quiz-box">
+                <div class="quiz-question">Avaliação Final: No código do projeto acima, qual estrutura de repetição (loop) nativa do Python é utilizada para fazer o sinal do pedestre piscar várias vezes em sequência antes de fechar?</div>
+                <div id="opts-4">
+                    <button class="option-btn" onclick="selectOption(4, this, false)">A) if botao.value() == 0:</button>
+                    <button class="option-btn" onclick="selectOption(4, this, true)">B) for contador in range(1, 14):</button>
+                    <button class="option-btn" onclick="selectOption(4, this, false)">C) import time</button>
                 </div>
+                <div id="feedback-4" class="feedback"></div>
+                <button class="btn btn-success" id="btn-next-4" style="display:none; width:100%; font-size:18px;" onclick="irParaPythonShow()">➔ IR PARA A PROVA FINAL: PYTHON SHOW 🎙️</button>
             </div>
         </div>
     </div>
 
-    <div id="python-show-container">
-        <h1 style="color:white">🎙️ PYTHON SHOW: O GRANDE DESAFIO</h1>
-        <p style="color:var(--accent)">Prove seu conhecimento para o IFRS!</p>
-        <div id="game-quiz">
-            <div id="q-counter" style="color: #94a3b8; margin-bottom: 15px;">Pergunta 1 de 10</div>
+    <div id="game-container">
+        <h1>🎙️ PYTHON SHOW</h1>
+        <div class="sub-titulo" id="sub-header">Prova Final do Curso de Python</div>
+
+        <div id="screen-start" class="screen" style="display: block;">
+            <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">Você concluiu a teoria! Agora é hora de testar seus conhecimentos no nosso estúdio. Responda <strong>10 perguntas cruciais</strong>. Atinja uma nota <strong>7 ou superior</strong> para desbloquear seu Certificado!</p>
+            <button class="btn-principal" onclick="iniciarJogo()">Começar as Perguntas 🚀</button>
+        </div>
+
+        <div id="screen-quiz" class="screen" style="display: none;">
+            <div class="progress-bar-bg"><div id="progress-fill-game" class="progress-bar-fill"></div></div>
+            <div style="font-size: 13px; color: #94a3b8; text-align: left; margin-bottom: 8px;" id="question-counter">Pergunta 1 de 10</div>
+            
             <div class="quiz-layout-box">
-                <div class="pergunta-box" id="show-question">...</div>
+                <svg viewBox="0 0 100 100" class="silvio-avatar">
+                    <path d="M 10 100 Q 50 40 90 100 Z" fill="#1e293b" stroke="#eab308" stroke-width="2"/>
+                    <path d="M 35 70 L 50 95 L 65 70 Z" fill="#ffffff"/>
+                    <path d="M 45 75 L 50 100 L 55 75 Z" fill="#ef4444"/>
+                    <circle cx="50" cy="40" r="28" fill="#fcd3a1"/>
+                    <path d="M 18 40 Q 25 5 50 5 Q 75 5 82 40 Q 88 20 50 0 Q 12 20 18 40 Z" fill="#4a3018"/>
+                    <circle cx="38" cy="35" r="7" fill="none" stroke="#222" stroke-width="2"/>
+                    <circle cx="62" cy="35" r="7" fill="none" stroke="#222" stroke-width="2"/>
+                    <path d="M 45 35 L 55 35" stroke="#222" stroke-width="2"/>
+                    <circle cx="38" cy="35" r="3" fill="#000"/>
+                    <circle cx="62" cy="35" r="3" fill="#000"/>
+                    <path d="M 32 50 Q 50 68 68 50 Q 50 58 32 50 Z" fill="#ffffff" stroke="#000" stroke-width="1"/>
+                    <rect x="47" y="60" width="6" height="20" fill="#94a3b8" rx="2"/>
+                    <circle cx="50" cy="58" r="6" fill="#111827"/>
+                    <path d="M 44 58 L 56 58" stroke="#cbd5e1" stroke-width="1"/>
+                </svg>
+                <div class="pergunta-box" id="texto-pergunta">Carregando pergunta...</div>
             </div>
-            <div class="alternativas-grid" id="show-options"></div>
+            
+            <div class="alternativas-grid" id="grid-alternativas"></div>
         </div>
-        <div id="game-results" style="display:none;">
-            <h2 style="color:white; border:none;">Nota Final: <span id="final-score">0</span> / 10</h2>
-            <div id="pass-message"></div>
-            <input type="text" id="student-name" class="input-nome" placeholder="Digite seu Nome Completo">
-            <button class="btn-action" style="background:var(--success)" onclick="generateCertificate()">GERAR MEU CERTIFICADO 📜</button>
+
+        <div id="screen-result" class="screen" style="display: none;">
+            <div style="font-size: 20px; color: #cbd5e1;">Sua nota final foi:</div>
+            <div id="nota-final" class="resultado-score">0 / 10</div>
+            <div id="status-badge" class="status-badge passou">APROVADO</div>
+            
+            <div id="painel-emissao">
+                <p style="font-size: 14px; color: #94a3b8; padding: 0 20px;">Você venceu o desafio final! Digite seu nome completo para emitir seu Certificado de Conclusão do Curso:</p>
+                <input type="text" id="nome-estudante" class="input-nome" placeholder="Seu Nome Completo">
+                <button class="btn-principal" onclick="emitirCertificado()">Gerar Meu Certificado 📜</button>
+            </div>
+
+            <div id="painel-reprovado" style="display: none;">
+                <p style="font-size: 14px; color: #94a3b8;">Não foi dessa vez! Você precisa de pelo menos Nota 7 para conquistar o certificado. Revise o material EAD e tente novamente.</p>
+                <button class="btn-principal" onclick="voltarParaEAD()">Voltar para a Teoria 📚</button>
+                <button class="btn-secundario" onclick="resetarJogo()">Tentar Prova Novamente 🔄</button>
+            </div>
         </div>
     </div>
 
-    <div id="certificate-view">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Instituto_Federal_Marca_2015.svg/1200px-Instituto_Federal_Marca_2015.svg.png" height="80" alt="Logo">
-        <h2 style="color:#000; border:none; margin: 20px 0 0;">CERTIFICADO DE CONCLUSÃO</h2>
-        <p style="margin:0; font-size: 14px;">MINICURSO DE INTRODUÇÃO À PYTHON</p>
-        <div style="margin-top: 40px;">Certificamos com distinção que:</div>
-        <div class="cert-name" id="cert-target-name">...</div>
-        <p style="font-style: italic;">Concluiu integralmente os 4 módulos práticos e teóricos, incluindo simulação Maker no Wokwi e avaliação gamificada de proficiência lógica.</p>
-        <div style="margin-top: 60px; display: flex; justify-content: space-around; font-size: 12px;">
-            <div>__________________________<br>Victor Mattos<br>Professor Regente</div>
-            <div>__________________________<br>IFRS Veranópolis<br>Coordenação de Curso</div>
+    <div id="layout-certificado">
+        <svg viewBox="0 0 200 240" width="130" height="156" style="margin: 0 auto 15px auto; display: block; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4));">
+            <path d="M 75 0 L 60 70 L 85 70 Z" fill="#2563eb" opacity="0.85"/>
+            <path d="M 125 0 L 140 70 L 115 70 Z" fill="#2563eb" opacity="0.85"/>
+            <path d="M 100 0 L 85 70 L 115 70 Z" fill="#ffffff" opacity="0.9"/>
+            <circle cx="100" cy="75" r="34" fill="#eab308" stroke="#ca8a04" stroke-width="2"/>
+            <circle cx="100" cy="75" r="30" fill="#fef08a" stroke="#eab308" stroke-width="1"/>
+            <g transform="translate(84, 59) scale(0.65)">
+                <path d="M 16 4 L 26 4 A 11 11 0 0 1 37 15 L 37 20 L 16 20 A 5 5 0 0 0 11 25 L 11 35 L 5 35 A 5 5 0 0 1 0 30 L 0 16 A 11 11 0 0 1 16 4 Z" fill="#1e40af"/>
+                <circle cx="10" cy="10" r="2.5" fill="#ffffff"/>
+                <path d="M 34 44 L 24 44 A 11 11 0 0 1 13 33 L 13 28 L 34 28 A 5 5 0 0 0 39 23 L 39 13 L 45 13 A 5 5 0 0 1 50 18 L 50 33 A 11 11 0 0 1 34 44 Z" fill="#ca8a04"/>
+                <circle cx="40" cy="38" r="2.5" fill="#1e40af"/>
+            </g>
+            <g transform="translate(0, 42)">
+                <path d="M 62 122 Q 70 85 100 85 Q 130 85 138 122 Q 148 100 100 80 Q 52 100 62 122 Z" fill="#4a3018"/>
+                <circle cx="100" cy="122" r="28" fill="#fcd3a1" stroke="#ca8a04" stroke-width="0.5"/>
+                <circle cx="87" cy="118" r="8" fill="none" stroke="#1e293b" stroke-width="2"/>
+                <circle cx="113" cy="118" r="8" fill="none" stroke="#1e293b" stroke-width="2"/>
+                <path d="M 95 118 L 105 118" stroke="#1e293b" stroke-width="2"/>
+                <circle cx="87" cy="118" r="3" fill="#000"/>
+                <circle cx="113" cy="118" r="3" fill="#000"/>
+                <path d="M 80 134 Q 100 152 120 134 Q 100 142 80 134 Z" fill="#ffffff" stroke="#1e293b" stroke-width="1"/>
+            </g>
+        </svg>
+
+        <div class="cert-titulo">CERTIFICADO DE CONCLUSÃO</div>
+        <div style="font-size: 15px; color: #cbd5e1; text-transform: uppercase; letter-spacing: 1px;">Curso de Introdução à Python</div>
+        <div style="font-size: 14px; color: #94a3b8; margin-top: 25px;">Certificamos com distinção que:</div>
+        
+        <div class="cert-nome" id="nome-certificado">NOME DO JOGADOR</div>
+        
+        <p style="font-size: 14px; color: #cbd5e1; line-height: 1.6; max-width: 500px; margin: 0 auto; padding-bottom: 20px;">
+            Concluiu com êxito todos os módulos de lógica, variáveis e integração de hardware (MicroPython), e foi APROVADO na sabatina final do Python Show, demonstrando proficiência no pilar fundamental da linguagem Python.
+        </p>
+        
+        <div style="margin-top: 35px; border-top: 1px dashed #475569; padding-top: 20px;">
+            <button class="btn-principal" onclick="window.print()">🖨️ Salvar PDF / Imprimir</button>
+            <button class="btn-secundario" onclick="location.reload()">Voltar ao Início</button>
         </div>
-        <button class="btn-action" style="margin-top:50px" onclick="window.print()">🖨️ IMPRIMIR / SALVAR PDF</button>
     </div>
-
-    <footer>
-        Este minicurso foi desenvolvido pelos alunos do 1º período de Análise e Desenvolvimento de Sistemas do <b>Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Sul (IFRS) - Campus Veranópolis</b>, como parte integrante da disciplina de <b>Introdução à Computação</b>, ministrada pelo professor <b>Victor Mattos</b>.
-    </footer>
-
-    <div id="yt-audio-player" style="position: absolute; top: -999px;"></div>
 
     <script>
-        // NAVEGAÇÃO DOS MÓDULOS
-        function showModule(n) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById('mod' + n).classList.add('active');
+        // -------------------------------------------------------------
+        // LOGICA EAD - MÓDULOS 1 AO 4
+        // -------------------------------------------------------------
+        function selectOption(modNum, btnEl, isCorrect) {
+            const buttons = document.getElementById(`opts-${modNum}`).getElementsByTagName('button');
+            for(let b of buttons) { b.disabled = true; b.style.cursor = 'default'; }
             
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach((t, i) => {
-                if(i + 1 === n) t.classList.add('active');
-                else t.classList.remove('active');
-            });
-            window.scrollTo(0, 0);
-        }
-
-        function checkQuiz(mod, btn, isCorrect) {
-            const container = btn.parentElement;
-            const buttons = container.querySelectorAll('.option-btn');
-            buttons.forEach(b => b.disabled = true);
+            const feedback = document.getElementById(`feedback-${modNum}`);
+            feedback.style.display = 'block';
 
             if(isCorrect) {
-                btn.classList.add('correct');
-                document.getElementById('next-btn-' + mod).style.display = 'block';
-                confetti({ particleCount: 40, spread: 60, origin: { y: 0.8 } });
+                btnEl.classList.add('correct');
+                feedback.innerText = "✅ Resposta Correta! Você absorveu o conhecimento.";
+                feedback.style.color = "#34d399";
+                document.getElementById(`btn-next-${modNum}`).style.display = "inline-block";
+                confetti({ particleCount: 30, spread: 40, origin: { y: 0.8 } });
             } else {
-                btn.classList.add('wrong');
-                setTimeout(() => {
-                    buttons.forEach(b => { b.disabled = false; b.classList.remove('wrong'); });
-                }, 1500);
+                btnEl.classList.add('wrong');
+                feedback.innerHTML = "❌ Resposta Incorreta. Leia a teoria e tente novamente.<br><button class='btn' onclick='resetQuiz("+modNum+")' style='padding:8px 15px; margin-top:10px;'>Tentar Novamente 🔄</button>";
+                feedback.style.color = "#f87171";
             }
         }
 
-        // MOTOR DO PYTHON SHOW
+        function resetQuiz(modNum) {
+            const buttons = document.getElementById(`opts-${modNum}`).getElementsByTagName('button');
+            for(let b of buttons) { 
+                b.disabled = false; 
+                b.style.cursor = 'pointer'; 
+                b.classList.remove('wrong'); 
+                b.classList.remove('correct'); 
+            }
+            document.getElementById(`feedback-${modNum}`).style.display = 'none';
+        }
+
+        function nextModule(nextModNum) {
+            document.getElementById('progress-bar').style.width = ((nextModNum - 1) * 33.3) + "%";
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(`mod${nextModNum}`).classList.add('active');
+            document.getElementById('main-container').scrollTo(0,0);
+        }
+
+        // -------------------------------------------------------------
+        // INTEGRAÇÃO: EAD -> PYTHON SHOW (INJETANDO YOUTUBE API AQUI)
+        // -------------------------------------------------------------
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
         var player;
+        var somPronto = false;
+        var somHabilitado = true;
+
         function onYouTubeIframeAPIReady() {
-            player = new YT.Player('yt-audio-player', {
-                height: '10', width: '10', videoId: 'wbFxNbLWaRo',
-                playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': 'wbFxNbLWaRo' }
+            player = new YT.Player('youtube-player', {
+                height: '10', width: '10', videoId: 'wbFxNbLWaRo', 
+                playerVars: { 'autoplay': 0, 'controls': 0, 'disablekb': 1, 'loop': 1, 'playlist': 'wbFxNbLWaRo' },
+                events: { 'onReady': () => { somPronto = true; console.log("Áudio carregado!"); } }
+            });
+        }
+        setTimeout(() => { somPronto = true; }, 5000);
+
+        function irParaPythonShow() {
+            document.getElementById('main-container').style.display = 'none';
+            document.getElementById('game-container').style.display = 'block';
+            document.getElementById('btn-som').style.display = 'block';
+
+            if (somPronto && player && typeof player.playVideo === 'function') {
+                try {
+                    player.unMute();
+                    player.setVolume(35); 
+                    player.playVideo();
+                    
+                    somHabilitado = true;
+                    document.getElementById('btn-som').innerText = "🎵 Som: ON";
+                    document.getElementById('btn-som').style.background = "#10b981";
+                    document.getElementById('btn-som').style.borderColor = "#059669";
+                } catch(e) {}
+            }
+            initAudio();
+        }
+
+        function voltarParaEAD() {
+            document.getElementById('game-container').style.display = 'none';
+            document.getElementById('btn-som').style.display = 'none';
+            document.getElementById('main-container').style.display = 'block';
+            if(somHabilitado && player && typeof player.pauseVideo === 'function') {
+                player.pauseVideo();
+            }
+            resetarJogo();
+            document.getElementById('main-container').scrollTo(0,0);
+        }
+
+        // -------------------------------------------------------------
+        // LÓGICA DE ÁUDIO DO JOGO 
+        // -------------------------------------------------------------
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+        function initAudio() { if (!audioCtx) audioCtx = new AudioContext(); }
+
+        function acionarBotaoSom() {
+            if (somHabilitado) {
+                player.pauseVideo(); somHabilitado = false;
+                document.getElementById('btn-som').innerText = "🎵 Som: OFF";
+                document.getElementById('btn-som').style.background = "#334155";
+                document.getElementById('btn-som').style.borderColor = "#475569";
+            } else {
+                player.playVideo(); somHabilitado = true;
+                document.getElementById('btn-som').innerText = "🎵 Som: ON";
+                document.getElementById('btn-som').style.background = "#10b981";
+                document.getElementById('btn-som').style.borderColor = "#059669";
+            }
+        }
+
+        function tocarEfeitoAcerto() {
+            if (!somHabilitado || !audioCtx) return;
+            const tempo = audioCtx.currentTime;
+            [261.63, 329.63, 392.00, 523.25].forEach((freq, i) => {
+                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+                osc.type = 'sine'; osc.frequency.setValueAtTime(freq, tempo + (i * 0.08));
+                gain.gain.setValueAtTime(0.1, tempo + (i * 0.08)); gain.gain.exponentialRampToValueAtTime(0.001, tempo + (i * 0.08) + 0.3);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(tempo + (i * 0.08)); osc.stop(tempo + (i * 0.08) + 0.3);
             });
         }
 
-        function startPythonShow() {
-            document.getElementById('nav-tabs').style.display = 'none';
-            document.getElementById('main-card').style.display = 'none';
-            document.getElementById('python-show-container').style.display = 'block';
-            if(player) { player.unMute(); player.setVolume(30); player.playVideo(); }
-            loadQuestion();
+        function tocarEfeitoErro() {
+            if (!somHabilitado || !audioCtx) return;
+            const tempo = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+            osc.type = 'sawtooth'; osc.frequency.setValueAtTime(140, tempo); osc.frequency.linearRampToValueAtTime(60, tempo + 0.5);
+            gain.gain.setValueAtTime(0.15, tempo); gain.gain.exponentialRampToValueAtTime(0.001, tempo + 0.5);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(tempo); osc.stop(tempo + 0.5);
         }
 
-        const questions = [
-            { q: "Qual comando Python exibe dados na tela?", o: ["print()", "show()", "output()", "display()"], c: 0 },
-            { q: "O que o símbolo '=' faz no Python?", o: ["Soma", "Compara", "Guarda valor", "Deleta"], c: 2 },
-            { q: "Qual o erro quando falta espaços à esquerda?", o: ["TypeError", "NameError", "IndentationError", "SyntaxError"], c: 1 },
-            { q: "Para que serve o comando 'if'?", o: ["Repetir", "Mudar cor", "Tomar decisão", "Somar"], c: 2 },
-            { q: "O que é uma String?", o: ["Número", "Texto", "Pausa", "Lista"], c: 1 },
-            { q: "O que o '.append()' faz em uma lista?", o: ["Apaga", "Limpa", "Adiciona ao fim", "Soma tudo"], c: 2 },
-            { q: "Qual comando define uma função nova?", o: ["function", "def", "create", "new"], c: 1 },
-            { q: "O que o simulador Wokwi faz?", o: ["Cozinha", "Simula hardware", "Edita fotos", "Joga game"], c: 1 },
-            { q: "Qual a função do resistor no LED?", o: ["Aumentar brilho", "Mudar cor", "Proteção", "Ligar"], c: 2 },
-            { q: "O que o ADS significa no IFRS?", o: ["Sistemas", "Análise e Desenv.", "Automotores", "Artes"], c: 1 }
+        // -------------------------------------------------------------
+        // LÓGICA DO QUIZ SHOW (NOVA TRAVA DE SEGURANÇA DE TELAS)
+        // -------------------------------------------------------------
+        const bancoPerguntas = [
+            { p: "Como se exibe uma mensagem de texto na tela usando Python?", o: ["display()", "print()", "show()", "echo()"], c: 1 },
+            { p: "Qual caractere é utilizado para iniciar um comentário de uma linha em Python?", o: ["//", "/*", "#", "-->"], c: 2 },
+            { p: "Qual operador testa se duas variáveis são IGUAIS?", o: ["=", "==", "===", "match"], c: 1 },
+            { p: "Como se declara uma Lista vazia em Python?", o: ["lista = []", "lista = {}", "lista = ()", "lista = list.new()"], c: 0 },
+            { p: "Qual função nativa recolhe o que o usuário digita no teclado?", o: ["read()", "get()", "input()", "listen()"], c: 2 },
+            { p: "Como convertemos a string '10' em um número inteiro?", o: ["int('10')", "str(10)", "float('10')", "convert('10')"], c: 0 },
+            { p: "O que o comando len('Python') irá retornar?", o: ["6", "5", "7", "Erro de Sintaxe"], c: 0 },
+            { p: "Qual palavra-chave inicia um loop com um número definido de vezes?", o: ["while", "loop", "foreach", "for"], c: 3 },
+            { p: "Qual o símbolo utilizado em Python para multiplicação?", o: ["x", "X", "*", "^"], c: 2 },
+            { p: "Qual comando é usado para criar uma função personalizada?", o: ["function", "def", "func", "create"], c: 1 }
         ];
 
-        let currentQ = 0, score = 0;
+        let perguntaAtual = 0; let acertos = 0; let respondido = false;
 
-        function loadQuestion() {
-            const data = questions[currentQ];
-            document.getElementById('q-counter').innerText = `Pergunta ${currentQ + 1} de 10`;
-            document.getElementById('show-question').innerText = data.q;
-            const grid = document.getElementById('show-options');
+        // TRAVA FORTE DE JAVASCRIPT: Garante que só 1 tela exista visualmente por vez
+        function mudarTelaShow(idTela) {
+            document.getElementById('screen-start').style.display = 'none';
+            document.getElementById('screen-quiz').style.display = 'none';
+            document.getElementById('screen-result').style.display = 'none';
+            
+            const telaAtiva = document.getElementById(idTela);
+            telaAtiva.style.display = 'block';
+        }
+
+        function iniciarJogo() {
+            perguntaAtual = 0; acertos = 0;
+            mudarTelaShow('screen-quiz');
+            carregarPergunta();
+        }
+
+        function carregarPergunta() {
+            respondido = false;
+            const dados = bancoPerguntas[perguntaAtual];
+            document.getElementById('progress-fill-game').style.width = ((perguntaAtual / bancoPerguntas.length) * 100) + "%";
+            document.getElementById('question-counter').innerText = `Pergunta ${perguntaAtual + 1} de ${bancoPerguntas.length}`;
+            document.getElementById('texto-pergunta').innerText = dados.p;
+            
+            const grid = document.getElementById('grid-alternativas');
             grid.innerHTML = "";
-            data.o.forEach((opt, i) => {
-                const b = document.createElement('button');
-                b.className = "btn-opcao";
-                b.innerHTML = `<span>${String.fromCharCode(65+i)})</span> ${opt}`;
-                b.onclick = () => {
-                    if(i === data.c) { b.classList.add('correct'); score++; }
-                    else { b.classList.add('wrong'); }
-                    setTimeout(() => {
-                        currentQ++;
-                        if(currentQ < 10) loadQuestion();
-                        else finishGame();
-                    }, 1500);
-                };
-                grid.appendChild(b);
+            const letras = ["A", "B", "C", "D"];
+            dados.o.forEach((opcao, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "btn-opcao";
+                btn.innerHTML = `<span>${letras[idx]})</span> ${opcao}`;
+                btn.onclick = () => verificarResposta(idx, btn);
+                grid.appendChild(btn);
             });
         }
 
-        function finishGame() {
-            document.getElementById('game-quiz').style.display = 'none';
-            document.getElementById('game-results').style.display = 'block';
-            document.getElementById('final-score').innerText = score;
-            if(score < 7) {
-                document.getElementById('pass-message').innerHTML = "<p style='color:red'>Você precisa de Nota 7 para o certificado. Recarregue e tente de novo!</p>";
+        function verificarResposta(indiceEscolhido, elementoBotao) {
+            if (respondido) return; respondido = true;
+            const correta = bancoPerguntas[perguntaAtual].c;
+            const botoes = document.getElementById('grid-alternativas').getElementsByTagName('button');
+
+            if (indiceEscolhido === correta) {
+                elementoBotao.classList.add('correct'); acertos++; tocarEfeitoAcerto();
+            } else {
+                elementoBotao.classList.add('wrong'); botoes[correta].classList.add('correct'); tocarEfeitoErro();
+            }
+
+            setTimeout(() => {
+                perguntaAtual++;
+                if (perguntaAtual < bancoPerguntas.length) { carregarPergunta(); } 
+                else { mostrarResultadoFinal(); }
+            }, 1800);
+        }
+
+        function mostrarResultadoFinal() {
+            mudarTelaShow('screen-result');
+            document.getElementById('progress-fill-game').style.width = "100%";
+            document.getElementById('nota-final').innerText = `${acertos} / ${bancoPerguntas.length}`;
+            
+            const badge = document.getElementById('status-badge');
+            if (acertos >= 7) {
+                badge.innerText = "APROVADO ✔️"; badge.className = "status-badge passou";
+                document.getElementById('painel-emissao').style.display = 'block';
+                document.getElementById('painel-reprovado').style.display = 'none';
+                tocarEfeitoAcerto(); dispararConfetes();
+            } else {
+                badge.innerText = "REPROVADO ❌"; badge.className = "status-badge reprovou";
+                document.getElementById('painel-emissao').style.display = 'none';
+                document.getElementById('painel-reprovado').style.display = 'block';
             }
         }
 
-        function generateCertificate() {
-            const name = document.getElementById('student-name').value;
-            if(!name) return alert("Por favor, digite seu nome!");
-            document.getElementById('cert-target-name').innerText = name;
-            document.getElementById('python-show-container').style.display = 'none';
-            document.querySelector('header').style.display = 'none';
-            document.getElementById('certificate-view').style.display = 'block';
-            document.querySelector('footer').style.display = 'none';
-            confetti({ particleCount: 200, spread: 90, origin: { y: 0.6 } });
+        function dispararConfetes() {
+            var duration = 4 * 1000; var end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 6, angle: 60, spread: 60, origin: { x: 0 }, colors: ['#eab308', '#ffffff', '#34d399', '#3b82f6'] });
+                confetti({ particleCount: 6, angle: 120, spread: 60, origin: { x: 1 }, colors: ['#eab308', '#ffffff', '#34d399', '#3b82f6'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+
+        function resetarJogo() { mudarTelaShow('screen-start'); }
+
+        // -------------------------------------------------------------
+        // CERTIFICADO FINAL APÓS O JOGO
+        // -------------------------------------------------------------
+        function emitirCertificado() {
+            const nome = document.getElementById('nome-estudante').value.trim();
+            if (nome === "") { alert("Por favor, digite seu nome para emitir o documento!"); return; }
+            
+            document.getElementById('nome-certificado').innerText = nome.toUpperCase();
+            document.getElementById('game-container').style.display = 'none';
+            document.getElementById('btn-som').style.display = 'none';
+            document.getElementById('layout-certificado').style.display = 'block';
+            
+            if (somHabilitado && player && typeof player.pauseVideo === 'function') { 
+                player.pauseVideo(); 
+            }
         }
     </script>
-    <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
