@@ -286,17 +286,77 @@ print("Idade:", 4)</pre>
         </div>
 
         <div id="mod2" class="view">
-            <h2>Módulo 2: Tomando Decisões e Repetições</h2>
-            <p>As estruturas condicionais permitem que o programa tome decisões com base em condições. <span class="highlight">if, elif, e else</span>. Lembre-se que o Python usa 4 espaços de recuo (indentação). A indentação (recuo do código) é obrigatória para organizar os blocos de execução.</p>
+            <div id="mod2" class="view">
+            <h2>Módulo 2: Tomada de Decisão e Estruturas Condicionais</h2>
+            <p>Até agora, o nosso código executava todas as linhas de cima para baixo. Mas e se o computador precisasse escolher caminhos diferentes baseado em uma situação? É aqui que entram as estruturas condicionais: <code>if</code> (se), <code>elif</code> (senão se) e <code>else</code> (senão).</p>
+
+            <h3>🚦 O Fluxo de Decisão (A Metáfora do Semáforo)</h3>
+            <p>Pense nas condições como um guarda de trânsito. O código chega a uma bifurcação, testa uma regra, e apenas segue pelo caminho permitido se a resposta for <strong>Verdadeira (True)</strong>.</p>
+            
+            <pre class="inline-code" style="background: #1e293b; color: #38bdf8; font-family: monospace; padding: 10px; border-left: 4px solid var(--accent);">
+[Início] ──> O semáforo está Verde?
+                │
+                ├──> SIM (True) ──> [ Ação: Pode passar! ]
+                │
+                └──> NÃO (False) ──> O semáforo está Amarelo?
+                                        │
+                                        ├──> SIM (True) ──> [ Ação: Reduza a velocidade! ]
+                                        │
+                                        └──> NÃO (False) ──> [ Ação: Pare o veículo! ]</pre>
+
+            <h3>💻 Sintaxe Básica do IF e ELSE</h3>
+            <p>Em Python, a estrutura é extremamente limpa, mas exige atenção a dois detalhes vitais: os <strong>dois pontos (:)</strong> no final da linha e a <strong>indentação</strong> (o recuo/espaço de 4 espaços na linha de baixo para indicar o que está dentro do bloco).</p>
+
             <pre class="inline-code">
-temperatura = 39.5
-if temperatura > 39.2:
-    print("O animal está com febre.")
+temperatura = 38.5
+
+if temperatura > 37.5:
+    print("Alerta: Paciente com febre!")
 else:
     print("Temperatura normal.")</pre>
-            <h3>Estruturas de Repetição (Loops) e Listas</h3>
-            <p>O loop <span class="highlight">for</span> repete um trecho de código um número definido de vezes. O loop <span class="highlight">while</span> repete enquanto uma condição for verdadeira.</p>
-            <p>Listas servem para guardar vários dados juntos usando colchetes <code>[]</code>. Exemplo: <code>sintomas = ["tosse", "febre"]</code>. Para adicionar itens, usamos o comando <code>append()</code>.</p>
+
+            <h3>🛠️ Exemplo Prático: Automação com Sensores (IoT)</h3>
+            <p>Imagine que você está programando um microcontrolador que monitora a humidade do solo de uma planta ou estufa automaticamente. Podemos usar o <code>elif</code> para criar regras intermediárias:</p>
+
+            <pre class="inline-code">
+# Nível de humidade medido por um sensor (em porcentagem)
+humidade_solo = 25 
+
+if humidade_solo < 30:
+    print("🚨 Solo muito seco! Ativando sistema de irrigação automático...")
+elif humidade_solo >= 30 and humidade_solo <= 60:
+    print("💧 Humidade ideal. Sistema em modo de espera.")
+else:
+    print("⚠️ Atenção: Solo excessivamente húmido. Desligando drenos.")</pre>
+
+            <h3>⚖️ Operadores de Comparação e Lógicos</h3>
+            <p>Para criar as condições, usamos símbolos matemáticos especiais de comparação:</p>
+            <ul>
+                <li><code>==</code> : Igual a (Cuidado: um único <code>=</code> serve para guardar dados na variável, dois <code>==</code> servem para comparar!)</li>
+                <li><code>!=</code> : Diferente de</li>
+                <li><code>></code> e <code><</code> : Maior que e Menor que</li>
+                <li><code>>=</code> e <code><=</code> : Maior ou igual e Menor ou igual</li>
+            </ul>
+
+            <p>E também podemos combinar condições usando operadores lógicos:</p>
+            <ul>
+                <li><strong><code>and</code> (E):</strong> Só executa se <strong>todas</strong> as condições forem verdadeiras.</li>
+                <li><strong><code>or</code> (OU):</strong> Executa se pelo menos <strong>uma</strong> das condições for verdadeira.</li>
+            </ul>
+
+            <h3>⚠️ Erro Comum: O Esquecimento dos Dois Pontos (:)</h3>
+            <p>Um dos erros mais comuns de quem está a começar a programar em Python é esquecer de pontuar o final da condição. Veja a diferença:</p>
+
+            <pre class="inline-code" style="border-left: 4px solid var(--danger); color: #f87171;">
+# ❌ ERRO DE SINTAXE (Falta o : no final do if):
+if idade >= 18
+    print("Maior de idade")
+
+#  CORRETO:
+if idade >= 18:
+    print("Maior de idade")</pre>
+
+            <div class="quiz-box">
             <div class="quiz-box">
                 <div class="quiz-question">Avaliação 2: Como adicionamos um novo item ao final de uma lista existente?</div>
                 <div id="opts-2">
