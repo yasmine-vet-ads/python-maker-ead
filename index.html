@@ -1074,18 +1074,26 @@ function navegarParaModulo(numeroModulo) {
         function initAudio() { if (!audioCtx) audioCtx = new AudioContext(); }
 
         function acionarBotaoSom() {
-            if (somHabilitado) {
-                player.pauseVideo(); somHabilitado = false;
-                document.getElementById('btn-som').innerText = "🎵 Som: OFF";
-                document.getElementById('btn-som').style.background = "#334155";
-                document.getElementById('btn-som').style.borderColor = "#475569";
-            } else {
-                player.playVideo(); somHabilitado = true;
-                document.getElementById('btn-som').innerText = "🎵 Som: ON";
-                document.getElementById('btn-som').style.background = "#10b981";
-                document.getElementById('btn-som').style.borderColor = "#059669";
-            }
+    if (somHabilitado) {
+        // Verifica se o player existe e carregou a função antes de tentar pausar
+        if (player && typeof player.pauseVideo === 'function') {
+            player.pauseVideo();
         }
+        somHabilitado = false;
+        document.getElementById('btn-som').innerText = "🎵 Som: OFF";
+        document.getElementById('btn-som').style.background = "#334155";
+        document.getElementById('btn-som').style.borderColor = "#475569";
+    } else {
+        // Verifica se o player existe antes de dar o play
+        if (player && typeof player.playVideo === 'function') {
+            player.playVideo();
+        }
+        somHabilitado = true;
+        document.getElementById('btn-som').innerText = "🎵 Som: ON";
+        document.getElementById('btn-som').style.background = "#10b981";
+        document.getElementById('btn-som').style.borderColor = "#059669";
+    }
+}
 
         function tocarEfeitoAcerto() {
             if (!somHabilitado || !audioCtx) return;
