@@ -209,19 +209,70 @@
         <div id="mod1" class="view active">
             <h2>Módulo 1: Primeiros Passos e o "Modo Pensar"</h2>
             <p>Seja muito bem-vindo! Pense no código como uma sequência de instruções que ensina o computador a resolver problemas passo a passo. O computador apenas lê linha por linha e executa exatamente o que você mandou.</p>
+            
             <h3>Por que Python?</h3>
             <ul>
                 <li><span class="highlight">Sintaxe Limpa:</span> O código parece inglês fluente. É feito para humanos lerem sem esforço.</li>
                 <li><span class="highlight">Superpoderes de Mercado:</span> Python é uma das linguagens mais utilizadas no mundo em áreas como Inteligência Artificial, automação, análise de dados e Internet das Coisas (IoT).</li>
             </ul>
+            
             <h3>Conceitos Fundamentais</h3>
             <p>O comando básico para mostrar qualquer informação na tela do computador é a função <span class="highlight">print()</span>:</p>
             <pre class="inline-code">print("Olá, Mundo!")</pre>
-            <p>Variáveis são espaços reservados na memória usados para armazenar informações temporariamente. O Python identifica o tipo de dado sozinho:</p>
+
+            <h3>📦 Entendendo Variáveis (A Metáfora das Gavetas)</h3>
+            <p>Imagine que a memória do computador é um grande armário organizador. Uma <strong>variável</strong> é simplesmente uma gaveta onde você cola uma etiqueta para saber o que tem dentro. Se você colar a etiqueta <code>nome_do_pet</code> e colocar o texto <code>"Rex"</code> lá dentro, toda vez que o Python ler essa etiqueta, ele saberá exatamente o que está guardado. O Python identifica o tipo de dado sozinho:</p>
             <ul>
                 <li><strong>String (str):</strong> Texto delimitado por aspas. Ex: <code>nome = "Rex"</code></li>
-                <li><strong>Inteiro (int):</strong> Números inteiros. Ex: <code>idade = 4</code></li>
+                <li><strong>Inteiro (int):</strong> Números inteiros sem casas decimais. Ex: <code>idade = 4</code></li>
+                <li><strong>Float (float):</strong> Números com casas decimais (ponto flutuante). Ex: <code>peso = 12.5</code></li>
             </ul>
+
+            <pre class="inline-code">
+# Criando as gavetas (armazenando dados)
+nome_do_pet = "Rex"      
+idade = 4                
+peso = 12.5              
+
+# Usando o conteúdo das gavetas
+print(nome_do_pet)       # Vai mostrar: Rex
+print(idade)             # Vai mostrar: 4</pre>
+
+            <h3>📝 Exemplo Prático: Criador de Fichas Automático</h3>
+            <p>O Python permite organizar e juntar textos com variáveis de forma muito simples usando uma estrutura chamada <code>f-string</code> (basta colocar um <code>f</code> antes das aspas e a variável entre chaves <code>{}</code>). Veja como criar uma mensagem automatizada combinando as gavetas que guardamos:</p>
+
+            <pre class="inline-code">
+# Combinando variáveis para gerar um relatório automático
+relatorio = f"O paciente {nome_do_pet} tem {idade} anos e pesa {peso}kg."
+print(relatorio)
+
+# Saída na tela: O paciente Rex tem 4 anos e pesa 12.5kg.</pre>
+
+            <h3>🧮 Operações Matemáticas na Prática</h3>
+            <p>O computador é uma excelente calculadora. Podemos usar os operadores padrão para automatizar contas: <code>+</code> (soma), <code>-</code> (subtração), <code>*</code> (multiplicação) e <code>/</code> (divisão).</p>
+
+            <pre class="inline-code">
+# Exemplo: Calculando a dosagem diária de ração baseada no peso do animal
+# Regra: 10 gramas de ração para cada quilo do pet
+peso_animal = 15 
+porcao_por_quilo = 10 
+
+total_racao_diaria = peso_animal * porcao_por_quilo
+print(f"O animal precisa de {total_racao_diaria}g de ração por dia.")
+
+# Saída na tela: O animal precisa de 150g de ração por dia.</pre>
+
+            <h3>⚠️ Atenção ao "Modo de Pensar" do Computador</h3>
+            <p>O Python é extremamente organizado e rigoroso. Se você tentar somar um texto com um número diretamente, ele não vai saber se deve fazer uma conta matemática ou juntar as palavras, gerando um erro de tipo (<code>TypeError</code>) que trava o programa.</p>
+
+            <pre class="inline-code" style="border-left: 4px solid var(--danger); color: #f87171;">
+# ❌ ISSO VAI GERAR UM ERRO E TRAVAR O CÓDIGO:
+print("Idade: " + 4) 
+
+#  JEITO CORRETO (Usando f-string ou separando por vírgula):
+print(f"Idade: {4}")
+print("Idade:", 4)</pre>
+
             <div class="quiz-box">
                 <div class="quiz-question">Avaliação 1: Qual função é utilizada para exibir mensagens no terminal em Python?</div>
                 <div id="opts-1">
