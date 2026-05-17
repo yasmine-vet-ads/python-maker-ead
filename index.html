@@ -6,31 +6,66 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        :root { --primary: #2563eb; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --accent: #eab308; --success: #10b981; --danger: #ef4444; --ifrs-green: #2f833c; --ifrs-red: #e30613; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        :root { 
+            --primary: #2563eb; 
+            --bg: #0f172a; 
+            --card: #1e293b; 
+            --text: #f8fafc; 
+            --accent: #eab308; 
+            --success: #10b981; 
+            --danger: #ef4444; 
+            --ifrs-green: #2f833c; 
+            --ifrs-red: #e30613; 
+        }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+        }
         
         /* ==================== CABEÇALHO INSTITUCIONAL IFRS ==================== */
-        .ifrs-header-banner { display: flex; align-items: center; gap: 18px; background: #ffffff; padding: 14px 28px; border-radius: 10px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); width: 100%; max-width: 900px; box-sizing: border-box; border-left: 6px solid var(--ifrs-green); }
+        .ifrs-header-banner { 
+            display: flex; 
+            align-items: center; 
+            gap: 18px; 
+            background: #ffffff; 
+            padding: 14px 28px; 
+            border-radius: 10px; 
+            margin-bottom: 25px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
+            width: 100%; 
+            max-width: 900px; 
+            box-sizing: border-box; 
+            border-left: 6px solid var(--ifrs-green); 
+        }
         .ifrs-logo-svg { width: 40px; height: 55px; flex-shrink: 0; }
         .ifrs-text-container { display: flex; flex-direction: column; font-family: 'Arial Black', sans-serif; line-height: 1.15; }
         .ifrs-title-main { font-size: 17px; font-weight: 900; color: #000000; letter-spacing: -0.5px; }
         .ifrs-title-sub { font-size: 12px; font-weight: bold; color: #4b5563; }
         .ifrs-campus { font-size: 12px; font-weight: 800; color: var(--ifrs-green); }
 
-        /* ==================== CSS DA PLATAFORMA EAD ==================== */
+        /* ==================== PLATAFORMA EAD CORE ==================== */
         .container { background: var(--card); width: 100%; max-width: 900px; padding: 40px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative; overflow-y: auto; max-height: 90vh; box-sizing: border-box; margin-bottom: 25px; }
         
         h1 { color: var(--text); text-align: center; font-size: 28px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 12px; font-weight: 800; }
         .py-icon-svg { width: 36px; height: 36px; vertical-align: middle; }
         
         h2 { color: #93c5fd; font-size: 22px; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-top: 30px; }
-        h3 { color: #cbd5e1; font-size: 18px; margin-top: 25px; }
+        h3 { color: #cbd5e1; font-size: 18px; margin-top: 25px; font-weight: 600; }
         p, li { color: #94a3b8; line-height: 1.6; font-size: 16px; }
         .highlight { color: var(--accent); font-weight: bold; }
         
-        pre.inline-code { background: #020617; padding: 16px; border-radius: 8px; border-left: 4px solid var(--primary); overflow-x: auto; color: #34d399; font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.5; margin: 15px 0; }
+        pre.inline-code { background: #020617; padding: 18px; border-radius: 8px; border-left: 4px solid var(--primary); overflow-x: auto; color: #34d399; font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.5; margin: 15px 0; }
         .code-explanation { background: #131e35; padding: 15px 20px 15px 40px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-top: 12px; font-size: 15px; }
-        .code-explanation li { margin-bottom: 8px; color: #cbd5e1; }
+        .code-explanation li { margin-bottom: 8px; color: #cbd5e1; list-style-type: square; }
         
         .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; margin-top: 20px; text-align: center; text-decoration: none; outline: none; }
         .btn:hover { background: #1d4ed8; transform: translateY(-2px); }
@@ -38,7 +73,7 @@
         .btn-success { background: var(--success); }
         .btn-success:hover { background: #059669; }
         
-        /* ABAS DE NAVEGAÇÃO LIVRE INTERATIVA */
+        /* ABAS DE NAVEGAÇÃO SUPERIOR */
         .nav-tabs-menu { display: flex; justify-content: space-between; gap: 6px; margin-bottom: 8px; width: 100%; }
         .nav-tab { background: #1e293b; color: #94a3b8; border: 1px solid #334155; padding: 12px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer; transition: all 0.2s ease; flex: 1; text-align: center; outline: none; }
         .nav-tab:hover { background: #334155; color: #f8fafc; border-color: var(--accent); }
@@ -48,6 +83,7 @@
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* BOXES DE REVISÃO INTERNA */
         .quiz-box { background: #0f172a; padding: 25px; border-radius: 10px; border: 2px dashed #475569; margin-top: 30px; }
         .quiz-question { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: white; }
         .option-btn { display: block; width: 100%; background: #334155; color: white; border: 2px solid #475569; padding: 12px; margin-bottom: 10px; border-radius: 6px; text-align: left; cursor: pointer; font-size: 15px; transition: 0.2s; outline: none; }
@@ -56,6 +92,7 @@
         .option-btn.wrong { background: var(--danger) !important; border-color: #b91c1c !important; color: white !important; }
         .feedback { font-weight: bold; margin-top: 15px; display: none; }
 
+        /* WOKWI MOCKUP VISUAL */
         .wokwi-mockup { background: #1e1e1e; border-radius: 8px; overflow: hidden; border: 1px solid #444; margin: 20px 0; }
         .wokwi-header { background: #2d2d2d; padding: 10px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #111; }
         .wokwi-dot { width: 12px; height: 12px; border-radius: 50%; background: #ef4444; }
@@ -70,10 +107,10 @@
         .progress-bar { width: 100%; height: 6px; background: #334155; border-radius: 3px; overflow: hidden; margin-top: 10px; }
         .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.3s ease; }
 
-        /* ==================== CSS DO PYTHON SHOW ==================== */
+        /* ==================== ESTÚDIO DO PYTHON SHOW ==================== */
         #btn-som { position: absolute; top: 20px; right: 20px; background: #10b981; color: white; border: 2px solid #059669; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; z-index: 100; transition: 0.2s; display: none; }
         
-        #game-container { background: #1e293b; width: 100%; max-width: 700px; padding: 35px; border-radius: 16px; border: 3px solid #eab308; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); text-align: center; box-sizing: border-box; display: none; position: relative; z-index: 10; animation: fadeIn 0.5s ease; margin-bottom: 25px; }
+        #game-container { background: #1e293b; width: 100%; max-width: 750px; padding: 35px; border-radius: 16px; border: 3px solid #eab308; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); text-align: center; box-sizing: border-box; display: none; position: relative; z-index: 10; animation: fadeIn 0.5s ease; margin-bottom: 25px; }
         
         .screen { animation: slideIn 0.4s ease forwards; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -87,11 +124,15 @@
 
         .pergunta-box { background: #0f172a; padding: 20px; border-radius: 8px; border: 1px solid #475569; font-size: 17px; font-weight: bold; flex-grow: 1; min-height: 70px; display: flex; align-items: center; justify-content: center; text-align: left; }
         
-        .btn-opcao { background: #334155; color: #f8fafc; border: 2px solid #475569; padding: 15px; text-align: left; font-size: 15px; font-weight: 500; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; outline: none; display: flex; align-items: center; width: 100%; margin-bottom: 10px; }
+        .alternativas-grid { display: flex; flex-direction: column; gap: 12px; }
+        .btn-opcao { background: #334155; color: #f8fafc; border: 2px solid #475569; padding: 15px; text-align: left; font-size: 15px; font-weight: 500; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; outline: none; display: flex; align-items: center; width: 100%; margin-bottom: 5px; }
         .btn-opcao:hover { background: #475569; border-color: #eab308; transform: scale(1.01); box-shadow: 0 0 15px rgba(234, 179, 8, 0.2); }
         .btn-opcao span { color: #eab308; font-weight: bold; margin-right: 12px; font-size: 18px; }
+        
+        /* Efeito de Glow verde pulsante resgatado */
         .btn-opcao.correct { background: #10b981 !important; border-color: #059669 !important; animation: pulseGlowGreen 0.3s ease 2; color: white !important; font-weight: bold; }
         .btn-opcao.wrong { background: #ef4444 !important; border-color: #b91c1c !important; color: white !important; }
+        @keyframes pulseGlowGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 100% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); } }
 
         .btn-principal { background: #2563eb; color: white; border: none; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; margin-top: 15px; }
         .btn-principal:hover { background: #1d4ed8; }
@@ -102,13 +143,13 @@
         .passou { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
         .reprovou { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
 
-        /* ==================== CSS DO CERTIFICADO ==================== */
+        /* ==================== CERTIFICADO CHANCELADO ==================== */
         .input-nome { width: 100%; max-width: 350px; padding: 12px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; font-size: 16px; margin: 15px auto; text-align: center; display: block; }
-        #layout-certificado { display: none; background: #1e293b; border: 4px double #eab308; padding: 45px; border-radius: 10px; text-align: center; color: #f8fafc; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7); animation: slideIn 0.5s ease; position: relative; z-index: 10; max-width: 700px; margin-bottom: 25px; }
+        #layout-certificado { display: none; background: #1e293b; border: 4px double #eab308; padding: 45px; border-radius: 10px; text-align: center; color: #f8fafc; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7); animation: slideIn 0.5s ease; position: relative; z-index: 10; max-width: 720px; margin-bottom: 25px; }
         .cert-titulo { font-size: 26px; color: #eab308; font-weight: bold; letter-spacing: 1px; margin-bottom: 20px; }
         .cert-nome { font-size: 32px; color: #34d399; font-weight: bold; margin: 25px auto; border-bottom: 2px dashed #475569; width: 85%; padding-bottom: 5px; font-family: 'Georgia', serif; }
 
-        /* ==================== RODAPÉ ACADÊMICO ==================== */
+        /* ==================== RODAPÉ ACADÊMICO REQUISITADO ==================== */
         footer { width: 100%; max-width: 900px; text-align: center; padding: 25px; color: #64748b; font-size: 13px; border-top: 1px solid #334155; line-height: 1.6; box-sizing: border-box; margin-top: 15px; }
     </style>
 </head>
@@ -142,9 +183,9 @@
                 <path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-67.8 67.8H172.7c-5.8 0-10.2 4.8-10.2 10.3v8.1c0 10.2 4.8 10.2 10.2 10.2h141.6c46.2 0 73.1 24.5 73.1 73.7v3.5c0 47.1-31.7 75.1-79.4 75.1H195.8c-53.8 0-72.2-30.4-72.2-82.3V312c0-37 30.5-68 67.5-68h16.7c6 0 10.3-4.5 10.3-10.3v-2.2c0-6-4.5-10.2-10.3-10.2h-16.7c-48.4 0-88 39.6-88 88v85.3c0 66.1 36.3 102.3 93.9 102.3h110.8c56.3 0 91.9-38.6 91.9-95.2v-3.5c0-43.2-22.3-64.4-65.7-64.4H172.7c-2 0-3.4-1.4-3.4-3.4v-4.4c0-2.3 1.4-3.4 3.4-3.4h141.6c56.2 0 88.2-31.1 88.2-86.4v-46.1c.1-1.1-.3-15.6-2.7-27.1z" fill="#ffd343"/>
                 <path d="M125.6 278.4V210c0-51.9 18.4-82.3 72.2-82.3h112.4c47.7 0 79.4 28 79.4 75.1v3.5c0 49.2-26.9 73.7-73.1 73.7H174.9c-5.4 0-10.2 0-10.2 10.2v8.1c0 5.5 4.4 10.3 10.2 10.3h105.7c36.6 0 67.8 31 67.8 67.8v47.4h40.1c31.1 0 45.7-23.3 53.4-54.2 2.4-11.5 2.8-26 2.7-27.1v-46.1c0-55.3-32-86.4-88.2-86.4H174.9c-2 0-3.4-1.1-3.4-3.4v-4.4c0-2 1.4-3.4 3.4-3.4h112.4c43.4 0 65.7-21.2 65.7-64.4v-3.5c0-56.6-35.6-95.2-91.9-95.2H153.1c-57.6 0-93.9 36.2-93.9 102.3V192c0 48.4 39.6 88 88 88h16.7c5.8 0 10.3-4.2 10.3-10.2v-2.2c0-5.8-4.3-10.3-10.3-10.3h-16.7c-37 0-67.5-31-67.5-68v-85.3c0-51.9 18.4-82.3 72.2-82.3h110.8c47.7 0 79.4 28 79.4 75.1v3.5c0 49.2-26.9 73.7-73.1 73.7H125.6z" fill="#3776ab"/>
             </svg>
-            CURSO DE INTRODUÇÃO À PYTHON
+            MINICURSO DE INTRODUÇÃO À PYTHON
         </h1>
-        <p style="text-align: center; margin-top:0; color:#94a3b8; font-weight:500;">Plataforma de Extensão Acadêmica Interativa</p>
+        <p style="text-align: center; margin-top:0; color:#94a3b8; font-weight:500;">Ambiente de Ensino à Distância Livre e Consultivo</p>
 
         <div class="nav-tabs-menu" id="menu-abas-navegacao">
             <button class="nav-tab active" onclick="jumpToModule(1)">MÓDULO 1</button>
@@ -158,27 +199,31 @@
         </div>
 
         <div id="mod1" class="view active">
-            <h2>Módulo 1: Primeiros Passos e o "Modo Pensar"</h2>
+            <h2>Módulo 1: Primeiros Passos e o "Modo Pensar" do Python</h2>
             <p>Seja muito bem-vindo! Pense no código de programação como uma receita de bolo detalhada: o computador apenas lê linha por linha e executa exatamente o que você mandou.</p>
-            <h3>Por que Python?</h3>
+            <h3>Por que o mercado escolheu o Python?</h3>
             <ul>
-                <li><span class="highlight">Sintaxe Limpa:</span> O código parece inglês fluente. É feito para humanos lerem sem esforço.</li>
-                <li><span class="highlight">Superpoderes de Mercado:</span> Ferramenta nº 1 para Inteligência Artificial (IA) e Internet das Coisas (IoT).</li>
+                <li><span class="highlight">Sintaxe Limpa:</span> O código parece inglês fluente. É feito para humanos lerem sem esforço, reduzindo erros de digitação.</li>
+                <li><span class="highlight">Superpoderes Tecnológicos:</span> É a ferramenta número 1 do mundo para Inteligência Artificial (IA), Ciência de Dados e Internet das Coisas (IoT).</li>
             </ul>
-            <h3>Conceitos Fundamentais</h3>
-            <p>O comando básico para mostrar qualquer informação na tela do computador é a função <span class="highlight">print()</span>:</p>
-            <pre class="inline-code">print("Olá, Mundo!")</pre>
-            <p>Variáveis funcionam como "caixinhas" com etiquetas na memória para guardar dados temporários. O Python identifica o tipo de dado sozinho:</p>
+            <h3>Conceitos na Prática: Variáveis e Saída de Dados</h3>
+            <p>Variáveis funcionam como "caixinhas" com etiquetas na memória para guardar dados temporários. O comando básico para mostrar qualquer informação na tela do computador é a função <span class="highlight">print()</span>. Veja esse exemplo simulando o prontuário de uma clínica veterinária:</p>
+            <pre class="inline-code">
+nome_paciente = "Bruce Brian"  # Criamos uma variável de Texto (String)
+idade = 5                      # Criamos uma variável Numérica Inteira (int)
+
+print("Paciente:", nome_paciente)
+print("Idade registrada:", idade, "anos")</pre>
             <ul class="code-explanation">
-                <li><strong>String (str):</strong> Texto delimitado por aspas. Ex: <code>nome = "Bruce Brian"</code></li>
-                <li><strong>Inteiro (int):</strong> Números inteiros sem casas decimais. Ex: <code>idade = 5</code></li>
+                <li><strong>nome_paciente = "Bruce Brian"</strong>: O sinal de igual <code>=</code> serve para "guardar" a informação dentro da caixinha. Usamos aspas porque é um texto livre (String).</li>
+                <li><strong>idade = 5</strong>: Números puros não levam aspas. Assim, o Python entende matematicamente que é um Inteiro (int) e permite fazer contas com ele futuramente.</li>
             </ul>
             <div class="quiz-box">
-                <div class="quiz-question">Avaliação 1: Qual comando é utilizado para exibir uma mensagem na tela em Python?</div>
+                <div class="quiz-question">Avaliação 1: No código acima, por que o número 5 não possui aspas ao seu redor?</div>
                 <div id="opts-1">
-                    <button class="option-btn" onclick="selectOption(1, this, false)"><span>A)</span> display("Texto")</button>
-                    <button class="option-btn" onclick="selectOption(1, this, true)"><span>B)</span> print("Texto")</button>
-                    <button class="option-btn" onclick="selectOption(1, this, false)"><span>C)</span> echo("Texto")</button>
+                    <button class="option-btn" onclick="selectOption(1, this, false)"><span>A)</span> Porque esquecemos de colocar ao digitar as strings.</button>
+                    <button class="option-btn" onclick="selectOption(1, this, true)"><span>B)</span> Porque ele é um dado Numérico Inteiro (int), e números não levam aspas em Python.</button>
+                    <button class="option-btn" onclick="selectOption(1, this, false)"><span>C)</span> Porque a função print() impede o uso de aspas em dados clínicos.</button>
                 </div>
                 <div id="feedback-1" class="feedback"></div>
                 <button class="btn btn-success" id="btn-next-1" style="display:none;" onclick="nextModule(2)">Avançar para Módulo 2 ➔</button>
@@ -187,16 +232,28 @@
 
         <div id="mod2" class="view">
             <h2>Módulo 2: Tomando Decisões e Repetições</h2>
-            <p>Para darmos inteligência ao código, precisamos que ele tome decisões usando as estruturas <span class="highlight">if, elif, e else</span>. Lembre-se que o Python usa 4 espaços de recuo (indentação) para organizar os blocos.</p>
+            <p>Para darmos inteligência ao código, precisamos que ele tome decisões sozinho usando uma lógica condicional de "Se isso acontecer, faça a tarefa A; Senão, faça a tarefa B".</p>
+            <h3>1. Estruturas Condicionais (if / else)</h3>
             <pre class="inline-code">
 temperatura = 39.5
+
 if temperatura > 39.2:
-    print("O animal está com febre.")
+    print("Alerta clínico: O animal está com febre!")
 else:
-    print("Temperatura normal.")</pre>
-            <h3>Estruturas de Repetição (Loops) e Listas</h3>
-            <p>O loop <span class="highlight">for</span> repete um trecho de código um número definido de vezes. O loop <span class="highlight">while</span> repete enquanto uma condição for verdadeira.</p>
-            <p>Listas servem para guardar vários dados juntos usando colchetes <code>[]</code>. Exemplo: <code>sintomas = ["tosse", "febre"]</code>. Para adicionar itens dinamicamente, usamos o comando <code>append()</code>.</p>
+    print("Temperatura dentro da normalidade.")</pre>
+            <ul class="code-explanation">
+                <li><strong>if temperatura > 39.2:</strong> Significa "SE a temperatura for maior que 39.2". Os dois pontos (<code>:</code>) abrem o bloco de ação.</li>
+                <li><strong>Recuo (Indentação):</strong> Note que as funções <code>print</code> estão empurradas 4 espaços para a direita. Isso é obrigatório no Python! É assim que ele sabe quais linhas dependem da decisão do if.</li>
+                <li><strong>else:</strong> Significa "SENÃO". Se a condição do if for falsa, o Python ignora ela e executa o bloco do else.</li>
+            </ul>
+            <h3>2. Listas e Loops de Repetição (for)</h3>
+            <p>E se precisarmos analisar dezenas de dados em sequência? Criamos uma <strong>Lista</strong> usando colchetes <code>[]</code> e aplicamos um <strong>Loop for</strong> para repetir a leitura linha por linha.</p>
+            <pre class="inline-code">
+sintomas = ["tosse", "apatia"] # Criamos a lista com dois sintomas
+sintomas.append("febre")       # Adicionamos dinamicamente um terceiro item
+
+for sintoma in sintomas:
+    print("Foi detectado o sintoma:", sintoma)</pre>
             <div class="quiz-box">
                 <div class="quiz-question">Avaliação 2: Como adicionamos um novo item ao final de uma lista existente?</div>
                 <div id="opts-2">
@@ -210,14 +267,24 @@ else:
         </div>
 
         <div id="mod3" class="view">
-            <h2>Módulo 3: Organizando a Casa com Funções</h2>
-            <p>Funções são blocos autônomos que realizam tarefas específicas. Criamos uma função utilizando a palavra-chave <span class="highlight">def</span> e retornamos a resposta com <span class="highlight">return</span>.</p>
+            <h2>Módulo 3: Organizando a Casa com Funções e Módulos</h2>
+            <p>Quando o nosso sistema começa a crescer, escrever códigos soltos gera bagunça. Para organizar, empacotamos blocos de regras dentro de <strong>Funções</strong> reutilizáveis.</p>
             <pre class="inline-code">
+import time  # Importamos a biblioteca nativa de tempo do sistema
+
 def calcular_dosagem(peso_animal):
-    dosagem = peso_animal * 0.5
-    return dosagem</pre>
-            <h3>O Ecossistema de Bibliotecas</h3>
-            <p>O Python possui ferramentas nativas prontas para uso. Ao usar o comando <span class="highlight">import</span>, você traz inteligência extra para o seu código. Por exemplo, <code>import time</code> permite criar pausas na execução do código com o comando <code>time.sleep(2)</code>.</p>
+    dosagem = peso_animal * 0.5  # Regra de negócio: 0.5mg por quilo
+    return dosagem
+
+print("Acessando banco de dados...")
+time.sleep(2)  # Faz o programa pausar por 2 segundos reais
+
+resultado = calcular_dosagem(10) # Chamamos a função passando o peso 10
+print("Dose calculada com segurança:", resultado, "mg")</pre>
+            <ul class="code-explanation">
+                <li><strong>def calcular_dosagem(peso_animal):</strong> O comando <code>def</code> cria a função. O dado dentro dos parênteses é o parâmetro recebido de fora.</li>
+                <li><strong>return dosagem</strong>: É a devolução. Entrega o valor calculado para a variável de saída do script principal.</li>
+            </ul>
             <div class="quiz-box">
                 <div class="quiz-question">Avaliação 3: Qual palavra-chave é obrigatória para começar a criar uma função própria no Python?</div>
                 <div id="opts-3">
@@ -231,19 +298,19 @@ def calcular_dosagem(peso_animal):
         </div>
 
         <div id="mod4" class="view">
-            <h2>Módulo 4: Projeto Integrador Maker (Semáforo)</h2>
-            <p>Agora vamos sair da tela de texto e controlar o mundo real usando <span class="highlight">MicroPython</span> no simulador de placas <strong>Wokwi</strong>.</p>
-            
-            <h3>🛠️ O que é a Cultura Maker?</h3>
-            <p>A Cultura Maker (o "faça-você-mesmo") é um movimento global que encoraja as pessoas a criarem e modificarem sistemas físicos usando tecnologia acessível. Deixamos de ser apenas consumidores para virar criadores!</p>
-
-            <h3>Entendendo a Lógica do Código</h3>
+            <h2>Módulo 4: Projeto Integrador Maker (Semáforo de Pedestres)</h2>
+            <p>Agora vamos unir tudo! A <strong>Cultura Maker</strong> prega o "faça você mesmo", transformando linhas de código em ações no mundo físico através de microcontroladores programados em <span class="highlight">MicroPython</span>.</p>
+            <h3>Lógica de Hardware Aplicada</h3>
             <ul>
-                <li><span class="highlight">Configuração (Setup):</span> Usamos <code>Pin(NUMERO, Pin.OUT)</code> para emitir energia e <code>Pin(NUMERO, Pin.IN)</code> para ler botões.</li>
-                <li><span class="highlight">O Loop Infinito (while True):</span> Mantém o semáforo rodando continuamente.</li>
-                <li><strong>A Magia dos Resistores:</strong> LEDs ligados direto sem resistor queimam na hora! Eles servem como um pedágio para limitar a corrente elétrica perigosa.</li>
+                <li><strong>Setup de Pinos:</strong> Configurar pinos como Saída (<code>Pin.OUT</code>) serve para injetar energia (acender LEDs). Configurar como Entrada (<code>Pin.IN</code>) serve para monitorar botões.</li>
+                <li><strong>O Papel Crítico dos Resistores:</strong> LEDs queimam se receberem energia total direta da placa. O resistor funciona como um "pedágio", diminuindo a corrente elétrica para proteger a lâmpada. No botão, ele estabiliza o sinal contra ruídos elétricos atmosféricos.</li>
             </ul>
-
+            <h3>🔌 Passo a Passo para o Aluno Simular no Wokwi</h3>
+            <ol style="background: #0f172a; padding: 20px 20px 20px 45px; border-left: 4px solid var(--accent); border-radius: 8px; line-height: 1.8;">
+                <li>Abra o site <strong><a href="https://wokwi.com" target="_blank" style="color:#60a5fa; font-weight:bold;">wokwi.com</a></strong> e selecione a placa <strong>ESP32</strong> rodando MicroPython.</li>
+                <li>Clique no botão azul de <strong>"+" (Add a new part)</strong> para puxar os componentes: LEDs (Vermelho, Amarelo, Verde), resistores de 220 ohms e 1 botão do tipo Pushbutton.</li>
+                <li>Cole todo o código-fonte exibido abaixo na aba <code>main.py</code> do simulador e clique no botão verde de **Play** do Wokwi!</li>
+            </ol>
             <div class="wokwi-mockup">
                 <div class="wokwi-header">
                     <div class="wokwi-dot"></div><div class="wokwi-dot"></div><div class="wokwi-dot"></div>
@@ -267,8 +334,13 @@ while True:
         time.sleep(2)
         sinalAmCarro.value(0)
         sinalVmCarro.value(1)
-        time.sleep(5)
-        sinalVmCarro.value(0)</div>
+        
+        for contador in range(1, 14):
+            sinalVmCarro.value(1)
+            time.sleep(0.5)
+            
+        sinalVmCarro.value(0)
+    time.sleep(0.1)</div>
                     <div class="wokwi-canvas">
                         <svg viewBox="0 0 500 400" width="100%" height="100%">
                             <rect x="20" y="220" width="460" height="130" fill="#444" rx="4"/>
@@ -281,7 +353,6 @@ while True:
                     </div>
                 </div>
             </div>
-
             <div class="quiz-box">
                 <div class="quiz-question">Avaliação Final: No código do projeto acima, qual estrutura de repetição (loop) cria a rotina contínua e infinita no hardware?</div>
                 <div id="opts-4">
@@ -297,10 +368,10 @@ while True:
 
     <div id="game-container">
         <h1>🎙️ PYTHON SHOW</h1>
-        <div class="sub-titulo" id="sub-header">Prova Final do Curso de Python</div>
+        <div class="sub-titulo" id="sub-header" style="color: #cbd5e1; margin-bottom: 15px;">Prova Final do Curso de Python</div>
 
         <div id="screen-start" class="screen" style="display: block;">
-            <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">Você concluiu a teoria! Agora responda <strong>10 perguntas cruciais</strong>. Atinja uma nota <strong>7 ou superior</strong> para desbloquear seu Certificado!</p>
+            <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">Você concluiu a teoria! Agora é hora de testar seus conhecimentos no nosso estúdio. Responda <strong>10 perguntas cruciais</strong>. Atinja uma nota <strong>7 ou superior</strong> para desbloquear seu Certificado!</p>
             <button class="btn-principal" onclick="iniciarJogo()">Começar as Perguntas 🚀</button>
         </div>
 
@@ -333,12 +404,12 @@ while True:
 
         <div id="screen-result" class="screen" style="display: none;">
             <div style="font-size: 20px; color: #cbd5e1;">Sua nota final foi:</div>
-            <div id="nota-final" class="resultado-score">0 / 10</div>
+            <div id="nota-final" class="resultado-score" style="color: var(--accent);">0 / 10</div>
             <div id="status-badge" class="status-badge passou">APROVADO</div>
             
             <div id="painel-emissao">
                 <input type="text" id="nome-estudante" class="input-nome" placeholder="Seu Nome Completo">
-                <button class="btn-principal" onclick="emitirCertificado()">Gerar Meu Certificado IFRS 📜</button>
+                <button class="btn-principal" onclick="emitirCertificado()">Gerar Meu Certificado 📜</button>
             </div>
 
             <div id="painel-reprovado" style="display: none;">
@@ -378,7 +449,7 @@ while True:
     </footer>
 
     <script>
-        // Sincroniza a barra de progresso verde e os estados visuais das abas superiores clicáveis
+        // MOTOR DE NAVEGAÇÃO ENTRE AS ABAS LIVRES
         function jumpToModule(nextModNum) {
             document.getElementById('progress-bar').style.width = ((nextModNum - 1) * 33.3) + "%";
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -392,7 +463,6 @@ while True:
             document.getElementById('main-container').scrollTo(0,0);
         }
 
-        // Mantém a compatibilidade do botão de avançar interno sem travar o motor das abas
         function nextModule(nextModNum) {
             jumpToModule(nextModNum);
         }
@@ -406,7 +476,7 @@ while True:
 
             if(isCorrect) {
                 btnEl.classList.add('correct');
-                feedback.innerText = "✅ Resposta Correta! Você absorveu o conhecimento.";
+                feedback.innerText = "✅ Resposta Correta! Conceito perfeitamente assimilado.";
                 feedback.style.color = "#34d399";
                 document.getElementById(`btn-next-${modNum}`).style.display = "inline-block";
                 confetti({ particleCount: 30, spread: 40, origin: { y: 0.8 } });
@@ -428,7 +498,7 @@ while True:
             document.getElementById(`feedback-${modNum}`).style.display = 'none';
         }
 
-        // MOTOR DO AUDIO SHOW
+        // CONTROLADOR DE ÁUDIO YOUTUBE API
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -452,7 +522,7 @@ while True:
 
             if (somPronto && player && typeof player.playVideo === 'function') {
                 try {
-                    player.unMute(); player.setVolume(30); player.playVideo();
+                    player.unMute(); player.setVolume(25); player.playVideo();
                     somHabilitado = true;
                     document.getElementById('btn-som').innerText = "🎵 Som: ON";
                     document.getElementById('btn-som').style.background = "#10b981";
@@ -509,7 +579,7 @@ while True:
             osc.start(tempo); osc.stop(tempo + 0.5);
         }
 
-        // BANCO DE PERGUNTAS DA SABATINA
+        // BANCO DE PERGUNTAS DO JOGO FINAL
         const bancoPerguntas = [
             { p: "Como se exibe uma mensagem de texto na tela usando Python?", o: ["display()", "print()", "show()", "echo()"], c: 1 },
             { p: "Qual caractere é utilizado para iniciar um comentário de uma linha em Python?", o: ["//", "/*", "#", "-->"], c: 2 },
@@ -542,7 +612,7 @@ while True:
             respondido = false;
             const dados = bancoPerguntas[perguntaAtual];
             document.getElementById('progress-fill-game').style.width = ((perguntaAtual / bancoPerguntas.length) * 100) + "%";
-            document.getElementById('question-counter').innerText = `Pergunta ${perguntaAtual + 1} de ${bancoPerguntas.length}`;
+            document.getElementById('question-counter').innerText = `Pergunta ${perguntaAtual + 1} de 10`;
             document.getElementById('texto-pergunta').innerText = dados.p;
             
             const grid = document.getElementById('grid-alternativas');
@@ -572,7 +642,7 @@ while True:
                 perguntaAtual++;
                 if (perguntaAtual < bancoPerguntas.length) { carregarPergunta(); } 
                 else { mostrarResultadoFinal(); }
-            }, 1800);
+            }, 1600);
         }
 
         function mostrarResultadoFinal() {
