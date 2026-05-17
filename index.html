@@ -286,7 +286,6 @@ print("Idade:", 4)</pre>
         </div>
 
         <div id="mod2" class="view">
-            <div id="mod2" class="view">
             <h2>Módulo 2: Tomada de Decisão e Estruturas Condicionais</h2>
             <p>Até agora, o nosso código executava todas as linhas de cima para baixo. Mas e se o computador precisasse escolher caminhos diferentes baseado em uma situação? É aqui que entram as estruturas condicionais: <code>if</code> (se), <code>elif</code> (senão se) e <code>else</code> (senão).</p>
 
@@ -305,7 +304,7 @@ print("Idade:", 4)</pre>
                                         └──> NÃO (False) ──> [ Ação: Pare o veículo! ]</pre>
 
             <h3>💻 Sintaxe Básica do IF e ELSE</h3>
-            <p>Em Python, a estrutura é extremamente limpa, mas exige atenção a dois detalhes vitais: os <strong>dois pontos (:)</strong> no final da linha e a <strong>indentação</strong> (o recuo/espaço de 4 espaços na linha de baixo para indicar o que está dentro do bloco).</p>
+            <p>Em Python, a estrutura é extremamente limpa, mas exige atenção a dois detalhes vitais: os <strong>dois pontos (:)</strong> no final da linha e a <strong>indentação</strong> (o recuo de 4 espaços na linha de baixo para indicar o que está dentro do bloco).</p>
 
             <pre class="inline-code">
 temperatura = 38.5
@@ -316,26 +315,26 @@ else:
     print("Temperatura normal.")</pre>
 
             <h3>🛠️ Exemplo Prático: Automação com Sensores (IoT)</h3>
-            <p>Imagine que você está programando um microcontrolador que monitora a humidade do solo de uma planta ou estufa automaticamente. Podemos usar o <code>elif</code> para criar regras intermediárias:</p>
+            <p>Imagine que você está programando um microcontrolador que monitora a umidade do solo de uma estufa automaticamente. Podemos usar o <code>elif</code> para criar regras intermediárias:</p>
 
             <pre class="inline-code">
-# Nível de humidade medido por um sensor (em porcentagem)
-humidade_solo = 25 
+# Nível de umidade medido por um sensor (em porcentagem)
+umidade_solo = 25 
 
-if humidade_solo < 30:
+if umidade_solo < 30:
     print("🚨 Solo muito seco! Ativando sistema de irrigação automático...")
-elif humidade_solo >= 30 and humidade_solo <= 60:
-    print("💧 Humidade ideal. Sistema em modo de espera.")
+elif umidade_solo >= 30 and umidade_solo <= 60:
+    print("💧 Umidade ideal. Sistema em modo de espera.")
 else:
-    print("⚠️ Atenção: Solo excessivamente húmido. Desligando drenos.")</pre>
+    print("⚠️ Atenção: Solo excessivamente úmido. Desligando drenos.")</pre>
 
             <h3>⚖️ Operadores de Comparação e Lógicos</h3>
             <p>Para criar as condições, usamos símbolos matemáticos especiais de comparação:</p>
             <ul>
                 <li><code>==</code> : Igual a (Cuidado: um único <code>=</code> serve para guardar dados na variável, dois <code>==</code> servem para comparar!)</li>
                 <li><code>!=</code> : Diferente de</li>
-                <li><code>></code> e <code><</code> : Maior que e Menor que</li>
-                <li><code>>=</code> e <code><=</code> : Maior ou igual e Menor ou igual</li>
+                <li><code>&gt;</code> e <code>&lt;</code> : Maior que e Menor que</li>
+                <li><code>&gt;=</code> e <code>&lt;=</code> : Maior ou igual e Menor ou igual</li>
             </ul>
 
             <p>E também podemos combinar condições usando operadores lógicos:</p>
@@ -345,7 +344,7 @@ else:
             </ul>
 
             <h3>⚠️ Erro Comum: O Esquecimento dos Dois Pontos (:)</h3>
-            <p>Um dos erros mais comuns de quem está a começar a programar em Python é esquecer de pontuar o final da condição. Veja a diferença:</p>
+            <p>Um dos erros mais comuns de quem está a começar a programar em Python é esquecer de pontuar o final da condição.</p>
 
             <pre class="inline-code" style="border-left: 4px solid var(--danger); color: #f87171;">
 # ❌ ERRO DE SINTAXE (Falta o : no final do if):
@@ -357,15 +356,15 @@ if idade >= 18:
     print("Maior de idade")</pre>
 
             <div class="quiz-box">
-            <div class="quiz-box">
-                <div class="quiz-question">Avaliação 2: Como adicionamos um novo item ao final de uma lista existente?</div>
-                <div id="opts-2">
-                    <button class="option-btn" onclick="selectOption(2, this, false)">A) lista.add("item")</button>
-                    <button class="option-btn" onclick="selectOption(2, this, false)">B) lista.insert("item")</button>
-                    <button class="option-btn" onclick="selectOption(2, this, true)">C) lista.append("item")</button>
+                <div class="quiz-question">Avaliação 2: Qual a sintaxe correta para verificar se uma variável 'x' é igual a 10?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 2)">if x = 10:</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true, 2)">if x == 10:</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 2)">if x === 10</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false, 2)">x == 10</div>
                 </div>
-                <div id="feedback-2" class="feedback"></div>
-                <button class="btn btn-success" id="btn-next-2" style="display:none;" onclick="nextModule(3)">Avançar para Módulo 3 ➔</button>
+                <div class="feedback"></div>
+                <button class="btn-next" onclick="nextModule(3)" id="btn-next-2" disabled>Avançar para o Módulo 3</button>
             </div>
         </div>
 
