@@ -451,28 +451,49 @@ for id_sensor in range(1, 6): # Gera IDs numéricos de 1 a 5
             </div>
         </div>
         <div id="mod4" class="view">
-            <h2>Módulo 4: Projeto Integrador Maker (Semáforo)</h2>
-            <p>Agora vamos sair da tela de texto e controlar o mundo real usando <span class="highlight">MicroPython</span> no simulador de placas <strong>Wokwi</strong>.</p>
-            
-            <h3>🛠️ O que é a Cultura Maker?</h3>
-            <p>A Cultura Maker (o famoso "faça-você-mesmo") é um movimento global que encoraja as pessoas a criarem, consertarem e modificarem objetos e sistemas físicos usando tecnologia acessível. A ideia principal é que deixemos de ser apenas consumidores passivos de tecnologia para nos tornarmos criadores ativos!</p>
+            <h2>Módulo 4: Organização, Funções e Projeto Integrador Maker (Semáforo)</h2>
+            <p>Parabéns por chegar ao módulo final! Até aqui, você aprendeu a lidar com variáveis, condições e repetições. Agora, vamos descobrir como o Python organiza dados complexos com <strong>Listas</strong>, isola códigos inteligentes com <strong>Funções</strong> e como aplicar tudo isso para controlar o mundo real usando <strong>MicroPython</strong> no simulador <strong>Wokwi</strong>.</p>
 
-            <h3>Entendendo a Lógica do Código</h3>
+            <h3>🛒 Listas e ⚙️ Funções na Prática Maker</h3>
+            <p>Em projetos de automação e Internet das Coisas (IoT), usamos <strong>Listas</strong> para agrupar conjuntos de dados (como os números dos pinos da placa ou históricos de sensores) e <strong>Funções</strong> (estruturas criadas com <code>def</code>) para empacotar blocos de código que executam uma tarefa repetitiva.</p>
+
+            <pre class="inline-code">
+# Exemplo de como organizar seu hardware usando conceitos do Módulo 4:
+
+# Uma Lista contendo os pinos dos LEDs dos carros
+pinos_leds = [32, 25, 33] 
+
+# Uma Função inteligente para desligar todos os LEDs de uma vez só
+def desligar_farois(lista_de_pinos):
+    for pino in lista_de_pinos:
+        # Lógica para enviar energia zero para o pino do componente
+        print(f"Desligando componente no pino: {pino}")</pre>
+
+            <h3>🛠️ O que é a Cultura Maker e o MicroPython?</h3>
+            <p>A Cultura Maker ("faça-você-mesmo") é um movimento que encoraja qualquer pessoa a criar soluções físicas usando tecnologia acessível. Juntando isso com o <strong>MicroPython</strong> (uma versão leve do Python feita sob medida para rodar em pequenos chips), conseguimos programar placas como o <strong>ESP32</strong> para ler sensores e controlar luzes de forma muito simples.</p>
+
+            <h3>🔌 Entendendo a Lógica do Circuito do Semáforo</h3>
             <ul>
-                <li><span class="highlight">Configuração (Setup):</span> Usamos <code>Pin(NUMERO, Pin.OUT)</code> para definir que o pino vai <em>enviar</em> energia e <code>Pin(NUMERO, Pin.IN)</code> para o botão, que vai <em>escutar</em> a entrada.</li>
-                <li><span class="highlight">O Loop Infinito (<code>while True:</code>):</span> Um semáforo nunca dorme! Este comando cria um laço contínuo.</li>
-                <li><span class="highlight">A Detecção (<code>if botao.value() == 0:</code>):</span> É o gatilho da travessia. O código fica "vigiando" o botão.</li>
-                <li><span class="highlight">O Efeito Pisca-Pisca (<code>for contador in range(1, 14):</code>):</span> Automatiza a repetição do piscar do sinal do pedestre.</li>
+                <li><span class="highlight">Configuração (Setup):</span> Usamos <code>Pin(NUMERO, Pin.OUT)</code> para definir que o pino vai <em>enviar</em> energia (para acender um LED) e <code>Pin(NUMERO, Pin.IN)</code> para o botão, que vai <em>escutar</em> a presença do pedestre.</li>
+                <li><span class="highlight">O Loop Infinito (<code>while True:</code>):</span> Um semáforo de trânsito real nunca dorme! Este comando cria um laço contínuo que mantém o chip vigiando o cruzamento para sempre.</li>
+                <li><span class="highlight">A Detecção (<code>if botao.value() == 0:</code>):</span> É o gatilho da travessia. O código interrompe o fluxo normal dos carros somente se identificar que o botão foi pressionado.</li>
+                <li><span class="highlight">O Efeito Pisca-Pisca (<code>for contador in range(1, 14):</code>):</span> Uma estrutura de repetição idêntica ao que vimos no Módulo 3, programada aqui exclusivamente para fazer o sinal verde do pedestre piscar em segurança antes de fechar.</li>
             </ul>
 
-            <h3>🔌 Passo a Passo: Como Iniciar a Simulação no Wokwi</h3>
-            <ol style="background: #1e293b; padding: 20px 20px 20px 40px; border-left: 4px solid #eab308; border-radius: 8px;">
-                <li style="margin-bottom: 10px;">Acesse <strong><a href="https://wokwi.com" target="_blank" style="color: #60a5fa;">wokwi.com</a></strong>, role a página um pouco para baixo e clique em <strong>ESP32</strong> na aba MicroPython.</li>
-                <li style="margin-bottom: 10px;">No menu superior do simulador, use o botão azul <strong>"+" (Add a new part)</strong> para adicionar ao painel: 3 LEDs para os carros, 2 LEDs para os pedestres, resistores e 1 Botão (Pushbutton).</li>
-                <li style="margin-bottom: 10px;"><strong>A Magia dos Resistores:</strong> Um LED liga direto na placa queima na hora! Você deve usar um resistor em série com o negativo de cada LED para funcionar como um "pedágio" que estrangula a corrente e protege a luz.</li>
-                <li style="margin-bottom: 10px;"><strong>Montagem:</strong> Conecte a perna positiva de cada LED no seu respectivo pino do ESP32 (ex: Pino 32 para o Vermelho do carro). A perna negativa vai para o Terra (GND) passando pelo resistor.</li>
-                <li>Cole todo o código-fonte exibido abaixo na aba <code>main.py</code> do simulador e clique no botão verde de <strong>Play</strong> no Wokwi!</li>
-            </ol>
+            <div style="background: #1e293b; border: 2px solid #2563eb; border-radius: 8px; padding: 20px; margin: 25px 0; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 12px;">
+                    <span style="font-size: 28px;">🚀</span>
+                    <h3 style="margin: 0; color: #38bdf8; font-size: 20px;">Laboratório Prático: Seu Simulador Prontinho no Wokwi!</h3>
+                </div>
+                <p style="margin: 0 0 15px 0; font-size: 14px; color: #cbd5e1; line-height: 1.5;">
+                    Para ver a mágica acontecer agora mesmo, acesse o link do protótipo interativo que preparamos para você. Nele, o circuito eletrônico completo do ESP32 já está montado e conectado aos LEDs e ao botão de travessia. Basta clicar e rodar o código para interagir!
+                </p>
+                <div style="text-align: center;">
+                    <a href="https://wokwi.com/projects/464182639336141825" target="_blank" style="display: inline-block; background: #2563eb; color: #ffffff; font-weight: bold; padding: 12px 24px; border-radius: 6px; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+                        🔌 Abrir Simulador Interativo do Projeto ➔
+                    </a>
+                </div>
+            </div>
 
             <div class="wokwi-mockup">
                 <div class="wokwi-header">
@@ -604,8 +625,6 @@ sinalVdPedestre.value(0)
                 <button class="btn btn-success" id="btn-next-4" style="display:none; width:100%; font-size:18px;" onclick="irParaPythonShow()">➔ IR PARA A PROVA FINAL: PYTHON SHOW 🎙️</button>
             </div>
         </div>
-    </div>
-
     <div id="game-container">
         <h1>🎙️ PYTHON SHOW</h1>
         <div class="sub-titulo" id="sub-header">Prova Final do Curso de Python</div>
