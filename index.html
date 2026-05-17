@@ -8,7 +8,29 @@
     <style>
         :root { --primary: #2563eb; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --accent: #eab308; --success: #10b981; --danger: #ef4444; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow-x: hidden; }
-        
+        /* ==================== CABEÇALHO INSTITUCIONAL ==================== */
+
+.header-institucional img {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+
+    .header-institucional {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center !important;
+    }
+
+    .header-institucional > div {
+        justify-content: center;
+    }
+
+    .header-institucional h1 {
+        font-size: 24px !important;
+    }
+}        
         /* ==================== CSS DA PLATAFORMA EAD ==================== */
         .container { background: var(--card); width: 100%; max-width: 900px; padding: 40px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative; overflow-y: auto; max-height: 90vh; }
         
@@ -101,9 +123,84 @@
     <button id="btn-som" onclick="acionarBotaoSom()">🎵 Som: ON</button>
 
     <div class="container" id="main-container">
-        <h1>🐍 CURSO DE INTRODUÇÃO À LINGUAGEM DE PROGRAMAÇÃO PYTHON</h1>
-        <p style="text-align: center; margin-top:0;">Trilha Completa + Avaliação Final</p>
+        <!-- CABEÇALHO INSTITUCIONAL -->
+<div class="header-institucional" style="
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:25px;
+    flex-wrap:wrap;
+">
 
+    <!-- LADO ESQUERDO -->
+    <div style="display:flex; align-items:center; gap:18px;">
+
+        <!-- LOGO PYTHON -->
+        <img src="https://www.python.org/static/community_logos/python-logo.png"
+             alt="Python"
+             style="height:70px;">
+
+        <!-- TEXOS -->
+        <div>
+            <h1 style="
+                margin:0;
+                color:var(--accent);
+                font-size:30px;
+                line-height:1.1;
+                text-shadow:0 0 10px rgba(234,179,8,0.3);
+            ">
+                CURSO DE INTRODUÇÃO AO PYTHON
+            </h1>
+
+            <p style="
+                margin-top:8px;
+                color:#cbd5e1;
+                font-size:15px;
+            ">
+                Trilha Completa + Avaliação Final
+            </p>
+        </div>
+    </div>
+
+    <!-- LADO DIREITO -->
+    <div style="
+        display:flex;
+        align-items:center;
+        gap:12px;
+    ">
+
+        <!-- LOGO IFRS -->
+        <img src="https://ifrs.edu.br/wp-content/uploads/2020/04/ifrs-logo-horizontal.png"
+             alt="IFRS"
+             style="height:70px;">
+
+        <!-- TEXTO CAMPUS -->
+        <div style="line-height:1.2;">
+            <div style="
+                font-size:15px;
+                color:#ffffff;
+                font-weight:bold;
+            ">
+                INSTITUTO FEDERAL
+            </div>
+
+            <div style="
+                font-size:13px;
+                color:#cbd5e1;
+            ">
+                Rio Grande do Sul
+            </div>
+
+            <div style="
+                font-size:13px;
+                color:#cbd5e1;
+            ">
+                Campus Veranópolis
+            </div>
+        </div>
+    </div>
+</div>
         <div class="progress-container">
             <div style="display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; font-weight: bold;" id="prog-text">
                 <span>MÓDULO 1</span><span>MÓDULO 2</span><span>MÓDULO 3</span><span>MÓDULO 4</span>
