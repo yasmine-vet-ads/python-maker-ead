@@ -370,26 +370,86 @@ if idade >= 18:
         </div>
 
         <div id="mod3" class="view">
-            <h2>Módulo 3: Organizando a Casa com Funções</h2>
-            <p>Funções são blocos autônomos que realizam tarefas específicas. Criamos uma função utilizando a palavra-chave <span class="highlight">def</span> e retornamos a resposta com <span class="highlight">return</span>.</p>
+            <h2>Módulo 3: Estruturas de Repetição (Loops)</h2>
+            <p>Imagine se você precisasse mandar o computador exibir a frase "Olá, Mundo!" 100 vezes. Escrever 100 linhas de <code>print()</code> seria extremamente cansativo e ineficiente. É para isso que servem os <strong>Loops (Laços de Repetição)</strong>: eles dizem ao computador para repetir um bloco de código enquanto uma condição for verdadeira ou até percorrer uma sequência de dados por completo.</p>
+
+            <h3>🔄 O Loop WHILE (Repetição Baseada em Condição)</h3>
+            <p>O <code>while</code> (enquanto) funciona de forma parecida com o <code>if</code>, mas com um superpoder: em vez de executar o bloco interno uma única vez, ele <strong>volta para o topo</strong> e executa novamente, repetindo o processo até que a condição se torne Falsa (False).</p>
+            <p><strong>Metáfora do mundo real:</strong> Fique lavando os pratos <em>enquanto</em> a pia não estiver vazia.</p>
+
             <pre class="inline-code">
-def calcular_imc(peso, altura):
-    imc = peso / (altura * altura)
-    return imc</pre>
-            <h3>O Ecossistema de Bibliotecas</h3>
-            <p>O Python possui ferramentas nativas prontas para uso. Ao usar o comando <span class="highlight">import</span>, você traz inteligência extra para o seu código. Por exemplo, <code>import time</code> permite criar pausas na execução do código.</p>
+# Exemplo: Contagem regressiva para lançamento
+contador = 5
+
+while contador > 0:
+    print(f"Lançamento em: {contador}...")
+    contador = contador - 1  # Vital para reduzir o número e o loop ter fim!
+
+print("🚀 Decolar!")</pre>
+
+            <h3>⚠️ Alerta Crítico: O perigo do Loop Infinito!</h3>
+            <p>Se você esquecer de atualizar a variável de controle dentro do <code>while</code> (como a linha <code>contador = contador - 1</code> acima), a condição de entrada será <strong>sempre Verdadeira</strong>. O computador tentará rodar o código para sempre, o que causa o travamento do programa.</p>
+
+            <pre class="inline-code" style="border-left: 4px solid var(--danger); color: #f87171;">
+# ❌ CUIDADO - LOOP INFINITO (O programa trava):
+x = 1
+while x == 1:
+    print("Estou preso para sempre aqui!")</pre>
+
+            <h3>🔁 O Loop FOR (Repetição Baseada em Sequências)</h3>
+            <p>O <code>for</code> é a estrutura ideal quando você já sabe exatamente quantas vezes quer repetir uma ação ou quando precisa olhar item por item dentro de uma coleção (como uma lista de dados ou registros).</p>
+            <p><strong>Metáfora do mundo real:</strong> Uma playlist de músicas. O tocador vai reproduzir a primeira música, depois a segunda, até esgotar todos os itens da lista.</p>
+
+            <pre class="inline-code">
+# Exemplo: Percorrendo uma lista de pacientes/pets cadastrados
+pacientes = ["Rex", "Thor", "Mel", "Luna"]
+
+for pet in pacientes:
+    print(f"🐶 Chamando para atendimento: {pet}")</pre>
+
+            <h3>🔢 A Função range()</h3>
+            <p>Quando queremos usar o <code>for</code> para repetir um bloco por um número exato e fixo de vezes (ex: 5 vezes), usamos a ferramenta auxiliar <code>range()</code>:</p>
+
+            <pre class="inline-code">
+# Vai repetir de 0 até 4 (totalizando 5 repetições em tela)
+for i in range(5):
+    print(f"Executando repetição número {i}")</pre>
+
+            <h3>🛑 Controlando os Loops: O Comando break</h3>
+            <p>Às vezes, você quer que um loop pare imediatamente se uma condição específica for atingida, mesmo que o loop ainda tivesse mais voltas para dar. Para isso, usamos o <code>break</code> (interromper).</p>
+            <p><strong>Exemplo Prático (IoT/Saúde):</strong> Imagine um sistema de monitoramento de um sensor. Se a leitura atingir um patamar crítico, o loop deve ser interrompido imediatamente para disparar um alarme de segurança.</p>
+
+            <pre class="inline-code">
+# Simulando checagem de um sensor de pressão em tempo real
+leituras_pressao = [22, 24, 25, 38, 23, 22] # O valor 38 ultrapassa o limite seguro!
+
+for pressao in leituras_pressao:
+    if pressao > 30:
+        print(f"🚨 Alerta Crítico! Pressão perigosa detectada ({pressao} atm). Interrompendo sistema!")
+        break # Aborta o loop na hora! Ignora o restante da lista.
+    print(f"Pressão normal: {pressao} atm.")</pre>
+
+            <h3>⏭️ Pulando Etapas: O Comando continue</h3>
+            <p>Diferente do <code>break</code> (que cancela e mata o loop inteiro), o comando <code>continue</code> serve para <strong>pular apenas a repetição atual</strong>, ignorando as linhas abaixo dele e indo direto para a próxima volta programada do loop.</p>
+            <p><strong>Exemplo Prático:</strong> Você deseja listar IDs de sensores para manutenção programada, mas precisa ignorar temporariamente o sensor de ID número 3, que já recebeu reparos.</p>
+
+            <pre class="inline-code">
+for id_sensor in range(1, 6): # Gera IDs numéricos de 1 a 5
+    if id_sensor == 3:
+        continue # Pula o resto deste bloco e avança direto para o id_sensor = 4
+    print(f"🔧 Agendando manutenção para o Sensor ID: {id_sensor}")</pre>
+
             <div class="quiz-box">
-                <div class="quiz-question">Avaliação 3: Qual palavra-chave é obrigatória para começar a criar uma função própria no Python?</div>
+                <div class="quiz-question">Avaliação 3: Qual estrutura ou combinação é mais recomendada quando sabemos previamente o número exato de repetições?</div>
                 <div id="opts-3">
-                    <button class="option-btn" onclick="selectOption(3, this, true)">A) def</button>
-                    <button class="option-btn" onclick="selectOption(3, this, false)">B) function</button>
-                    <button class="option-btn" onclick="selectOption(3, this, false)">C) create</button>
+                    <button class="option-btn" onclick="selectOption(3, this, false)">A) while</button>
+                    <button class="option-btn" onclick="selectOption(3, this, true)">B) for ... in range()</button>
+                    <button class="option-btn" onclick="selectOption(3, this, false)">C) if ... else</button>
                 </div>
                 <div id="feedback-3" class="feedback"></div>
                 <button class="btn btn-success" id="btn-next-3" style="display:none;" onclick="nextModule(4)">Avançar para Módulo Final ➔</button>
             </div>
         </div>
-
         <div id="mod4" class="view">
             <h2>Módulo 4: Projeto Integrador Maker (Semáforo)</h2>
             <p>Agora vamos sair da tela de texto e controlar o mundo real usando <span class="highlight">MicroPython</span> no simulador de placas <strong>Wokwi</strong>.</p>
