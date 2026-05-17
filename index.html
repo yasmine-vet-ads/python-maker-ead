@@ -1,4 +1,32 @@
-<!DOCTYPE html>
+# ==============================================================================
+# FÁBRICA DE ARQUIVOS PARA O GITHUB (V18 FINAL - EXEMPLOS DE CÓDIGO DETALHADOS)
+# Execute esta célula para gerar os arquivos. O servidor não será iniciado aqui.
+# ==============================================================================
+
+import os
+
+# ------------------------------------------------------------------------------
+# 1. GERANDO O app.py
+# ------------------------------------------------------------------------------
+print("📝 1. Gerando o arquivo de rotas ('app.py')...")
+app_code = """from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+
+app = FastAPI()
+
+@app.get("/")
+async def get():
+    with open("index.html", "r", encoding="utf-8") as f:
+        return HTMLResponse(content=f.read())
+"""
+with open("app.py", "w", encoding="utf-8") as f:
+    f.write(app_code)
+
+# ------------------------------------------------------------------------------
+# 2. GERANDO O index.html (COM O CURSO APRIMORADO E PYTHON SHOW)
+# ------------------------------------------------------------------------------
+print("🎨 2. Gerando o Front-end completo ('index.html')...")
+index_code = """<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -18,7 +46,8 @@
         p, li { color: #94a3b8; line-height: 1.6; font-size: 16px; }
         .highlight { color: var(--accent); font-weight: bold; }
         
-        pre.inline-code { background: #020617; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); overflow-x: auto; color: #34d399; font-family: monospace; font-size: 14px; }
+        pre.inline-code { background: #020617; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); overflow-x: auto; color: #34d399; font-family: monospace; font-size: 14px; margin-top: 15px; }
+        .code-explanation { background: #1e293b; padding: 15px 15px 15px 40px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-top: 10px; font-size: 15px; }
         
         .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; margin-top: 20px; text-align: center; }
         .btn:hover { background: #1d4ed8; transform: translateY(-2px); }
@@ -30,7 +59,7 @@
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .quiz-box { background: #0f172a; padding: 25px; border-radius: 10px; border: 2px dashed #475569; margin-top: 30px; }
+        .quiz-box { background: #0f172a; padding: 25px; border-radius: 10px; border: 2px dashed #475569; margin-top: 35px; }
         .quiz-question { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: white; }
         .option-btn { display: block; width: 100%; background: #334155; color: white; border: 2px solid #475569; padding: 12px; margin-bottom: 10px; border-radius: 6px; text-align: left; cursor: pointer; font-size: 15px; transition: 0.2s; }
         .option-btn:hover { border-color: var(--accent); background: #475569; }
@@ -114,25 +143,29 @@
         <div id="mod1" class="view active">
             <h2>Módulo 1: Primeiros Passos e o "Modo Pensar"</h2>
             <p>Seja muito bem-vindo! Pense no código de programação como uma receita de bolo detalhada: o computador apenas lê linha por linha e executa exatamente o que você mandou.</p>
-            <h3>Por que Python?</h3>
-            <ul>
-                <li><span class="highlight">Sintaxe Limpa:</span> O código parece inglês fluente. É feito para humanos lerem sem esforço.</li>
-                <li><span class="highlight">Superpoderes de Mercado:</span> Ferramenta nº 1 para Inteligência Artificial (IA) e Internet das Coisas (IoT).</li>
+            
+            <h3>Conceitos na Prática: Criando Variáveis e Mostrando na Tela</h3>
+            <p>Variáveis funcionam como "caixinhas" com etiquetas na memória para guardar dados temporários. O comando básico para mostrar qualquer informação guardada na tela do computador é a função <span class="highlight">print()</span>. Vamos criar um cadastro simples de paciente clínico:</p>
+            
+            <pre class="inline-code">
+nome_paciente = "Bruce Brian"  # Criamos uma variável de Texto (String)
+idade = 5                      # Criamos uma variável Numérica Inteira (int)
+
+print("Paciente:", nome_paciente)
+print("Idade registrada:", idade, "anos")</pre>
+            
+            <ul class="code-explanation">
+                <li><span class="highlight">nome_paciente = "Bruce Brian"</span>: O sinal de igual <code>=</code> serve para "guardar" a informação dentro da variável. Usamos aspas porque é um texto (uma palavra ou nome).</li>
+                <li><span class="highlight">idade = 5</span>: Números não precisam de aspas. Assim, o Python entende matematicamente que é um número e pode até fazer contas com ele futuramente.</li>
+                <li><span class="highlight">print(...)</span>: É o nosso megafone. A vírgula dentro dos parênteses serve para unir um texto fixo (ex: "Paciente:") com o que está guardado na variável.</li>
             </ul>
-            <h3>Conceitos Fundamentais</h3>
-            <p>O comando básico para mostrar qualquer informação na tela do computador é a função <span class="highlight">print()</span>:</p>
-            <pre class="inline-code">print("Olá, Mundo!")</pre>
-            <p>Variáveis funcionam como "caixinhas" com etiquetas na memória para guardar dados temporários. O Python identifica o tipo de dado sozinho:</p>
-            <ul>
-                <li><strong>String (str):</strong> Texto delimitado por aspas. Ex: <code>nome = "Rex"</code></li>
-                <li><strong>Inteiro (int):</strong> Números inteiros. Ex: <code>idade = 4</code></li>
-            </ul>
+
             <div class="quiz-box">
-                <div class="quiz-question">Avaliação 1: Qual comando é utilizado para exibir uma mensagem na tela em Python?</div>
+                <div class="quiz-question">Avaliação 1: No código acima, por que o número 5 não possui aspas ao seu redor?</div>
                 <div id="opts-1">
-                    <button class="option-btn" onclick="selectOption(1, this, false)">A) display("Texto")</button>
-                    <button class="option-btn" onclick="selectOption(1, this, true)">B) print("Texto")</button>
-                    <button class="option-btn" onclick="selectOption(1, this, false)">C) echo("Texto")</button>
+                    <button class="option-btn" onclick="selectOption(1, this, false)">A) Porque esquecemos de colocar ao digitar.</button>
+                    <button class="option-btn" onclick="selectOption(1, this, true)">B) Porque ele é um dado Numérico Inteiro (int), e números não levam aspas em Python.</button>
+                    <button class="option-btn" onclick="selectOption(1, this, false)">C) Porque o comando print() não aceita textos com aspas.</button>
                 </div>
                 <div id="feedback-1" class="feedback"></div>
                 <button class="btn btn-success" id="btn-next-1" style="display:none;" onclick="nextModule(2)">Avançar para Módulo 2 ➔</button>
@@ -141,22 +174,46 @@
 
         <div id="mod2" class="view">
             <h2>Módulo 2: Tomando Decisões e Repetições</h2>
-            <p>Para darmos inteligência ao código, precisamos que ele tome decisões usando as estruturas <span class="highlight">if, elif, e else</span>. Lembre-se que o Python usa 4 espaços de recuo (indentação) para organizar os blocos.</p>
+            
+            <h3>1. Condicionais (if / else)</h3>
+            <p>Para darmos inteligência ao código, precisamos que ele tome decisões sozinho usando uma lógica de "Se isso acontecer, faça A; Senão, faça B".</p>
+            
             <pre class="inline-code">
 temperatura = 39.5
+
 if temperatura > 39.2:
-    print("O animal está com febre.")
+    print("Alerta clínico: O animal está com febre!")
 else:
-    print("Temperatura normal.")</pre>
-            <h3>Estruturas de Repetição (Loops) e Listas</h3>
-            <p>O loop <span class="highlight">for</span> repete um trecho de código um número definido de vezes. O loop <span class="highlight">while</span> repete enquanto uma condição for verdadeira.</p>
-            <p>Listas servem para guardar vários dados juntos usando colchetes <code>[]</code>. Exemplo: <code>sintomas = ["tosse", "febre"]</code>. Para adicionar itens, usamos o comando <code>append()</code>.</p>
+    print("Temperatura dentro da normalidade.")</pre>
+            
+            <ul class="code-explanation">
+                <li><span class="highlight">if temperatura > 39.2:</span> Lê-se "SE a temperatura for MAIOR que 39.2". Os dois pontos (<code>:</code>) indicam que uma ação será executada a seguir caso seja verdade.</li>
+                <li><span class="highlight">Recuo (Indentação):</span> Note que o comando <code>print</code> está empurrado 4 espaços para a direita. Isso é crucial! É assim que o Python sabe que esse print pertence ao bloco do "if".</li>
+                <li><span class="highlight">else:</span> Lê-se "SENÃO". Se a condição inicial (o if) for mentira, o Python ignora ela e pula direto para executar a ação que está no bloco do "else".</li>
+            </ul>
+
+            <h3>2. Listas e Loops (Repetições)</h3>
+            <p>E se precisarmos analisar vários dados em sequência? Usamos uma <strong>Lista</strong> <code>[]</code> para guardar vários itens e um <strong>Loop for</strong> para pedir ao Python que repita a leitura para cada item existente na lista.</p>
+            
+            <pre class="inline-code">
+sintomas = ["tosse", "apatia"] # Uma lista criada com 2 itens iniciais
+sintomas.append("febre")       # Adicionamos um 3º item pelo código
+
+for sintoma in sintomas:
+    print("Foi detectado o seguinte sintoma no paciente:", sintoma)</pre>
+            
+            <ul class="code-explanation">
+                <li><span class="highlight">sintomas = ["tosse", "apatia"]</span>: Os colchetes <code>[]</code> indicam a criação de uma Lista. Ela permite empacotar dezenas de informações de uma vez.</li>
+                <li><span class="highlight">.append("febre")</span>: É uma ferramenta nativa muito poderosa. Ela injeta dinamicamente o novo dado ("febre") no final da lista.</li>
+                <li><span class="highlight">for sintoma in sintomas:</span>: É o Loop (laço de repetição). O Python vai rodar o <code>print</code> três vezes automaticamente, substituindo a variável temporária <code>sintoma</code> por cada palavra da lista a cada volta.</li>
+            </ul>
+
             <div class="quiz-box">
-                <div class="quiz-question">Avaliação 2: Como adicionamos um novo item ao final de uma lista existente?</div>
+                <div class="quiz-question">Avaliação 2: Para que serve o recuo (os 4 espaços à direita) no comando print dentro de um 'if' ou de um 'for'?</div>
                 <div id="opts-2">
-                    <button class="option-btn" onclick="selectOption(2, this, false)">A) lista.add("item")</button>
-                    <button class="option-btn" onclick="selectOption(2, this, false)">B) lista.insert("item")</button>
-                    <button class="option-btn" onclick="selectOption(2, this, true)">C) lista.append("item")</button>
+                    <button class="option-btn" onclick="selectOption(2, this, false)">A) Apenas para deixar o código visualmente mais bonito no monitor.</button>
+                    <button class="option-btn" onclick="selectOption(2, this, false)">B) Para indicar o fim imediato do script.</button>
+                    <button class="option-btn" onclick="selectOption(2, this, true)">C) Para indicar ao Python (Indentação) que aquele comando pertence ao bloco do if ou do loop acima dele.</button>
                 </div>
                 <div id="feedback-2" class="feedback"></div>
                 <button class="btn btn-success" id="btn-next-2" style="display:none;" onclick="nextModule(3)">Avançar para Módulo 3 ➔</button>
@@ -165,19 +222,38 @@ else:
 
         <div id="mod3" class="view">
             <h2>Módulo 3: Organizando a Casa com Funções</h2>
-            <p>Funções são blocos autônomos que realizam tarefas específicas. Criamos uma função utilizando a palavra-chave <span class="highlight">def</span> e retornamos a resposta com <span class="highlight">return</span>.</p>
+            
+            <h3>Funções Próprias (def) e Bibliotecas (import)</h3>
+            <p>Quando o código fica complexo, empacotamos blocos de lógica que se repetem muito dentro de <strong>Funções</strong>. Além disso, a linguagem Python permite importar "ferramentas prontas" do sistema, conhecidas como bibliotecas.</p>
+            
             <pre class="inline-code">
-def calcular_imc(peso, altura):
-    imc = peso / (altura * altura)
-    return imc</pre>
-            <h3>O Ecossistema de Bibliotecas</h3>
-            <p>O Python possui ferramentas nativas prontas para uso. Ao usar o comando <span class="highlight">import</span>, você traz inteligência extra para o seu código. Por exemplo, <code>import time</code> permite criar pausas na execução do código.</p>
+import time  # 1. Trazendo a biblioteca de relógio/tempo para o código
+
+# 2. Criando nossa própria "fórmula" encapsulada
+def calcular_dosagem(peso_animal):
+    dosagem = peso_animal * 0.5  # Nossa regra de negócio: 0.5mg por quilo
+    return dosagem
+
+print("Iniciando cálculo para um cão de 10kg...")
+time.sleep(2)  # 3. Pausa a execução visualmente por 2 segundos inteiros
+
+# 4. Injetamos o peso 10 na função e guardamos a resposta
+resultado = calcular_dosagem(10)
+print("Dose segura calculada:", resultado, "mg")</pre>
+            
+            <ul class="code-explanation">
+                <li><span class="highlight">import time</span>: Abre a maleta de ferramentas do Python e pega as funções nativas de tempo.</li>
+                <li><span class="highlight">def calcular_dosagem(peso_animal):</span>: O comando <code>def</code> ensina uma ação nova ao Python. O <code>peso_animal</code> é o dado (Parâmetro) que ela obrigatoriamente precisa receber para conseguir trabalhar.</li>
+                <li><span class="highlight">return dosagem</span>: É a devolução! Após processar a matemática dentro da função fechada, ela arremessa o valor correto para a variável principal que a chamou de fora.</li>
+                <li><span class="highlight">time.sleep(2)</span>: Usa o poder da biblioteca <code>time</code> para congelar a leitura do código por exatamente 2 segundos, ideal para simular cálculos e carregamentos para o usuário.</li>
+            </ul>
+
             <div class="quiz-box">
-                <div class="quiz-question">Avaliação 3: Qual palavra-chave é obrigatória para começar a criar uma função própria no Python?</div>
+                <div class="quiz-question">Avaliação 3: Qual comando dentro de uma função criada com 'def' é responsável por devolver a resposta do cálculo para o programa principal?</div>
                 <div id="opts-3">
-                    <button class="option-btn" onclick="selectOption(3, this, true)">A) def</button>
-                    <button class="option-btn" onclick="selectOption(3, this, false)">B) function</button>
-                    <button class="option-btn" onclick="selectOption(3, this, false)">C) create</button>
+                    <button class="option-btn" onclick="selectOption(3, this, true)">A) return</button>
+                    <button class="option-btn" onclick="selectOption(3, this, false)">B) send</button>
+                    <button class="option-btn" onclick="selectOption(3, this, false)">C) def_back</button>
                 </div>
                 <div id="feedback-3" class="feedback"></div>
                 <button class="btn btn-success" id="btn-next-3" style="display:none;" onclick="nextModule(4)">Avançar para Módulo Final ➔</button>
@@ -191,12 +267,18 @@ def calcular_imc(peso, altura):
             <h3>🛠️ O que é a Cultura Maker?</h3>
             <p>A Cultura Maker (o famoso "faça-você-mesmo") é um movimento global que encoraja as pessoas a criarem, consertarem e modificarem objetos e sistemas físicos usando tecnologia acessível. A ideia principal é que deixemos de ser apenas consumidores passivos de tecnologia para nos tornarmos criadores ativos!</p>
 
-            <h3>Entendendo a Lógica do Código</h3>
+            <h3>Entendendo a Lógica do Código (MicroPython)</h3>
             <ul>
                 <li><span class="highlight">Configuração (Setup):</span> Usamos <code>Pin(NUMERO, Pin.OUT)</code> para definir que o pino vai <em>enviar</em> energia e <code>Pin(NUMERO, Pin.IN)</code> para o botão, que vai <em>escutar</em> a entrada.</li>
                 <li><span class="highlight">O Loop Infinito (<code>while True:</code>):</span> Um semáforo nunca dorme! Este comando cria um laço contínuo.</li>
                 <li><span class="highlight">A Detecção (<code>if botao.value() == 0:</code>):</span> É o gatilho da travessia. O código fica "vigiando" o botão.</li>
                 <li><span class="highlight">O Efeito Pisca-Pisca (<code>for contador in range(1, 14):</code>):</span> Automatiza a repetição do piscar do sinal do pedestre.</li>
+            </ul>
+
+            <h3>A Magia Oculta: O Papel Fundamental dos Resistores</h3>
+            <ul>
+                <li><span class="highlight">Protegendo os LEDs (Limitador de Corrente):</span> Um LED é sensível. Usamos resistores em série para atuar como um "pedágio", estrangulando a corrente e permitindo que a luz acenda com segurança sem explodir.</li>
+                <li><span class="highlight">Estabilizando o Botão (Pull-Up / Pull-Down):</span> O resistor prende a leitura em um valor fixo enquanto o botão não é apertado, evitando interferências elétricas fantasma.</li>
             </ul>
 
             <h3>🔌 Passo a Passo: Como Iniciar a Simulação no Wokwi</h3>
@@ -479,7 +561,7 @@ sinalVdPedestre.value(0)
         }
 
         // -------------------------------------------------------------
-        // INTEGRAÇÃO: EAD -> PYTHON SHOW (INJETANDO YOUTUBE API AQUI)
+        // INTEGRAÇÃO: EAD -> PYTHON SHOW
         // -------------------------------------------------------------
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -574,7 +656,7 @@ sinalVdPedestre.value(0)
         }
 
         // -------------------------------------------------------------
-        // LÓGICA DO QUIZ SHOW (NOVA TRAVA DE SEGURANÇA DE TELAS)
+        // LÓGICA DO QUIZ SHOW (TRAVA DE SEGURANÇA DE TELAS)
         // -------------------------------------------------------------
         const bancoPerguntas = [
             { p: "Como se exibe uma mensagem de texto na tela usando Python?", o: ["display()", "print()", "show()", "echo()"], c: 1 },
@@ -591,7 +673,6 @@ sinalVdPedestre.value(0)
 
         let perguntaAtual = 0; let acertos = 0; let respondido = false;
 
-        // TRAVA FORTE DE JAVASCRIPT: Garante que só 1 tela exista visualmente por vez
         function mudarTelaShow(idTela) {
             document.getElementById('screen-start').style.display = 'none';
             document.getElementById('screen-quiz').style.display = 'none';
@@ -692,3 +773,16 @@ sinalVdPedestre.value(0)
     </script>
 </body>
 </html>
+"""
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(index_code)
+
+# ------------------------------------------------------------------------------
+# 3. GERANDO O requirements.txt
+# ------------------------------------------------------------------------------
+print("📋 3. Gerando a lista de dependências ('requirements.txt')...")
+with open("requirements.txt", "w", encoding="utf-8") as f:
+    f.write("fastapi==0.110.0\nuvicorn==0.28.0\n")
+
+print("\n✅ ARQUIVOS PRONTOS!")
+print("Agora faça o download do 'index.html' gerado na pasta do Colab e o substitua lá no GitHub.")
