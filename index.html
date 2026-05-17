@@ -564,7 +564,37 @@ sinalVdPedestre.value(0)
             document.getElementById(`mod${nextModNum}`).classList.add('active');
             document.getElementById('main-container').scrollTo(0,0);
         }
+// -------------------------------------------------------------
+// FUNÇÃO PARA NAVEGAÇÃO LIVRE ENTRE MÓDULOS
+// -------------------------------------------------------------
+function navegarParaModulo(numeroModulo) {
+    // 1. Esconde todos os módulos tirando a classe 'active'
+    for (let i = 1; i <= 4; i++) {
+        const modulo = document.getElementById('mod' + i);
+        if (modulo) {
+            modulo.classList.remove('active');
+        }
+    }
 
+    // 2. Mostra apenas o módulo clicado
+    const moduloAlvo = document.getElementById('mod' + numeroModulo);
+    if (moduloAlvo) {
+        moduloAlvo.classList.add('active');
+    }
+
+    // 3. Atualiza a barra de progresso visual proporcionalmente
+    const barraProgresso = document.getElementById('progress-bar');
+    if (barraProgresso) {
+        // Define a porcentagem da barra baseado no módulo selecionado
+        const progressoPorModulo = {
+            1: '0%',
+            2: '33%',
+            3: '66%',
+            4: '100%'
+        };
+        barraProgresso.style.width = progressoPorModulo[numeroModulo];
+    }
+}
         // -------------------------------------------------------------
         // INTEGRAÇÃO: EAD -> PYTHON SHOW (INJETANDO YOUTUBE API AQUI)
         // -------------------------------------------------------------
