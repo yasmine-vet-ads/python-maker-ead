@@ -357,15 +357,14 @@ if idade >= 18:
     print("Maior de idade")</pre>
 
             <div class="quiz-box">
-                <div class="quiz-question">Avaliação 2: Qual a sintaxe correta para verificar se uma variável 'x' é igual a 10?</div>
-                <div class="quiz-options">
-                    <div class="quiz-option" onclick="checkAnswer(this, false, 2)">if x = 10:</div>
-                    <div class="quiz-option" onclick="checkAnswer(this, true, 2)">if x == 10:</div>
-                    <div class="quiz-option" onclick="checkAnswer(this, false, 2)">if x === 10</div>
-                    <div class="quiz-option" onclick="checkAnswer(this, false, 2)">x == 10</div>
+                <div class="quiz-question">Avaliação 2: Qual a sintaxe correta para verificar se uma variável 'x' é igual a 10 em Python?</div>
+                <div id="opts-2">
+                    <button class="option-btn" onclick="selectOption(2, this, false)">A) if x = 10:</button>
+                    <button class="option-btn" onclick="selectOption(2, this, true)">B) if x == 10:</button>
+                    <button class="option-btn" onclick="selectOption(2, this, false)">C) if x === 10</button>
                 </div>
-                <div class="feedback"></div>
-                <button class="btn-next" onclick="nextModule(3)" id="btn-next-2" disabled>Avançar para o Módulo 3</button>
+                <div id="feedback-2" class="feedback"></div>
+                <button class="btn btn-success" id="btn-next-2" style="display:none;" onclick="nextModule(3)">Avançar para Módulo 3 ➔</button>
             </div>
         </div>
 
