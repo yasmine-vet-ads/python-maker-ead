@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <title>Curso Interativo - Introdução à Python</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
     <style>
         :root { --primary: #2563eb; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --accent: #eab308; --success: #10b981; --danger: #ef4444; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow-x: hidden; }
         
-        /* CSS DA PLATAFORMA EAD */
+        /* ==================== CSS DA PLATAFORMA EAD ==================== */
         .container { background: var(--card); width: 100%; max-width: 900px; padding: 40px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative; overflow-y: auto; max-height: 90vh; }
+        
         h1 { color: var(--accent); text-align: center; font-size: 28px; margin-bottom: 5px; text-shadow: 0 0 10px rgba(234, 179, 8, 0.3); }
         h2 { color: #93c5fd; font-size: 22px; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-top: 30px; }
         h3 { color: #cbd5e1; font-size: 18px; margin-top: 25px; }
         p, li { color: #94a3b8; line-height: 1.6; font-size: 16px; }
         .highlight { color: var(--accent); font-weight: bold; }
+        
         pre.inline-code { background: #020617; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); overflow-x: auto; color: #34d399; font-family: monospace; font-size: 14px; }
         
         .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; margin-top: 20px; text-align: center; }
@@ -41,6 +44,7 @@
         .wokwi-dot:nth-child(2) { background: #eab308; }
         .wokwi-dot:nth-child(3) { background: #10b981; }
         .wokwi-body { display: flex; height: 500px; flex-direction: row; }
+        @media (max-width: 768px) { .wokwi-body { flex-direction: column; height: auto; } .wokwi-canvas { height: 300px; } }
         .wokwi-code { flex: 1; border-right: 1px solid #111; padding: 15px; background: #1e1e1e; color: #d4d4d4; font-family: 'Consolas', monospace; font-size: 11px; overflow-y: auto; line-height: 1.4; white-space: pre-wrap; }
         .wokwi-canvas { flex: 1; background: #e5e5e5; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
 
@@ -48,10 +52,14 @@
         .progress-bar { width: 100%; height: 8px; background: #334155; border-radius: 4px; overflow: hidden; margin-top: 10px; }
         .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.3s ease; }
 
-        /* CSS DO PYTHON SHOW */
+        /* ==================== CSS DO PYTHON SHOW ==================== */
         #btn-som { position: absolute; top: 20px; right: 20px; background: #10b981; color: white; border: 2px solid #059669; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; z-index: 100; transition: 0.2s; display: none; }
+        
         #game-container { background: #1e293b; width: 680px; padding: 35px; border-radius: 16px; border: 3px solid #eab308; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); text-align: center; box-sizing: border-box; display: none; position: relative; z-index: 10; animation: fadeIn 0.5s ease; }
         
+        .screen { animation: slideIn 0.4s ease forwards; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
         .progress-bar-bg { width: 100%; background: #0f172a; height: 10px; border-radius: 5px; margin-bottom: 25px; overflow: hidden; }
         .progress-bar-fill { width: 0%; height: 100%; background: #eab308; transition: width 0.3s ease; }
 
@@ -79,7 +87,7 @@
         .passou { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
         .reprovou { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
 
-        /* CSS DO CERTIFICADO */
+        /* ==================== CSS DO CERTIFICADO ==================== */
         .input-nome { width: 100%; max-width: 350px; padding: 12px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; font-size: 16px; margin: 15px auto; text-align: center; display: block; }
         #layout-certificado { display: none; background: #1e293b; border: 4px double #eab308; padding: 45px; border-radius: 10px; text-align: center; color: #f8fafc; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7); animation: slideIn 0.5s ease; position: relative; z-index: 10; max-width: 650px; }
         .cert-titulo { font-size: 26px; color: #eab308; font-weight: bold; letter-spacing: 1px; margin-bottom: 20px; }
@@ -89,6 +97,7 @@
 <body>
 
     <div id="youtube-player" style="position: absolute; top: -9999px; left: -9999px;"></div>
+    
     <button id="btn-som" onclick="acionarBotaoSom()">🎵 Som: ON</button>
 
     <div class="container" id="main-container">
@@ -177,29 +186,32 @@ def calcular_imc(peso, altura):
 
         <div id="mod4" class="view">
             <h2>Módulo 4: Projeto Integrador Maker (Semáforo)</h2>
-            <p>Agora vamos sair da tela de texto e controlar o mundo real usando <span class="highlight">MicroPython</span> no simulador de placas <span class="highlight">Wokwi</span>.</p>
+            <p>Agora vamos sair da tela de texto e controlar o mundo real usando <span class="highlight">MicroPython</span> no simulador de placas <strong>Wokwi</strong>.</p>
             
             <h3>🛠️ O que é a Cultura Maker?</h3>
-            <p>A Cultura Maker (o famoso "faça-você-mesmo") é um movimento global que encoraja as pessoas a criarem, consertarem e modificarem objetos e sistemas físicos usando tecnologia acessível. A ideia principal é que deixemos de ser apenas consumidores passivos de tecnologia para nos tornarmos criadores ativos! Desenvolver soluções integrando hardware e código, como este semáforo, é a verdadeira essência da cultura Maker.</p>
+            <p>A Cultura Maker (o famoso "faça-você-mesmo") é um movimento global que encoraja as pessoas a criarem, consertarem e modificarem objetos e sistemas físicos usando tecnologia acessível. A ideia principal é que deixemos de ser apenas consumidores passivos de tecnologia para nos tornarmos criadores ativos!</p>
 
             <h3>Entendendo a Lógica do Código</h3>
             <ul>
-                <li><span class="highlight">Configuração (Setup):</span> Usamos <code>Pin(NUMERO, Pin.OUT)</code> para definir que o pino vai <em>enviar</em> energia (para acender os LEDs) e <code>Pin(NUMERO, Pin.IN)</code> para o botão, que vai <em>escutar</em> a entrada de energia.</li>
-                <li><span class="highlight">O Loop Infinito (<code>while True:</code>):</span> Um semáforo de trânsito nunca dorme! Este comando cria um laço contínuo.</li>
+                <li><span class="highlight">Configuração (Setup):</span> Usamos <code>Pin(NUMERO, Pin.OUT)</code> para definir que o pino vai <em>enviar</em> energia e <code>Pin(NUMERO, Pin.IN)</code> para o botão, que vai <em>escutar</em> a entrada.</li>
+                <li><span class="highlight">O Loop Infinito (<code>while True:</code>):</span> Um semáforo nunca dorme! Este comando cria um laço contínuo.</li>
                 <li><span class="highlight">A Detecção (<code>if botao.value() == 0:</code>):</span> É o gatilho da travessia. O código fica "vigiando" o botão.</li>
                 <li><span class="highlight">O Efeito Pisca-Pisca (<code>for contador in range(1, 14):</code>):</span> Automatiza a repetição do piscar do sinal do pedestre.</li>
             </ul>
 
-            <h3>A Magia Oculta: O Papel Fundamental dos Resistores</h3>
-            <ul>
-                <li><span class="highlight">Protegendo os LEDs (Limitador de Corrente):</span> Um LED é sensível. Usamos resistores em série para atuar como um "pedágio", estrangulando a corrente e permitindo que a luz acenda com segurança sem explodir.</li>
-                <li><span class="highlight">Estabilizando o Botão (Pull-Up / Pull-Down):</span> O resistor prende a leitura em um valor fixo enquanto o botão não é apertado, evitando interferências fantasma.</li>
-            </ul>
+            <h3>🔌 Passo a Passo: Como Iniciar a Simulação no Wokwi</h3>
+            <ol style="background: #1e293b; padding: 20px 20px 20px 40px; border-left: 4px solid #eab308; border-radius: 8px;">
+                <li style="margin-bottom: 10px;">Acesse <strong><a href="https://wokwi.com" target="_blank" style="color: #60a5fa;">wokwi.com</a></strong>, role a página um pouco para baixo e clique em <strong>ESP32</strong> na aba MicroPython.</li>
+                <li style="margin-bottom: 10px;">No menu superior do simulador, use o botão azul <strong>"+" (Add a new part)</strong> para adicionar ao painel: 3 LEDs para os carros, 2 LEDs para os pedestres, resistores e 1 Botão (Pushbutton).</li>
+                <li style="margin-bottom: 10px;"><strong>A Magia dos Resistores:</strong> Um LED liga direto na placa queima na hora! Você deve usar um resistor em série com o negativo de cada LED para funcionar como um "pedágio" que estrangula a corrente e protege a luz.</li>
+                <li style="margin-bottom: 10px;"><strong>Montagem:</strong> Conecte a perna positiva de cada LED no seu respectivo pino do ESP32 (ex: Pino 32 para o Vermelho do carro). A perna negativa vai para o Terra (GND) passando pelo resistor.</li>
+                <li>Cole todo o código-fonte exibido abaixo na aba <code>main.py</code> do simulador e clique no botão verde de <strong>Play</strong> no Wokwi!</li>
+            </ol>
 
             <div class="wokwi-mockup">
                 <div class="wokwi-header">
                     <div class="wokwi-dot"></div><div class="wokwi-dot"></div><div class="wokwi-dot"></div>
-                    <span style="color:#aaa; font-size:12px; font-family:sans-serif; margin-left:5px;">main.py - Wokwi Simulator</span>
+                    <span style="color:#aaa; font-size:12px; font-family:sans-serif; margin-left:5px;">main.py - Código Fonte</span>
                 </div>
                 <div class="wokwi-body">
                     <div class="wokwi-code"><span style="color:#c586c0;">from</span> machine <span style="color:#c586c0;">import</span> Pin
@@ -286,23 +298,29 @@ sinalVdPedestre.value(0)
                             <path d="M 325 60 L 340 60 L 340 180 L 10 180 L 10 325 L 20 325" fill="none" stroke="#111" stroke-width="2.5"/>
 
                             <circle cx="60" cy="210" r="8" fill="#ef4444" stroke="#555" stroke-width="2"/>
-                            <rect x="58" y="260" width="4" height="20" fill="#dca570"/> <path d="M 60 280 L 60 325" stroke="#111" stroke-width="2"/> 
+                            <rect x="58" y="260" width="4" height="20" fill="#dca570"/>
+                            <path d="M 60 280 L 60 325" stroke="#111" stroke-width="2"/> 
 
                             <circle cx="90" cy="210" r="8" fill="#eab308" stroke="#555" stroke-width="2"/>
-                            <rect x="88" y="260" width="4" height="20" fill="#dca570"/>  <path d="M 90 280 L 90 325" stroke="#111" stroke-width="2"/>
+                            <rect x="88" y="260" width="4" height="20" fill="#dca570"/>
+                            <path d="M 90 280 L 90 325" stroke="#111" stroke-width="2"/>
 
                             <circle cx="120" cy="210" r="8" fill="#10b981" stroke="#555" stroke-width="2"/>
-                            <rect x="118" y="260" width="4" height="20" fill="#dca570"/>  <path d="M 120 280 L 120 325" stroke="#111" stroke-width="2"/>
+                            <rect x="118" y="260" width="4" height="20" fill="#dca570"/>
+                            <path d="M 120 280 L 120 325" stroke="#111" stroke-width="2"/>
 
                             <circle cx="370" cy="210" r="8" fill="#ef4444" stroke="#555" stroke-width="2"/>
-                            <rect x="368" y="260" width="4" height="20" fill="#dca570"/> <path d="M 370 280 L 370 325" stroke="#111" stroke-width="2"/>
+                            <rect x="368" y="260" width="4" height="20" fill="#dca570"/>
+                            <path d="M 370 280 L 370 325" stroke="#111" stroke-width="2"/>
 
                             <circle cx="400" cy="210" r="8" fill="#10b981" stroke="#555" stroke-width="2"/>
-                            <rect x="398" y="260" width="4" height="20" fill="#dca570"/> <path d="M 400 280 L 400 325" stroke="#111" stroke-width="2"/>
+                            <rect x="398" y="260" width="4" height="20" fill="#dca570"/>
+                            <path d="M 400 280 L 400 325" stroke="#111" stroke-width="2"/>
 
                             <rect x="440" y="250" width="20" height="20" fill="#ddd" rx="2" stroke="#888" stroke-width="1"/>
                             <circle cx="450" cy="260" r="6" fill="#2563eb"/>
-                            <rect x="425" y="260" width="4" height="20" fill="#dca570"/> <path d="M 427 280 L 427 325" stroke="#111" stroke-width="2"/>
+                            <rect x="425" y="260" width="4" height="20" fill="#dca570"/>
+                            <path d="M 427 280 L 427 325" stroke="#111" stroke-width="2"/>
                             <path d="M 440 260 L 429 260" stroke="#888" stroke-width="1.5"/> 
                         </svg>
                     </div>
@@ -326,12 +344,12 @@ sinalVdPedestre.value(0)
         <h1>🎙️ PYTHON SHOW</h1>
         <div class="sub-titulo" id="sub-header">Prova Final do Curso de Python</div>
 
-        <div id="screen-start" class="screen active">
-            <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">Você concluiu a teoria! Agora é hora de testar seus conhecimentos. Responda <strong>10 perguntas cruciais</strong>. Atinja uma nota <strong>7 ou superior</strong> para desbloquear seu Certificado!</p>
+        <div id="screen-start" class="screen" style="display: block;">
+            <p style="font-size: 16px; line-height: 1.6; color: #cbd5e1;">Você concluiu a teoria! Agora é hora de testar seus conhecimentos no nosso estúdio. Responda <strong>10 perguntas cruciais</strong>. Atinja uma nota <strong>7 ou superior</strong> para desbloquear seu Certificado!</p>
             <button class="btn-principal" onclick="iniciarJogo()">Começar as Perguntas 🚀</button>
         </div>
 
-        <div id="screen-quiz" class="screen">
+        <div id="screen-quiz" class="screen" style="display: none;">
             <div class="progress-bar-bg"><div id="progress-fill-game" class="progress-bar-fill"></div></div>
             <div style="font-size: 13px; color: #94a3b8; text-align: left; margin-bottom: 8px;" id="question-counter">Pergunta 1 de 10</div>
             
@@ -354,16 +372,17 @@ sinalVdPedestre.value(0)
                 </svg>
                 <div class="pergunta-box" id="texto-pergunta">Carregando pergunta...</div>
             </div>
+            
             <div class="alternativas-grid" id="grid-alternativas"></div>
         </div>
 
-        <div id="screen-result" class="screen">
+        <div id="screen-result" class="screen" style="display: none;">
             <div style="font-size: 20px; color: #cbd5e1;">Sua nota final foi:</div>
             <div id="nota-final" class="resultado-score">0 / 10</div>
             <div id="status-badge" class="status-badge passou">APROVADO</div>
             
             <div id="painel-emissao">
-                <p style="font-size: 14px; color: #94a3b8; padding: 0 20px;">Você venceu o desafio final! Digite seu nome completo para emitir seu Certificado de Conclusão:</p>
+                <p style="font-size: 14px; color: #94a3b8; padding: 0 20px;">Você venceu o desafio final! Digite seu nome completo para emitir seu Certificado de Conclusão do Curso:</p>
                 <input type="text" id="nome-estudante" class="input-nome" placeholder="Seu Nome Completo">
                 <button class="btn-principal" onclick="emitirCertificado()">Gerar Meu Certificado 📜</button>
             </div>
@@ -418,9 +437,13 @@ sinalVdPedestre.value(0)
     </div>
 
     <script>
+        // -------------------------------------------------------------
+        // LOGICA EAD - MÓDULOS 1 AO 4
+        // -------------------------------------------------------------
         function selectOption(modNum, btnEl, isCorrect) {
             const buttons = document.getElementById(`opts-${modNum}`).getElementsByTagName('button');
             for(let b of buttons) { b.disabled = true; b.style.cursor = 'default'; }
+            
             const feedback = document.getElementById(`feedback-${modNum}`);
             feedback.style.display = 'block';
 
@@ -439,7 +462,12 @@ sinalVdPedestre.value(0)
 
         function resetQuiz(modNum) {
             const buttons = document.getElementById(`opts-${modNum}`).getElementsByTagName('button');
-            for(let b of buttons) { b.disabled = false; b.style.cursor = 'pointer'; b.classList.remove('wrong'); b.classList.remove('correct'); }
+            for(let b of buttons) { 
+                b.disabled = false; 
+                b.style.cursor = 'pointer'; 
+                b.classList.remove('wrong'); 
+                b.classList.remove('correct'); 
+            }
             document.getElementById(`feedback-${modNum}`).style.display = 'none';
         }
 
@@ -450,7 +478,9 @@ sinalVdPedestre.value(0)
             document.getElementById('main-container').scrollTo(0,0);
         }
 
-        // INTEGRAÇÃO: YOUTUBE API
+        // -------------------------------------------------------------
+        // INTEGRAÇÃO: EAD -> PYTHON SHOW (INJETANDO YOUTUBE API AQUI)
+        // -------------------------------------------------------------
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -464,7 +494,7 @@ sinalVdPedestre.value(0)
             player = new YT.Player('youtube-player', {
                 height: '10', width: '10', videoId: 'wbFxNbLWaRo', 
                 playerVars: { 'autoplay': 0, 'controls': 0, 'disablekb': 1, 'loop': 1, 'playlist': 'wbFxNbLWaRo' },
-                events: { 'onReady': () => { somPronto = true; } }
+                events: { 'onReady': () => { somPronto = true; console.log("Áudio carregado!"); } }
             });
         }
         setTimeout(() => { somPronto = true; }, 5000);
@@ -479,6 +509,7 @@ sinalVdPedestre.value(0)
                     player.unMute();
                     player.setVolume(35); 
                     player.playVideo();
+                    
                     somHabilitado = true;
                     document.getElementById('btn-som').innerText = "🎵 Som: ON";
                     document.getElementById('btn-som').style.background = "#10b981";
@@ -492,12 +523,16 @@ sinalVdPedestre.value(0)
             document.getElementById('game-container').style.display = 'none';
             document.getElementById('btn-som').style.display = 'none';
             document.getElementById('main-container').style.display = 'block';
-            if(somHabilitado && player && typeof player.pauseVideo === 'function') { player.pauseVideo(); }
+            if(somHabilitado && player && typeof player.pauseVideo === 'function') {
+                player.pauseVideo();
+            }
             resetarJogo();
             document.getElementById('main-container').scrollTo(0,0);
         }
 
-        // AUDIO EFFECTS
+        // -------------------------------------------------------------
+        // LÓGICA DE ÁUDIO DO JOGO 
+        // -------------------------------------------------------------
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
         function initAudio() { if (!audioCtx) audioCtx = new AudioContext(); }
@@ -538,7 +573,9 @@ sinalVdPedestre.value(0)
             osc.start(tempo); osc.stop(tempo + 0.5);
         }
 
-        // QUIZ SHOW LOGIC
+        // -------------------------------------------------------------
+        // LÓGICA DO QUIZ SHOW (NOVA TRAVA DE SEGURANÇA DE TELAS)
+        // -------------------------------------------------------------
         const bancoPerguntas = [
             { p: "Como se exibe uma mensagem de texto na tela usando Python?", o: ["display()", "print()", "show()", "echo()"], c: 1 },
             { p: "Qual caractere é utilizado para iniciar um comentário de uma linha em Python?", o: ["//", "/*", "#", "-->"], c: 2 },
@@ -554,9 +591,14 @@ sinalVdPedestre.value(0)
 
         let perguntaAtual = 0; let acertos = 0; let respondido = false;
 
+        // TRAVA FORTE DE JAVASCRIPT: Garante que só 1 tela exista visualmente por vez
         function mudarTelaShow(idTela) {
-            document.querySelectorAll('#game-container .screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(idTela).classList.add('active');
+            document.getElementById('screen-start').style.display = 'none';
+            document.getElementById('screen-quiz').style.display = 'none';
+            document.getElementById('screen-result').style.display = 'none';
+            
+            const telaAtiva = document.getElementById(idTela);
+            telaAtiva.style.display = 'block';
         }
 
         function iniciarJogo() {
@@ -631,14 +673,21 @@ sinalVdPedestre.value(0)
 
         function resetarJogo() { mudarTelaShow('screen-start'); }
 
+        // -------------------------------------------------------------
+        // CERTIFICADO FINAL APÓS O JOGO
+        // -------------------------------------------------------------
         function emitirCertificado() {
             const nome = document.getElementById('nome-estudante').value.trim();
             if (nome === "") { alert("Por favor, digite seu nome para emitir o documento!"); return; }
+            
             document.getElementById('nome-certificado').innerText = nome.toUpperCase();
             document.getElementById('game-container').style.display = 'none';
             document.getElementById('btn-som').style.display = 'none';
             document.getElementById('layout-certificado').style.display = 'block';
-            if (somHabilitado && player && typeof player.pauseVideo === 'function') { player.pauseVideo(); }
+            
+            if (somHabilitado && player && typeof player.pauseVideo === 'function') { 
+                player.pauseVideo(); 
+            }
         }
     </script>
 </body>
