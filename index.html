@@ -745,61 +745,29 @@ def desligar_farois(lista_de_pinos):
                     <span style="color:#aaa; font-size:12px; font-family:sans-serif; margin-left:5px;">main.py - Código Fonte</span>
                 </div>
                 <div class="wokwi-body">
-                    <div class="wokwi-code">
+<div class="wokwi-code">
 
 <pre>
+from machine import Pin
+import time
 
-<span style="color:#c586c0;">from</span> machine <span style="color:#c586c0;">import</span> Pin
-<span style="color:#c586c0;">import</span> time
-
-<span style="color:#6a9955;"># Definindo os pinos</span>
 sinalVmCarro = Pin(32, Pin.OUT)
 sinalAmCarro = Pin(25, Pin.OUT)
 sinalVdCarro = Pin(33, Pin.OUT)
+
 sinalVmPedestre = Pin(21, Pin.OUT)
 sinalVdPedestre = Pin(22, Pin.OUT)
+
 botao = Pin(18, Pin.IN)
 
 contagem = 13
 
-<span style="color:#6a9955;"># Setup Inicial</span>
-sinalVmCarro.value(0)
-sinalAmCarro.value(0)
-sinalVdCarro.value(0)
-sinalVmPedestre.value(0)
-sinalVdPedestre.value(0)
-<span style="color:#dcdcaa;">print</span>(<span style="color:#ce9178;">"LIBERADO PARA O MOTORISTA"</span>)
+while True:
 
-<span style="color:#c586c0;">while True</span>:
+    sinalVmCarro.value(0)
     sinalVdCarro.value(1)
-    sinalVmPedestre.value(1)
-    
-    <span style="color:#c586c0;">if</span> botao.value() == 0:
-        <span style="color:#dcdcaa;">print</span>(<span style="color:#ce9178;">"ATENÇÃO MOTORISTA, PREFERENCIA DO PEDESTRE"</span>)
-        time.sleep(2)
-        
-        sinalVdCarro.value(0)
-        sinalAmCarro.value(1)
-        time.sleep(2)
-        
-        sinalAmCarro.value(0)
-        sinalVmCarro.value(1)
-        sinalVmPedestre.value(0)
-        sinalVdPedestre.value(1)
-        time.sleep(5)
-        
-        <span style="color:#c586c0;">for</span> contador <span style="color:#c586c0;">in</span> <span style="color:#dcdcaa;">range</span>(1, 14):
-            sinalVdPedestre.value(1)
-            time.sleep(0.5)
-            sinalVdPedestre.value(0)
-            time.sleep(0.5)
-            contagem -= 1
-            
-        sinalVmCarro.value(0)
-        contagem = 13
-        
-time.sleep(0.1)
 
+    time.sleep(0.1)
 </pre>
 
 </div>
