@@ -6,215 +6,356 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        :root { --primary: #2563eb; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --accent: #eab308; --success: #10b981; --danger: #ef4444; --ifrs-green: #32a041; }
+        :root { --primary: #2563eb; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --accent: #eab308; --success: #10b981; --danger: #ef4444; --ifrs-green: #2f833c; --ifrs-red: #e30613; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
         
-        /* LOGO IFRS */
-        .ifrs-logo { max-width: 280px; margin-bottom: 20px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+        /* BANNER INSTITUCIONAL IFRS VETORIAL COESO */
+        .ifrs-brand-banner { display: flex; align-items: center; gap: 15px; background: #ffffff; padding: 12px 25px; border-radius: 8px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); width: 100%; max-width: 850px; box-sizing: border-box; }
+        .ifrs-logo-svg { width: 45px; height: 60px; flex-shrink: 0; }
+        .ifrs-text-box { font-family: 'Arial Black', sans-serif; color: #1f2937; line-height: 1.1; }
+        .ifrs-text-main { font-size: 16px; font-weight: 900; letter-spacing: -0.5px; color: #000; }
+        .ifrs-text-sub { font-size: 11px; font-weight: bold; color: #4b5563; }
 
-        /* CONTAINER PRINCIPAL */
-        .container { background: var(--card); width: 100%; max-width: 900px; padding: 40px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative; overflow-y: auto; max-height: 85vh; margin-bottom: 40px; }
+        /* CONTAINER PRINCIPAL DA PLATAFORMA */
+        .container { background: var(--card); width: 100%; max-width: 900px; padding: 40px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative; overflow-y: auto; max-height: 85vh; margin-bottom: 35px; box-sizing: border-box; }
         
-        h1 { color: var(--accent); text-align: center; font-size: 28px; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap: 15px; }
-        h1 svg { width: 40px; height: 40px; }
+        h1 { color: var(--text); text-align: center; font-size: 28px; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap: 12px; font-weight: 800; }
+        .py-svg { width: 38px; height: 38px; vertical-align: middle; }
+        
         h2 { color: #93c5fd; font-size: 22px; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-top: 30px; }
-        h3 { color: #cbd5e1; font-size: 18px; margin-top: 25px; }
+        h3 { color: #cbd5e1; font-size: 18px; margin-top: 25px; font-weight: 600; }
         p, li { color: #94a3b8; line-height: 1.6; font-size: 16px; }
         .highlight { color: var(--accent); font-weight: bold; }
         
-        pre.inline-code { background: #020617; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); overflow-x: auto; color: #34d399; font-family: monospace; font-size: 14px; margin-top: 15px; }
-        .code-explanation { background: #1e293b; padding: 15px 15px 15px 40px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-top: 10px; font-size: 15px; }
+        /* CÓDIGOS E EXPLICAÇÕES PEDAGÓGICAS */
+        pre.inline-code { background: #020617; padding: 18px; border-radius: 8px; border-left: 4px solid var(--primary); overflow-x: auto; color: #34d399; font-family: 'Consolas', monospace; font-size: 14px; margin-top: 15px; line-height: 1.5; }
+        .code-explanation { background: #131e35; padding: 18px 20px 18px 40px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-top: 12px; font-size: 15px; list-style-type: disc; }
+        .code-explanation li { margin-bottom: 10px; color: #cbd5e1; }
+        .code-explanation li:last-child { margin-bottom: 0; }
         
-        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; margin-top: 20px; text-align: center; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 26px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; margin-top: 20px; text-align: center; outline: none; }
         .btn:hover { background: #1d4ed8; transform: translateY(-2px); }
         .btn-success { background: var(--success); }
+        .btn-success:hover { background: #059669; }
         
         .view { display: none; animation: fadeIn 0.4s ease; }
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* QUIZ E OPÇÕES DO ESTÚDIO */
         .quiz-box { background: #0f172a; padding: 25px; border-radius: 10px; border: 2px dashed #475569; margin-top: 35px; }
-        .option-btn { display: block; width: 100%; background: #334155; color: white; border: 2px solid #475569; padding: 12px; margin-bottom: 10px; border-radius: 6px; text-align: left; cursor: pointer; font-size: 15px; transition: 0.2s; }
-        .option-btn:hover { border-color: var(--accent); background: #475569; }
-        .option-btn.correct { background: var(--success) !important; border-color: #059669 !important; }
-        .option-btn.wrong { background: var(--danger) !important; border-color: #b91c1c !important; }
+        .quiz-question { font-size: 18px; font-weight: bold; margin-bottom: 18px; color: white; text-align: left; }
         
-        /* WOKWI MOCKUP */
-        .wokwi-mockup { background: #1e1e1e; border-radius: 8px; overflow: hidden; border: 1px solid #444; margin: 20px 0; }
-        .wokwi-header { background: #2d2d2d; padding: 10px; display: flex; align-items: center; gap: 10px; }
-        .wokwi-body { display: flex; height: 450px; }
-        .wokwi-code { flex: 1; padding: 15px; background: #1e1e1e; color: #d4d4d4; font-family: 'Consolas', monospace; font-size: 11px; overflow-y: auto; white-space: pre-wrap; }
-        .wokwi-canvas { flex: 1; background: #e5e5e5; display: flex; align-items: center; justify-content: center; position: relative; }
+        .nav-tabs-menu { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 5px; width: 100%; }
+        .nav-tab { background: #1e293b; color: #94a3b8; border: 1px solid #334155; padding: 12px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer; transition: all 0.2s ease; flex: 1; text-align: center; outline: none; }
+        .nav-tab:hover { background: #334155; color: #f8fafc; border-color: var(--accent); }
+        .nav-tab.active { background: var(--ifrs-green); color: white; border-color: #23662e; box-shadow: 0 0 10px rgba(50, 160, 65, 0.3); }
 
-        .progress-bar { width: 100%; height: 8px; background: #334155; border-radius: 4px; overflow: hidden; margin-top: 10px; margin-bottom: 30px;}
+        /* MOCKUP DO SIMULADOR WOKWI */
+        .wokwi-mockup { background: #1e1e1e; border-radius: 8px; overflow: hidden; border: 1px solid #444; margin: 25px 0; }
+        .wokwi-header { background: #2d2d2d; padding: 12px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #111; }
+        .wokwi-body { display: flex; height: 480px; flex-direction: row; }
+        @media (max-width: 768px) { .wokwi-body { flex-direction: column; height: auto; } .wokwi-canvas { height: 300px; } }
+        .wokwi-code { flex: 1; border-right: 1px solid #111; padding: 18px; background: #1e1e1e; color: #d4d4d4; font-family: 'Consolas', monospace; font-size: 12px; overflow-y: auto; line-height: 1.5; white-space: pre-wrap; }
+        .wokwi-canvas { flex: 1; background: #e5e5e5; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+
+        .progress-bar { width: 100%; height: 6px; background: #334155; border-radius: 3px; overflow: hidden; margin-top: 10px; margin-bottom: 30px;}
         .progress-fill { height: 100%; background: var(--ifrs-green); width: 0%; transition: width 0.3s ease; }
 
-        /* RODAPÉ */
-        footer { width: 100%; max-width: 900px; text-align: center; padding: 20px; color: #64748b; font-size: 13px; border-top: 1px solid #334155; line-height: 1.5; }
+        /* PILLS DO PYTHON SHOW ESTILIZADOS */
+        #game-container { background: #1e293b; width: 100%; max-width: 700px; padding: 35px; border-radius: 16px; border: 3px solid var(--ifrs-green); box-shadow: 0 25px 50px rgba(0,0,0,0.5); text-align: center; display: none; margin-bottom: 40px; box-sizing: border-box; }
+        .progress-bar-bg { width: 100%; background: #0f172a; height: 10px; border-radius: 5px; margin-bottom: 25px; overflow: hidden; }
+        .progress-bar-fill { width: 0%; height: 100%; background: var(--accent); transition: width 0.3s ease; }
+        .quiz-layout-box { display: flex; gap: 20px; align-items: center; margin-bottom: 25px; }
+        .pergunta-box { background: #0f172a; padding: 22px; border-radius: 8px; border: 1px solid #475569; font-size: 17px; font-weight: bold; flex-grow: 1; min-height: 70px; display: flex; align-items: center; justify-content: center; text-align: left; color: #f8fafc; }
+        
+        .alternativas-grid { display: flex; flex-direction: column; gap: 12px; }
+        .btn-opcao { background: #334155; color: #f8fafc; border: 2px solid #475569; padding: 16px; text-align: left; font-size: 15px; font-weight: 500; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; outline: none; display: flex; align-items: center; width: 100%; }
+        .btn-opcao:hover { background: #475569; border-color: #eab308; transform: scale(1.01); box-shadow: 0 0 15px rgba(234, 179, 8, 0.2); }
+        .btn-opcao span { color: #eab308; font-weight: bold; margin-right: 12px; font-size: 18px; }
+        .btn-opcao.correct { background: #10b981 !important; border-color: #059669 !important; animation: pulseGlowGreen 0.3s ease 2; color: white !important; font-weight: bold; }
+        .btn-opcao.wrong { background: #ef4444 !important; border-color: #b91c1c !important; color: white !important; }
+        @keyframes pulseGlowGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 100% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); } }
 
-        /* PYTHON SHOW DESIGN */
-        #game-container { background: #1e293b; width: 100%; max-width: 750px; padding: 35px; border-radius: 16px; border: 3px solid var(--ifrs-green); box-shadow: 0 25px 50px rgba(0,0,0,0.5); text-align: center; display: none; margin-bottom: 40px; }
-        .silvio-avatar { width: 100px; height: 100px; animation: falarBoneco 0.6s ease-in-out infinite alternate; }
-        @keyframes falarBoneco { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
+        .silvio-avatar { width: 90px; height: 90px; flex-shrink: 0; }
+        .btn-principal { background: #2563eb; color: white; border: none; padding: 14px 30px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; margin-top: 15px; }
+        .btn-principal:hover { background: #1d4ed8; }
+        .input-nome { width: 100%; max-width: 380px; padding: 14px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; font-size: 16px; margin: 20px auto; text-align: center; display: block; }
 
-        /* CERTIFICADO */
-        #layout-certificado { display: none; background: #1e293b; border: 4px double #eab308; padding: 45px; border-radius: 10px; text-align: center; max-width: 700px; margin-bottom: 40px;}
-        .cert-nome { font-size: 32px; color: #34d399; font-weight: bold; margin: 20px 0; border-bottom: 2px dashed #475569; padding-bottom: 10px; font-family: 'Georgia', serif; }
+        /* LAYOUT PREMIUM DO CERTIFICADO DO INSTITUTO */
+        #layout-certificado { display: none; background: #1e293b; border: 5px double var(--accent); padding: 50px; border-radius: 10px; text-align: center; max-width: 750px; margin-bottom: 40px; box-shadow: 0 25px 50px rgba(0,0,0,0.6); position: relative; }
+        .cert-nome { font-size: 34px; color: #34d399; font-weight: bold; margin: 25px 0; border-bottom: 2px dashed #475569; padding-bottom: 10px; font-family: 'Georgia', serif; text-transform: uppercase; }
+
+        /* CRÉDITOS DO RODAPÉ ACADÊMICO */
+        footer { width: 100%; max-width: 900px; text-align: center; padding: 25px; color: #64748b; font-size: 13px; border-top: 1px solid #334155; line-height: 1.6; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
-    <img src="https://raw.githubusercontent.com/yasmine-vet-ads/python-maker-ead/main/logo_ifrs_veranopolis.png" alt="IFRS Campus Veranópolis" class="ifrs-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Instituto_Federal_Marca_2015.svg/1200px-Instituto_Federal_Marca_2015.svg.png'">
+    <div class="ifrs-brand-banner">
+        <svg class="ifrs-logo-svg" viewBox="0 0 45 60">
+            <rect x="0" y="0" width="12" height="12" fill="#2f833c"/>
+            <rect x="15" y="0" width="12" height="12" fill="#2f833c"/>
+            <rect x="30" y="0" width="12" height="12" fill="#2f833c"/>
+            <rect x="0" y="15" width="12" height="12" fill="#2f833c"/>
+            <circle cx="21" cy="21" r="6" fill="#e30613"/>
+            <rect x="30" y="15" width="12" height="12" fill="#2f833c"/>
+            <rect x="0" y="30" width="12" height="12" fill="#2f833c"/>
+            <rect x="15" y="30" width="12" height="12" fill="#2f833c"/>
+            <rect x="0" y="45" width="12" height="12" fill="#2f833c"/>
+        </svg>
+        <div class="ifrs-text-box">
+            <div class="ifrs-text-main">INSTITUTO FEDERAL</div>
+            <div class="ifrs-text-sub">Rio Grande do Sul</div>
+            <div class="ifrs-text-sub" style="color:#2f833c; font-weight:800;">Campus Veranópolis</div>
+        </div>
+    </div>
 
     <div class="container" id="main-container">
         <h1>
-            <svg viewBox="0 0 448 512" fill="currentColor"><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-67.8 67.8H172.7c-5.8 0-10.2 4.8-10.2 10.3v8.1c0 10.2 4.8 10.2 10.2 10.2h141.6c46.2 0 73.1 24.5 73.1 73.7v3.5c0 47.1-31.7 75.1-79.4 75.1H195.8c-53.8 0-72.2-30.4-72.2-82.3V312c0-37 30.5-68 67.5-68h16.7c6 0 10.3-4.5 10.3-10.3v-2.2c0-6-4.5-10.2-10.3-10.2h-16.7c-48.4 0-88 39.6-88 88v85.3c0 66.1 36.3 102.3 93.9 102.3h110.8c56.3 0 91.9-38.6 91.9-95.2v-3.5c0-43.2-22.3-64.4-65.7-64.4H172.7c-2 0-3.4-1.4-3.4-3.4v-4.4c0-2.3 1.4-3.4 3.4-3.4h141.6c56.2 0 88.2-31.1 88.2-86.4v-46.1c.1-1.1-.3-15.6-2.7-27.1zM125.6 278.4V210c0-51.9 18.4-82.3 72.2-82.3h112.4c47.7 0 79.4 28 79.4 75.1v3.5c0 49.2-26.9 73.7-73.1 73.7H174.9c-5.4 0-10.2 0-10.2 10.2v8.1c0 5.5 4.4 10.3 10.2 10.3h105.7c36.6 0 67.8 31 67.8 67.8v47.4h40.1c31.1 0 45.7-23.3 53.4-54.2 2.4-11.5 2.8-26 2.7-27.1v-46.1c0-55.3-32-86.4-88.2-86.4H174.9c-2 0-3.4-1.1-3.4-3.4v-4.4c0-2 1.4-3.4 3.4-3.4h112.4c43.4 0 65.7-21.2 65.7-64.4v-3.5c0-56.6-35.6-95.2-91.9-95.2H153.1c-57.6 0-93.9 36.2-93.9 102.3V192c0 48.4 39.6 88 88 88h16.7c5.8 0 10.3-4.2 10.3-10.2v-2.2c0-5.8-4.3-10.3-10.3-10.3h-16.7c-37 0-67.5-31-67.5-68v-85.3c0-51.9 18.4-82.3 72.2-82.3h110.8c47.7 0 79.4 28 79.4 75.1v3.5c0 49.2-26.9 73.7-73.1 73.7H125.6z"/></svg> 
-            MINICURSO DE PYTHON
+            <svg class="py-svg" viewBox="0 0 448 512">
+                <path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-67.8 67.8H172.7c-5.8 0-10.2 4.8-10.2 10.3v8.1c0 10.2 4.8 10.2 10.2 10.2h141.6c46.2 0 73.1 24.5 73.1 73.7v3.5c0 47.1-31.7 75.1-79.4 75.1H195.8c-53.8 0-72.2-30.4-72.2-82.3V312c0-37 30.5-68 67.5-68h16.7c6 0 10.3-4.5 10.3-10.3v-2.2c0-6-4.5-10.2-10.3-10.2h-16.7c-48.4 0-88 39.6-88 88v85.3c0 66.1 36.3 102.3 93.9 102.3h110.8c56.3 0 91.9-38.6 91.9-95.2v-3.5c0-43.2-22.3-64.4-65.7-64.4H172.7c-2 0-3.4-1.4-3.4-3.4v-4.4c0-2.3 1.4-3.4 3.4-3.4h141.6c56.2 0 88.2-31.1 88.2-86.4v-46.1c.1-1.1-.3-15.6-2.7-27.1z" fill="#ffd343"/>
+                <path d="M125.6 278.4V210c0-51.9 18.4-82.3 72.2-82.3h112.4c47.7 0 79.4 28 79.4 75.1v3.5c0 49.2-26.9 73.7-73.1 73.7H174.9c-5.4 0-10.2 0-10.2 10.2v8.1c0 5.5 4.4 10.3 10.2 10.3h105.7c36.6 0 67.8 31 67.8 67.8v47.4h40.1c31.1 0 45.7-23.3 53.4-54.2 2.4-11.5 2.8-26 2.7-27.1v-46.1c0-55.3-32-86.4-88.2-86.4H174.9c-2 0-3.4-1.1-3.4-3.4v-4.4c0-2 1.4-3.4 3.4-3.4h112.4c43.4 0 65.7-21.2 65.7-64.4v-3.5c0-56.6-35.6-95.2-91.9-95.2H153.1c-57.6 0-93.9 36.2-93.9 102.3V192c0 48.4 39.6 88 88 88h16.7c5.8 0 10.3-4.2 10.3-10.2v-2.2c0-5.8-4.3-10.3-10.3-10.3h-16.7c-37 0-67.5-31-67.5-68v-85.3c0-51.9 18.4-82.3 72.2-82.3h110.8c47.7 0 79.4 28 79.4 75.1v3.5c0 49.2-26.9 73.7-73.1 73.7H125.6z" fill="#3776ab"/>
+            </svg>
+            CURSO DE INTRODUÇÃO À PYTHON
         </h1>
-        <p style="text-align: center; margin-top:0;">Trilha Maker | ADS IFRS Veranópolis</p>
+        <p style="text-align: center; margin-top:0; color:#94a3b8; font-weight: 500;">Ambiente de Ensino à Distância Livre e Consultivo</p>
 
+        <div class="nav-tabs-menu" id="prog-text">
+            <button class="nav-tab active" onclick="nextModule(1)">MÓDULO 1</button>
+            <button class="nav-tab" onclick="nextModule(2)">MÓDULO 2</button>
+            <button class="nav-tab" onclick="nextModule(3)">MÓDULO 3</button>
+            <button class="nav-tab" onclick="nextModule(4)">MÓDULO 4 (MAKER)</button>
+        </div>
         <div class="progress-bar"><div class="progress-fill" id="progress-bar"></div></div>
 
         <div id="mod1" class="view active">
-            <h2>Módulo 1: Primeiros Passos e o "Modo Pensar"</h2>
-            <p>Seja bem-vindo ao mundo da programação! Vamos aprender como o Python lida com informações básicas usando variáveis clínica veterinária como exemplo:</p>
-            <pre class="inline-code">
-nome_paciente = "Bruce Brian"  # Texto (String)
-idade = 5                      # Número Inteiro (int)
-print("Paciente:", nome_paciente, "| Idade:", idade)</pre>
-            <ul class="code-explanation">
-                <li><span class="highlight">Variáveis:</span> Servem para guardar dados. O <code>=</code> é o comando de guardar.</li>
-                <li><span class="highlight">print():</span> Mostra o que está guardado no monitor.</li>
+            <h2>Módulo 1: Primeiros Passos e o "Modo Pensar" do Python</h2>
+            <p>Seja muito bem-vindo! Programar não é decorar fórmulas matemáticas difíceis, é apenas aprender a conversar com a máquina. Pense no código como uma receita de bolo detalhada: o computador apenas lê linha por linha e executa exatamente o que você mandou.</p>
+            
+            <h3>Por que o mercado escolheu o Python?</h3>
+            <ul>
+                <li><span class="highlight">Sintaxe Limpa:</span> O código parece inglês fluente. É feito para humanos lerem sem esforço, reduzindo erros.</li>
+                <li><span class="highlight">Superpoderes Tecnológicos:</span> É a linguagem número 1 para Inteligência Artificial (IA), Automação de Sistemas e Internet das Coisas (IoT).</li>
             </ul>
+
+            <h3>Conceitos na Prática: Variáveis e Saída de Dados</h3>
+            <p>Variáveis funcionam como "caixinhas" com etiquetas na memória para guardar dados temporários. O comando básico para mostrar qualquer informação guardada na tela do computador é a função <span class="highlight">print()</span>. Veja esse exemplo simulando o prontuário de uma clínica veterinária:</p>
+            
+            <pre class="inline-code">
+nome_paciente = "Bruce Brian"  # Criamos uma variável de Texto (String)
+idade = 5                      # Criamos uma variável Numérica Inteira (int)
+
+print("Paciente:", nome_paciente)
+print("Idade registrada:", idade, "anos")</pre>
+            
+            <ul class="code-explanation">
+                <li><strong>nome_paciente = "Bruce Brian"</strong>: O sinal de igual <code>=</code> serve para "guardar" a informação dentro da caixinha. Usamos aspas porque é um texto livre (String).</li>
+                <li><strong>idade = 5</strong>: Números puros não levam aspas. Assim, o Python entende matematicamente que é um Inteiro (int) e permite fazer contas com ele futuramente.</li>
+                <li><strong>print(...)</strong>: É a função de exibição. A vírgula dentro dos parênteses serve para unir textos fixos com os dados guardados nas variáveis.</li>
+            </ul>
+
             <div class="quiz-box">
-                <p class="highlight">Avaliação 1: Qual comando é usado para exibir mensagens na tela?</p>
+                <div class="quiz-question">Avaliação 1: No código acima, por que o número 5 não possui aspas ao seu redor?</div>
                 <div id="opts-1">
-                    <button class="option-btn" onclick="selectOption(1, this, true)">A) print()</button>
-                    <button class="option-btn" onclick="selectOption(1, this, false)">B) show()</button>
+                    <button class="option-btn" onclick="selectOption(1, this, false)"><span>A)</span> Porque esquecemos de colocar ao digitar as strings.</button>
+                    <button class="option-btn" onclick="selectOption(1, this, true)"><span>B)</span> Porque ele é um dado Numérico Inteiro (int), e números não levam aspas em Python.</button>
+                    <button class="option-btn" onclick="selectOption(1, this, false)"><span>C)</span> Porque a função print() impede o uso de aspas em dados clínicos.</button>
                 </div>
                 <div id="feedback-1" class="feedback"></div>
-                <button class="btn btn-success" id="btn-next-1" style="display:none;" onclick="nextModule(2)">Avançar ➔</button>
+                <button class="btn btn-success" id="btn-next-1" style="display:none;" onclick="nextModule(2)">Avançar para Módulo 2 ➔</button>
             </div>
         </div>
 
         <div id="mod2" class="view">
             <h2>Módulo 2: Tomando Decisões e Repetições</h2>
-            <p>O código pode decidir caminhos e repetir tarefas automaticamente:</p>
+            <p>Para darmos inteligência ao código, precisamos que ele tome decisões sozinho usando uma lógica condicional de "Se isso acontecer, faça a tarefa A; Senão, faça a tarefa B".</p>
+            
+            <h3>1. Estruturas Condicionais (if / else)</h3>
             <pre class="inline-code">
 temperatura = 39.5
-if temperatura > 39.2:
-    print("Alerta: O animal está com febre!")
 
-sintomas = ["tosse", "apatia"]
-for s in sintomas:
-    print("Sintoma detectado:", s)</pre>
+if temperatura > 39.2:
+    print("Alerta clínico: O animal está com febre!")
+else:
+    print("Temperatura dentro da normalidade.")</pre>
+            
             <ul class="code-explanation">
-                <li><span class="highlight">if:</span> Executa uma ação apenas "SE" a condição for verdadeira.</li>
-                <li><span class="highlight">for:</span> Repete o comando para cada item de uma lista <code>[]</code>.</li>
+                <li><strong>if temperatura > 39.2:</strong> Significa "SE a temperatura for maior que 39.2". Os dois pontos (<code>:</code>) abrem o bloco de ação.</li>
+                <li><strong>Recuo (Indentação):</strong> Note que as funções <code>print</code> estão empurradas 4 espaços para a direita. Isso é obrigatório no Python! É assim que ele sabe quais linhas dependem da decisão do if.</li>
+                <li><strong>else:</strong> Significa "SENÃO". Se a condição do if for falsa, o Python ignora ela e executa o bloco do else.</li>
             </ul>
+
+            <h3>2. Listas e Loops de Repetição (for)</h3>
+            <p>E se precisarmos analisar dezenas de dados em sequência? Criamos uma <strong>Lista</strong> usando colchetes <code>[]</code> e aplicamos um <strong>Loop for</strong> para repetir a leitura linha por linha.</p>
+            
+            <pre class="inline-code">
+sintomas = ["tosse", "apatia"] # Criamos a lista com dois sintomas
+sintomas.append("febre")       # Adicionamos dinamicamente um terceiro item
+
+for sintoma in sintomas:
+    print("Foi detectado o sintoma:", sintoma)</pre>
+            
+            <ul class="code-explanation">
+                <li><strong>.append("febre")</strong>: Pega a lista existente e injeta um novo elemento bem no final dela.</li>
+                <li><strong>for sintoma in sintomas:</strong>: É o laço. O Python roda o print três vezes seguidas, trocando a palavra automaticamente a cada volta.</li>
+            </ul>
+
             <div class="quiz-box">
-                <p class="highlight">Avaliação 2: Para que serve o recuo (espaço) à esquerda nos comandos dentro de um if?</p>
+                <div class="quiz-question">Avaliação 2: Para que serve o recuo (os 4 espaços à direita) nos comandos internos de um if ou for?</div>
                 <div id="opts-2">
-                    <button class="option-btn" onclick="selectOption(2, this, true)">A) Indentação: Para dizer que o comando pertence ao 'if'.</button>
-                    <button class="option-btn" onclick="selectOption(2, this, false)">B) Estética: Apenas para ficar bonito.</button>
+                    <button class="option-btn" onclick="selectOption(2, this, false)"><span>A)</span> Apenas para deixar o script organizado visualmente, sendo opcional.</button>
+                    <button class="option-btn" onclick="selectOption(2, this, true)"><span>B)</span> Indentação Obrigatória: Serve para delimitar que o comando pertence ao bloco daquela estrutura.</button>
                 </div>
                 <div id="feedback-2" class="feedback"></div>
-                <button class="btn btn-success" id="btn-next-2" style="display:none;" onclick="nextModule(3)">Avançar ➔</button>
+                <button class="btn btn-success" id="btn-next-2" style="display:none;" onclick="nextModule(3)">Avançar para Módulo 3 ➔</button>
             </div>
         </div>
 
         <div id="mod3" class="view">
-            <h2>Módulo 3: Organizando com Funções</h2>
-            <p>Funções são "receitas" que você cria uma vez e usa sempre que precisar:</p>
+            <h2>Módulo 3: Organizando a Casa com Funções e Módulos</h2>
+            <p>Quando o nosso sistema começa a crescer, escrever códigos soltos gera bagunça. Para organizar, empacotamos blocos de regras dentro de <strong>Funções</strong> reutilizáveis.</p>
+            
+            <h3>Funções Customizadas (def) e Bibliotecas (import)</h3>
             <pre class="inline-code">
-def calcular_dose(peso):
-    return peso * 0.5
+import time  # Importamos a biblioteca nativa de tempo do sistema
 
-resultado = calcular_dose(10) # Saída: 5.0</pre>
+def calcular_dosagem(peso_animal):
+    dosagem = peso_animal * 0.5  # Regra de negócio: 0.5mg por quilo
+    return dosagem
+
+print("Acessando banco de dados...")
+time.sleep(2)  # Faz o programa pausar por 2 segundos reais
+
+resultado = calcular_dosagem(10) # Chamamos a função passando o peso 10
+print("Dose calculada com segurança:", resultado, "mg")</pre>
+            
             <ul class="code-explanation">
-                <li><span class="highlight">def:</span> Define uma nova função/ação personalizada.</li>
-                <li><span class="highlight">return:</span> Arremessa o resultado final de volta para o programa.</li>
+                <li><strong>import time</strong>: Abre a caixa de ferramentas do Python e traz funções prontas de relógio para o seu código.</li>
+                <li><strong>def calcular_dosagem(peso_animal):</strong>: O comando <code>def</code> cria a função. O dado dentro dos parênteses é o parâmetro recebido de fora.</li>
+                <li><strong>return dosagem</strong>: É a devolução. Entrega o valor calculado para a variável de saída do script principal.</li>
+                <li><strong>time.sleep(2)</strong>: Pausa a execução do terminal, excelente para simular carregamentos ou cronometrar sensores.</li>
             </ul>
+
             <div class="quiz-box">
-                <p class="highlight">Avaliação 3: Qual palavra inicia a criação de uma função própria?</p>
+                <div class="quiz-question">Avaliação 3: Qual comando dentro de uma função criada com 'def' envia o resultado gerado de volta para o script principal?</div>
                 <div id="opts-3">
-                    <button class="option-btn" onclick="selectOption(3, this, true)">A) def</button>
-                    <button class="option-btn" onclick="selectOption(3, this, false)">B) function</button>
+                    <button class="option-btn" onclick="selectOption(3, this, true)"><span>A)</span> return</button>
+                    <button class="option-btn" onclick="selectOption(3, this, false)"><span>B)</span> import</button>
+                    <button class="option-btn" onclick="selectOption(3, this, false)"><span>C)</span> send_back</button>
                 </div>
                 <div id="feedback-3" class="feedback"></div>
-                <button class="btn btn-success" id="btn-next-3" style="display:none;" onclick="nextModule(4)">Avançar ➔</button>
+                <button class="btn btn-success" id="btn-next-3" style="display:none;" onclick="nextModule(4)">Avançar para Módulo Final ➔</button>
             </div>
         </div>
 
         <div id="mod4" class="view">
-            <h2>Módulo 4: Projeto Maker (Semáforo Inteligente)</h2>
-            <p>A <strong>Cultura Maker</strong> incentiva a criação de soluções reais com eletrônica e código. Abaixo, o projeto de um semáforo com botão de pedestre:</p>
+            <h2>Módulo 4: Projeto Integrador Maker (Semáforo de Pedestres)</h2>
+            <p>Agora vamos unir tudo! A <strong>Cultura Maker</strong> prega o "faça você mesmo", transformando linhas de código em ações no mundo físico através de microcontroladores (como o ESP32) programados em <span class="highlight">MicroPython</span>.</p>
+            
+            <h3>Lógica de Hardware Aplicada</h3>
+            <ul>
+                <li><strong>Setup de Pinos:</strong> Configurar pinos como Saída (<code>Pin.OUT</code>) serve para injetar energia (acender LEDs). Configurar como Entrada (<code>Pin.IN</code>) serve para monitorar sensores ou botões.</li>
+                <li><strong>O Papel Crítico dos Resistores:</strong> LEDs queimam se receberem energia total direta da placa. O resistor funciona como um "pedágio", diminuindo a corrente elétrica para proteger a lâmpada. No botão, ele estabiliza o sinal contra ruídos estáticos da atmosfera.</li>
+            </ul>
+
+            <h3>🔌 Passo a Passo para o Aluno Simular no Wokwi</h3>
+            <ol style="background: #0f172a; padding: 20px 20px 20px 45px; border-left: 4px solid var(--accent); border-radius: 8px; line-height: 1.8;">
+                <li>Abra o site <strong><a href="https://wokwi.com" target="_blank" style="color:#60a5fa; font-weight:bold;">wokwi.com</a></strong>, role a página inicial e escolha a placa <strong>ESP32</strong> rodando MicroPython.</li>
+                <li>Clique no botão azul de <strong>"+" (Add a new part)</strong> para puxar os componentes: LEDs (Vermelho, Amarelo, Verde), resistores de 220 ohms e 1 botão do tipo Pushbutton.</li>
+                <li>Conecte a perna positiva do LED no pino correspondente do código (ex: Pino 32) e a perna negativa no pino <strong>GND (Terra)</strong> passando pelo resistor protetor.</li>
+                <li>Substitua o código da aba <code>main.py</code> pelo script abaixo e aperte o botão verde de **Play** do simulador!</li>
+            </ol>
+
             <div class="wokwi-mockup">
-                <div class="wokwi-header"><div style="color:#fff; font-size:12px;">Wokwi Simulator - IFRS Veranópolis</div></div>
+                <div class="wokwi-header"><div style="color:#eab308; font-size:12px; font-weight:bold;">Wokwi Engine Simulator v2.0 | IFRS Campus Veranópolis</div></div>
                 <div class="wokwi-body">
                     <div class="wokwi-code">from machine import Pin
 import time
 
-sVm = Pin(32, Pin.OUT)
+sVdCarro = Pin(33, Pin.OUT)
+sVmCarro = Pin(32, Pin.OUT)
 botao = Pin(18, Pin.IN)
 
 while True:
-    if botao.value() == 0:
-        sVm.value(1) # Acende Vermelho
-        time.sleep(5)</div>
+    sVdCarro.value(1) # Carro flui
+    
+    if botao.value() == 0: # Botão pressionado!
+        sVdCarro.value(0)
+        sVmCarro.value(1) # Fecha sinal carros
+        time.sleep(5)     # Tempo seguro travessia
+        sVmCarro.value(0)
+    time.sleep(0.1)</div>
                     <div class="wokwi-canvas">
-                        <svg viewBox="0 0 200 200" width="100%"><rect x="50" y="20" width="60" height="100" fill="#333" rx="5"/><circle cx="80" cy="50" r="10" fill="#ef4444"/><circle cx="80" cy="80" r="10" fill="#eab308"/><circle cx="80" cy="110" r="10" fill="#10b981"/><rect x="140" y="100" width="20" height="20" fill="#2563eb" rx="2"/></svg>
+                        <svg viewBox="0 0 200 200" width="100%"><rect x="50" y="20" width="60" height="110" fill="#222" rx="5" stroke="#444"/><circle cx="80" cy="50" r="11" fill="#ef4444"/><circle cx="80" cy="75" r="11" fill="#eab308"/><circle cx="80" cy="100" r="11" fill="#10b981"/><rect x="140" y="100" width="25" height="25" fill="#2563eb" rx="2"/><text x="144" y="116" fill="#fff" font-size="9" font-family="sans-serif" font-weight="bold">BTN</text></svg>
                     </div>
                 </div>
             </div>
-            <p><strong>Atenção aos Resistores:</strong> Eles são essenciais para limitar a energia e não queimar os LEDs!</p>
+
             <div class="quiz-box">
-                <p class="highlight">Avaliação Final: Qual comando faz o semáforo "viciar" e verificar o botão infinitamente?</p>
+                <div class="quiz-question">Avaliação Final: Qual comando do MicroPython mantém o circuito do semáforo ativo, vigiando o botão em um ciclo contínuo e infinito?</div>
                 <div id="opts-4">
-                    <button class="option-btn" onclick="selectOption(4, this, true)">A) while True:</button>
-                    <button class="option-btn" onclick="selectOption(4, this, false)">B) for loop:</button>
+                    <button class="option-btn" onclick="selectOption(4, this, true)"><span>A)</span> while True:</button>
+                    <button class="option-btn" onclick="selectOption(4, this, false)"><span>B)</span> for contador in range(1, 14):</button>
+                    <button class="option-btn" onclick="selectOption(4, this, false)"><span>C)</span> import time</button>
                 </div>
                 <div id="feedback-4" class="feedback"></div>
-                <button class="btn btn-success" id="btn-next-4" style="display:none;" onclick="irParaPythonShow()">➔ IR PARA A PROVA FINAL: PYTHON SHOW 🎙️</button>
+                <button class="btn btn-success" id="btn-next-4" style="display:none; width:100%; font-size:18px;" onclick="irParaPythonShow()">➔ INGRESSAR NO ESTÚDIO: PYTHON SHOW 🎙️</button>
             </div>
         </div>
     </div>
 
     <div id="game-container">
         <h1 style="color: var(--accent);">🎙️ PYTHON SHOW</h1>
-        <p>Prova Final: ADS IFRS Veranópolis</p>
+        <p style="color:#cbd5e1; margin-top:0;">Avaliação Final | Analise e Desenvolvimento de Sistemas</p>
+        
         <div id="screen-start" class="screen" style="display: block;">
-            <p>Você concluiu a teoria! Atinja <strong>Nota 7</strong> para o Certificado oficial.</p>
-            <button class="btn btn-success" onclick="iniciarJogo()">Começar o Show! 🚀</button>
+            <p style="color:#94a3b8; line-height:1.6;">Você concluiu a trilha de aprendizado! Chegou a hora de provar sua proficiência lógica. Atinja **Nota 7 ou superior** para emitir seu Certificado de Conclusão chancelado institucionalmente.</p>
+            <button class="btn-principal" onclick="iniciarJogo()">Começar o Desafio! 🚀</button>
         </div>
+
         <div id="screen-quiz" class="screen" style="display: none;">
-            <div style="font-size: 14px; margin-bottom: 10px;" id="question-counter">Pergunta 1 de 10</div>
+            <div class="progress-bar-bg"><div id="progress-fill-game" class="progress-bar-fill"></div></div>
+            <div style="font-size: 14px; margin-bottom: 12px; color: #94a3b8; text-align: left;" id="question-counter">Pergunta 1 de 10</div>
             <div class="quiz-layout-box">
-                <svg viewBox="0 0 100 100" class="silvio-avatar"><circle cx="50" cy="40" r="28" fill="#fcd3a1"/><circle cx="38" cy="35" r="3" fill="#000"/><circle cx="62" cy="35" r="3" fill="#000"/><path d="M 32 50 Q 50 68 68 50" fill="none" stroke="#000" stroke-width="2"/></svg>
-                <div class="pergunta-box" id="texto-pergunta" style="background:#0f172a; padding:20px; border-radius:8px; border:1px solid #475569; font-weight:bold;"></div>
+                <svg viewBox="0 0 100 100" class="silvio-avatar">
+                    <circle cx="50" cy="40" r="28" fill="#fcd3a1" stroke="#ca8a04" stroke-width="1"/>
+                    <circle cx="38" cy="35" r="3" fill="#000"/>
+                    <circle cx="62" cy="35" r="3" fill="#000"/>
+                    <path d="M 32 50 Q 50 68 68 50" fill="none" stroke="#000" stroke-width="2.5"/>
+                    <path d="M 10 100 Q 50 50 90 100 Z" fill="#1e293b" stroke="#eab308" stroke-width="1.5"/>
+                </svg>
+                <div class="pergunta-box" id="texto-pergunta">Carregando questionário...</div>
             </div>
-            <div class="alternativas-grid" id="grid-alternativas" style="margin-top:20px;"></div>
+            <div class="alternativas-grid" id="grid-alternativas"></div>
         </div>
+
         <div id="screen-result" class="screen" style="display: none;">
-            <div style="font-size: 48px; font-weight: bold;" id="nota-final">0 / 10</div>
+            <div style="font-size: 20px; color: #cbd5e1;">Aproveitamento Final:</div>
+            <div style="font-size: 52px; font-weight: bold; color: var(--accent); margin: 15px 0;" id="nota-final">0 / 10</div>
             <div id="painel-emissao">
-                <input type="text" id="nome-estudante" class="input-nome" placeholder="Seu Nome Completo">
-                <button class="btn btn-success" onclick="emitirCertificado()">Gerar Certificado IFRS 📜</button>
+                <p style="color:#94a3b8; font-size:14px;">Parabéns, você foi aprovado! Insira seu nome completo abaixo para chancelar o documento de conclusão:</p>
+                <input type="text" id="nome-estudante" class="input-nome" placeholder="Nome Completo do Aluno">
+                <button class="btn-principal" style="background:var(--success)" onclick="emitirCertificado()">Gerar Meu Certificado IFRS 📜</button>
             </div>
         </div>
     </div>
 
     <div id="layout-certificado">
-        <img src="https://raw.githubusercontent.com/yasmine-vet-ads/python-maker-ead/main/logo_ifrs_veranopolis.png" alt="IFRS" style="max-width: 200px; margin-bottom: 20px;">
-        <h2 style="color: var(--accent); border:none;">CERTIFICADO DE CONCLUSÃO</h2>
-        <p>Certificamos com distinção que:</p>
-        <div class="cert-nome" id="nome-certificado">NOME DO ALUNO</div>
-        <p style="font-style: italic;">Concluiu o <b>Minicurso de Introdução à Python</b> (Módulos 1-4 + Avaliação Final), demonstrando proficiência lógica e integração Maker.</p>
-        <div style="margin-top: 30px; font-size: 12px; color: #64748b;">
-            <p>Parte integrante da disciplina de Introdução à Computação</p>
-            <p>Professor: Victor Mattos</p>
+        <svg viewBox="0 0 45 60" width="50" height="65" style="margin: 0 auto 15px auto; display:block;">
+            <rect x="0" y="0" width="12" height="12" fill="#2f833c"/><rect x="15" y="0" width="12" height="12" fill="#2f833c"/><rect x="30" y="0" width="12" height="12" fill="#2f833c"/><rect x="0" y="15" width="12" height="12" fill="#2f833c"/><circle cx="21" cy="21" r="6" fill="#e30613"/><rect x="30" y="15" width="12" height="12" fill="#2f833c"/><rect x="0" y="30" width="12" height="12" fill="#2f833c"/><rect x="15" y="30" width="12" height="12" fill="#2f833c"/><rect x="0" y="45" width="12" height="12" fill="#2f833c"/>
+        </svg>
+        <div style="font-family:'Arial Black', sans-serif; font-size:12px; color:white; letter-spacing:1px; margin-bottom:5px;">INSTITUTO FEDERAL DE SANTA CATARINA / RIO GRANDE DO SUL</div>
+        <h2 style="color: var(--accent); border:none; margin:10px 0; font-weight:900; font-size:26px;">CERTIFICADO DE EMISSÃO ACADÊMICA</h2>
+        <p style="color:#cbd5e1; font-size:14px; margin-top:20px;">Certificamos formalmente e com distinção de mérito que:</p>
+        <div class="cert-nome" id="nome-certificado">NOME DO ESTUDANTE</div>
+        <p style="max-width: 580px; margin: 0 auto; line-height: 1.6; color:#94a3b8; font-size:15px;">Concluiu de forma integral todas as etapas teóricas e práticas do <b>Minicurso de Introdução Prática ao Python</b>, abrangendo variáveis parametrizadas, blocos indentados de decisão condicional, escopos de funções e montagem de circuitos no simulador de hardware MicroPython (Wokwi).</p>
+        <div style="margin-top: 40px; font-size: 13px; color: #cbd5e1; border-top: 1px dashed #475569; padding-top: 20px;">
+            <p style="margin:2px 0;">Componente de Extensão Integrado à Disciplina de <b>Introdução à Computação</b></p>
+            <p style="margin:2px 0;">Professor Regente: <b>Victor Mattos</b></p>
+            <p style="margin:15px 0 0 0; font-size:10px; color:#64748b;">Código de Autenticidade Digital Registrado no Hub de ADS IFRS.</p>
         </div>
-        <button class="btn" onclick="window.print()" style="background: var(--success);">🖨️ Imprimir PDF</button>
+        <button class="btn" onclick="window.print()" style="background: var(--ifrs-green); font-weight:bold; margin-top:25px;">🖨️ Salvar em PDF / Imprimir Via</button>
     </div>
 
     <footer>
@@ -227,13 +368,23 @@ while True:
         function selectOption(modNum, btnEl, isCorrect) {
             const btns = document.getElementById(`opts-${modNum}`).getElementsByTagName('button');
             for(let b of btns) b.disabled = true;
+            const fb = document.getElementById(`feedback-${modNum}`);
+            fb.style.display = "block";
+
             if(isCorrect) {
                 btnEl.classList.add('correct');
+                fb.innerText = "✅ Resposta Correta! Conceito perfeitamente assimilado.";
+                fb.style.color = "#34d399";
                 document.getElementById(`btn-next-${modNum}`).style.display = "inline-block";
-                confetti({ particleCount: 30, origin: { y: 0.8 } });
+                confetti({ particleCount: 35, spread: 50, origin: { y: 0.8 } });
             } else {
                 btnEl.classList.add('wrong');
-                setTimeout(() => { for(let b of btns) {b.disabled = false; b.classList.remove('wrong');} }, 1500);
+                fb.innerText = "❌ Resposta Incorreta. Reveja a explicação estruturada logo acima.";
+                fb.style.color = "#f87171";
+                setTimeout(() => { 
+                    fb.style.display = "none";
+                    for(let b of btns) { b.disabled = false; b.classList.remove('wrong'); } 
+                }, 2000);
             }
         }
 
@@ -241,6 +392,12 @@ while True:
             document.getElementById('progress-bar').firstElementChild.style.width = ((n-1)*33.3) + "%";
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById(`mod${n}`).classList.add('active');
+            
+            const abas = document.getElementById('prog-text').getElementsByTagName('button');
+            for(let i=0; i<abas.length; i++) {
+                if((i+1) === n) abas[i].classList.add('active');
+                else abas[i].classList.remove('active');
+            }
             document.getElementById('main-container').scrollTo(0,0);
         }
 
@@ -252,20 +409,29 @@ while True:
         function irParaPythonShow() {
             document.getElementById('main-container').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
-            if(player) { player.unMute(); player.setVolume(30); player.playVideo(); }
+            if(player && typeof player.playVideo === 'function') { player.unMute(); player.setVolume(20); player.playVideo(); }
+        }
+
+        function voltarParaEAD() {
+            document.getElementById('game-container').style.display = 'none';
+            document.getElementById('main-container').style.display = 'block';
+            if(player && typeof player.pauseVideo === 'function') { player.pauseVideo(); }
+            perAtual = 0; acertos = 0;
+            document.getElementById('screen-start').style.display='block';
+            document.getElementById('screen-result').style.display='none';
         }
 
         const banco = [
             { p: "Qual símbolo guarda dados numa variável?", o: ["=", "==", "+", ":"], c: 0 },
             { p: "Qual o tipo de dado de 'Bruce Brian'?", o: ["int", "float", "String", "bool"], c: 2 },
-            { p: "O que o comando for faz?", o: ["Decisão", "Repetição", "Soma", "Pausa"], c: 1 },
+            { p: "O que o comando for faz?", o: ["Decisão Condicional", "Repetição em Loop", "Operação Aritmética", "Pausa do Terminal"], c: 1 },
             { p: "Como convertemos '10' em número?", o: ["int('10')", "str(10)", "bool(10)", "print(10)"], c: 0 },
-            { p: "Para que serve o time.sleep()?", o: ["Fazer conta", "Mudar cor", "Pausar o código", "Ligar LED"], c: 2 },
-            { p: "O que significa Pin.OUT no Wokwi?", o: ["Entrada", "Saída de Energia", "Resistor", "Botão"], c: 1 },
+            { p: "Para que serve o time.sleep()?", o: ["Fazer cálculo", "Mudar porta", "Pausar execução em segundos", "Ligar pino OUT"], c: 2 },
+            { p: "O que significa Pin.OUT no MicroPython?", o: ["Entrada de Sensor", "Envio/Saída de Energia", "Resistor PullDown", "Botão Push"], c: 1 },
             { p: "Como chamamos o erro de falta de espaços à esquerda?", o: ["SyntaxError", "IndentationError", "NameError", "TypeError"], c: 1 },
-            { p: "O que define uma função?", o: ["def", "func", "start", "create"], c: 0 },
+            { p: "O que define uma função customizada?", o: ["def", "func", "start", "create"], c: 0 },
             { p: "Qual operador testa se dois valores são IGUAIS?", o: ["=", "==", "!=", "and"], c: 1 },
-            { p: "Qual o pino do botão no nosso diagrama?", o: ["32", "18", "GND", "25"], c: 1 }
+            { p: "Qual estrutura cria loops infinitos de varredura nos circuitos?", o: ["while True:", "for range:", "if else:", "return:"], c: 0 }
         ];
 
         let perAtual = 0, acertos = 0;
@@ -273,16 +439,20 @@ while True:
         
         function carregarPer() {
             const d = banco[perAtual];
+            document.getElementById('progress-fill-game').style.width = ((perAtual / 10) * 100) + "%";
             document.getElementById('question-counter').innerText = `Pergunta ${perAtual+1} de 10`;
             document.getElementById('texto-pergunta').innerText = d.p;
             const grid = document.getElementById('grid-alternativas');
             grid.innerHTML = "";
+            const letras = ["A", "B", "C", "D"];
             d.o.forEach((op, i) => {
                 const b = document.createElement('button');
-                b.className = "btn-opcao"; b.innerText = op;
+                b.className = "btn-opcao"; b.innerHTML = `<span>${letras[i]})</span> ${op}`;
                 b.onclick = () => {
-                    if(i === d.c) { b.classList.add('correct'); acertos++; } else { b.classList.add('wrong'); }
-                    setTimeout(() => { perAtual++; if(perAtual < 10) carregarPer(); else finalizar(); }, 1500);
+                    const botoes = grid.getElementsByTagName('button');
+                    for(let btn of botoes) btn.disabled = true;
+                    if(i === d.c) { b.classList.add('correct'); acertos++; } else { b.classList.add('wrong'); botoes[d.c].classList.add('correct'); }
+                    setTimeout(() => { perAtual++; if(perAtual < 10) carregarPer(); else finalizar(); }, 1600);
                 };
                 grid.appendChild(b);
             });
@@ -293,17 +463,17 @@ while True:
             document.getElementById('screen-result').style.display='block';
             document.getElementById('nota-final').innerText = `${acertos} / 10`;
             if(acertos < 7) { 
-                document.getElementById('painel-emissao').innerHTML = "<p style='color:red'>Você precisa de 7 acertos. Recarregue a página e tente novamente!</p>";
+                document.getElementById('painel-emissao').innerHTML = "<p style='color:#ef4444; font-weight:bold; margin-top:20px;'>Média mínima não alcançada! É necessário acertar 7 ou mais questões para emitir a certificação.</p><button class='btn' onclick='voltarParaEAD()' style='margin-top:10px;'>Voltar ao Painel EAD e Revisar Conteúdos 📚</button>";
             }
         }
 
         function emitirCertificado() {
-            const n = document.getElementById('nome-estudante').value;
-            if(!n) return alert("Digite seu nome!");
+            const n = document.getElementById('nome-estudante').value.trim();
+            if(!n) return alert("Por favor, preencha o campo com seu nome completo!");
             document.getElementById('nome-certificado').innerText = n.toUpperCase();
             document.getElementById('game-container').style.display='none';
             document.getElementById('layout-certificado').style.display='block';
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            confetti({ particleCount: 160, spread: 85, origin: { y: 0.6 } });
         }
     </script>
     <script src="https://www.youtube.com/iframe_api"></script>
