@@ -8,7 +8,7 @@
     <style>
         :root { --primary: #2563eb; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --accent: #eab308; --success: #10b981; --danger: #ef4444; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow-x: hidden; }
-        /* ==================== CABEÇALHO INSTITUCIONAL ==================== */
+/* ==================== CABEÇALHO INSTITUCIONAL ==================== */
 
 .header-institucional img {
     max-width: 100%;
@@ -16,40 +16,28 @@
 }
 
 @media (max-width: 768px) {
-.header-institucional {
-    width: 100%;
-}
-
-.header-institucional img {
-    display: block;
-}
-
-@media (max-width: 768px) {
 
     .header-institucional {
+        width: 100%;
         flex-direction: column;
         align-items: center !important;
+        justify-content: center !important;
+        text-align: center;
     }
 
     .header-institucional > div {
         width: 100%;
         justify-content: center;
     }
-}
-    .header-institucional {
-        flex-direction: column;
-        text-align: center;
-        justify-content: center !important;
-    }
-
-    .header-institucional > div {
-        justify-content: center;
-    }
 
     .header-institucional h1 {
         font-size: 24px !important;
     }
-}        
+
+    .header-institucional img {
+        display: block;
+    }
+}
         /* ==================== CSS DA PLATAFORMA EAD ==================== */
         .container { background: var(--card); width: 100%; max-width: 900px; padding: 40px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative; overflow-y: auto; max-height: 90vh; }
         
@@ -182,7 +170,7 @@
         </div>
     </div>
 
-   <!-- LADO DIREITO -->
+<!-- LADO DIREITO -->
 <div style="
     display:flex;
     align-items:center;
@@ -207,23 +195,29 @@
         flex-direction:column;
         justify-content:center;
     ">
-                INSTITUTO FEDERAL
-            </div>
 
-            <div style="
-                font-size:13px;
-                color:#cbd5e1;
-            ">
-                Rio Grande do Sul
-            </div>
-
-            <div style="
-                font-size:13px;
-                color:#cbd5e1;
-            ">
-                Campus Veranópolis
-            </div>
+        <div style="
+            font-size:18px;
+            font-weight:bold;
+            color:white;
+        ">
+            INSTITUTO FEDERAL
         </div>
+
+        <div style="
+            font-size:13px;
+            color:#cbd5e1;
+        ">
+            Rio Grande do Sul
+        </div>
+
+        <div style="
+            font-size:13px;
+            color:#cbd5e1;
+        ">
+            Campus Veranópolis
+        </div>
+
     </div>
 </div>
         <div class="progress-container">
