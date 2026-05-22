@@ -24,4 +24,4 @@ O projeto está hospedado 100% na nuvem e pronto para uso em qualquer navegador.
 * **Recursos Multimídia:** YouTube Iframe API e Canvas Confetti.
 
 ---
-*Desenvolvido com 💡 e muita Lógica por Yasmine Santos*
+
