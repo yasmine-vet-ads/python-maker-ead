@@ -772,22 +772,81 @@ def desligar_farois(lista_de_pinos):
 from machine import Pin
 import time
 
-sinalVmCarro = Pin(32, Pin.OUT)
-sinalAmCarro = Pin(25, Pin.OUT)
-sinalVdCarro = Pin(33, Pin.OUT)
+# Definindo os pinos e seus respectivos nomes
+sinalVmCarro = Pin(32, Pin.OUT)    # Sinal Vermelho para carros
+sinalAmCarro = Pin(25, Pin.OUT)    # Sinal Amarelo para carros
+sinalVdCarro = Pin(33, Pin.OUT)    # Sinal Verde para carros
+sinalVmPedestre = Pin(21, Pin.OUT) # Sinal Vermelho para pedestres
+sinalVdPedestre = Pin(22, Pin.OUT) # Sinal Verde para pedestres
+botao = Pin(18, Pin.IN)            # Botão
 
-sinalVmPedestre = Pin(21, Pin.OUT)
-sinalVdPedestre = Pin(22, Pin.OUT)
-
-botao = Pin(18, Pin.IN)
-
+# Variável para a contagem regressiva
 contagem = 13
 
+# --- SETUP (Executa uma vez) ---
+# Desliga tudo para começar
+sinalVmCarro.value(0)
+sinalAmCarro.value(0)
+sinalVdCarro.value(0)
+sinalVmPedestre.value(0)
+sinalVdPedestre.value(0)
+
+print("LIBERADO PARA O MOTORISTA")
+
+# --- LOOP PRINCIPAL (Roda continuamente) ---
 while True:
-
-    sinalVmCarro.value(0)
+    # Print para ver o valor do botão (apenas teste)
+    print(f"valor: {botao.value()}")
+    
+    # Estado padrão: Farol verde dos veículos e vermelho dos pedestres acesos
     sinalVdCarro.value(1)
-
+    sinalVmPedestre.value(1)
+    
+    # Verifica se o botão foi pressionado (nível lógico 0)
+    if botao.value() == 0:
+        print(f"Botão foi apertado, valor: {botao.value()}")
+        print("ATENÇÃO MOTORISTA, PREFERENCIA DO PEDESTRE")
+        time.sleep(2) # delay de 2 segundos
+        
+        # Carro: Amarelo / Pedestre: Vermelho
+        sinalVdCarro.value(0)
+        sinalVmPedestre.value(1)
+        sinalVmCarro.value(0)
+        sinalAmCarro.value(1)
+        time.sleep(2)
+        
+        # Carro: Vermelho / Pedestre: Verde
+        sinalAmCarro.value(0)
+        sinalVmCarro.value(1)
+        sinalVdPedestre.value(1)
+        sinalVmPedestre.value(0)
+        print("ATENÇÃO PEDESTRE, PODE PASSAR")
+        time.sleep(5)
+        
+        print("ATENÇÃO PEDESTRE, O SINAL VAI FECHAR EM 13 SEGUNDOS")
+        
+        # Sinal do semáforo dos pedestres começa a piscar (Equivalente ao laço FOR)
+        for contador in range(1, 14):
+            sinalVdPedestre.value(1)
+            time.sleep(0.5)
+            sinalVdPedestre.value(0)
+            time.sleep(0.5)
+            
+            contagem -= 1
+            print(f"ATENÇÃO PEDESTRE, O SINAL VAI FECHAR EM {contagem} SEGUNDOS")
+            
+        print("PEDESTRE, SINAL FECHADO!")
+        
+        # Volta ao estado inicial do sistema
+        sinalVdCarro.value(0)
+        sinalVmPedestre.value(1)
+        sinalVmCarro.value(0)
+        print("MOTORISTA, PODE PROSSEGUIR")
+        
+        # Reinicia a variável de contagem para a próxima vez
+        contagem = 13
+        
+    # Um pequeno delay global para não travar o processador simulado/físico
     time.sleep(0.1)
 </pre>
 
