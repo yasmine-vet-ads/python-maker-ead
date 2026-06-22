@@ -21,6 +21,7 @@
             --accent: #38bdf8;
             --success: #22c55e;
             --danger: #ef4444;
+            --warning: #f59e0b;
             --text: #f8fafc;
             --muted: #94a3b8;
             --border: rgba(255, 255, 255, 0.10);
@@ -50,7 +51,7 @@
 
         .container {
             width: 100%;
-            max-width: 1040px;
+            max-width: 1080px;
             max-height: 92vh;
             overflow-y: auto;
             background: rgba(15, 23, 42, 0.92);
@@ -245,6 +246,85 @@
             margin: 20px 0;
         }
 
+        .warning {
+            background: rgba(245, 158, 11, 0.10);
+            border: 1px solid rgba(245, 158, 11, 0.28);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            margin: 20px 0;
+        }
+
+        .formula-box {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .calculator {
+            background: rgba(20, 184, 166, 0.08);
+            border: 1px solid rgba(20, 184, 166, 0.25);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        label {
+            color: #e2e8f0;
+            font-weight: 700;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            background: #020617;
+            color: white;
+            border: 1px solid var(--border);
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.16);
+        }
+
+        .result-box {
+            display: none;
+            background: #020617;
+            border: 1px solid rgba(94, 234, 212, 0.30);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .result-box h3 {
+            margin-top: 0;
+            color: #5eead4;
+        }
+
+        .result-line {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            color: #cbd5e1;
+        }
+
+        .result-line:last-child {
+            border-bottom: none;
+        }
+
         .quiz-box {
             background: rgba(255,255,255,0.04);
             border: 1px solid var(--border);
@@ -384,6 +464,10 @@
                 display: grid;
                 grid-template-columns: 1fr 1fr;
             }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -404,12 +488,13 @@
                 <h3>O que você vai construir?</h3>
                 <p>
                     Pequenos códigos para organizar fichas, criar alertas, percorrer listas de pacientes,
-                    automatizar cálculos e gerar mensagens técnicas simples.
+                    automatizar cálculos e desenvolver uma calculadora educacional de dose por peso.
                 </p>
                 <div class="tags">
                     <span class="tag">Python básico</span>
                     <span class="tag">Dados</span>
                     <span class="tag">Automação</span>
+                    <span class="tag">Calculadora de dose</span>
                     <span class="tag">HealthTech</span>
                     <span class="tag">VetTech</span>
                 </div>
@@ -443,6 +528,11 @@
 
             <h3>Variáveis: guardando informações</h3>
 
+            <p>
+                Variáveis são nomes usados para guardar informações. Em um sistema de saúde, elas podem armazenar
+                nome do paciente, peso, espécie, idade, exame solicitado ou resultado de uma conta.
+            </p>
+
             <pre class="inline-code">nome_paciente = "Luna"
 especie = "canina"
 idade = 8
@@ -463,6 +553,14 @@ exame = "ultrassonografia abdominal"
 ficha = f"Paciente {nome_paciente}, espécie {especie}, {idade} anos, {peso} kg. Exame: {exame}."
 print(ficha)</pre>
 
+            <h3>Tipos de dados usados nesse exemplo</h3>
+
+            <ul>
+                <li><span class="highlight">str:</span> texto, como nome, espécie e exame.</li>
+                <li><span class="highlight">int:</span> número inteiro, como idade.</li>
+                <li><span class="highlight">float:</span> número decimal, como peso.</li>
+            </ul>
+
             <div class="quiz-box">
                 <div class="quiz-question">Avaliação 1: Qual função é usada para exibir uma mensagem na tela em Python?</div>
                 <div id="opts-1">
@@ -480,9 +578,10 @@ print(ficha)</pre>
 
             <p>
                 Em Python, usamos <code>if</code>, <code>elif</code> e <code>else</code> para criar regras simples.
+                Isso é útil para transformar critérios em mensagens automáticas.
             </p>
 
-            <h3>Exemplo básico</h3>
+            <h3>Exemplo básico de alerta</h3>
 
             <pre class="inline-code">temperatura = 39.4
 
@@ -500,6 +599,14 @@ if idade >= 10 and creatinina > 1.8:
     print("Atenção: paciente geriátrico com alteração renal.")
 else:
     print("Sem alerta automático pelos critérios definidos.")</pre>
+
+            <h3>Aplicação em automação</h3>
+
+            <p>
+                Esse tipo de lógica pode ser usado em dashboards, sistemas de laudos, organização de exames
+                e ferramentas de apoio ao raciocínio. A regra programada não substitui o profissional;
+                ela apenas ajuda a chamar atenção para uma condição definida.
+            </p>
 
             <div class="note">
                 Estes exemplos são educacionais e não substituem avaliação profissional.
@@ -522,6 +629,7 @@ else:
 
             <p>
                 Listas e repetições ajudam a processar vários registros automaticamente.
+                Em saúde, isso pode ser usado para percorrer pacientes, exames, imagens, laudos ou resultados.
             </p>
 
             <h3>Listas</h3>
@@ -538,6 +646,13 @@ print(pacientes[0])</pre>
 for paciente in pacientes:
     print(f"Gerando ficha para: {paciente}")</pre>
 
+            <h3>Exemplo: processar uma lista de pesos</h3>
+
+            <pre class="inline-code">pesos = [4.5, 8.2, 12.0, 23.5]
+
+for peso in pesos:
+    print(f"Peso registrado: {peso} kg")</pre>
+
             <h3>Loop while</h3>
 
             <pre class="inline-code">tentativas = 1
@@ -545,6 +660,10 @@ for paciente in pacientes:
 while tentativas <= 3:
     print(f"Tentativa de envio do relatório: {tentativas}")
     tentativas = tentativas + 1</pre>
+
+            <div class="note">
+                No próximo módulo, vamos juntar variáveis, contas, funções e interface para criar uma calculadora educacional de dose por peso.
+            </div>
 
             <div class="quiz-box">
                 <div class="quiz-question">Avaliação 3: Qual estrutura é ideal para percorrer uma lista de pacientes?</div>
@@ -559,51 +678,162 @@ while tentativas <= 3:
         </section>
 
         <section id="mod4" class="view">
-            <h2>Módulo 4 — Funções e automação de relatórios simples</h2>
+            <h2>Módulo 4 — Funções, automação e calculadora de dose por peso</h2>
+
+            <div class="warning">
+                <strong>Aviso importante:</strong> este módulo é um exemplo educacional de programação.
+                O cálculo demonstrado não substitui prescrição, avaliação clínica, conferência de bula, espécie,
+                contraindicações, concentração real do produto, condição do paciente ou orientação profissional.
+            </div>
 
             <p>
-                Funções permitem reaproveitar blocos de código e automatizar pequenas rotinas.
+                Neste módulo, vamos usar Python para criar uma calculadora didática de dose por peso.
+                O exemplo usado será:
             </p>
 
-            <h3>Função com parâmetros</h3>
+            <ul>
+                <li><strong>Fármaco do exemplo:</strong> dipirona gotas.</li>
+                <li><strong>Dose didática:</strong> 12 mg/kg.</li>
+                <li><strong>Concentração exemplo:</strong> 500 mg/mL.</li>
+                <li><strong>Conversão exemplo:</strong> 20 gotas/mL.</li>
+            </ul>
 
-            <pre class="inline-code">def gerar_ficha(nome, especie, idade, peso):
-    ficha = f"Paciente {nome}, espécie {especie}, {idade} anos, {peso} kg."
-    return ficha
+            <h3>Passo 1 — Entender a dose em mg/kg</h3>
 
-resultado = gerar_ficha("Luna", "canina", 8, 12.4)
-print(resultado)</pre>
+            <p>
+                A dose em mg/kg significa quantos miligramas serão calculados para cada quilograma de peso.
+                Se a dose é <span class="highlight">12 mg/kg</span>, um animal de 10 kg teria:
+            </p>
 
-            <h3>Projeto integrador: relatório automatizado</h3>
+            <div class="formula-box">
+                <p><strong>Dose total em mg = peso do animal × dose em mg/kg</strong></p>
+                <p>Exemplo: 10 kg × 12 mg/kg = 120 mg</p>
+            </div>
 
-            <pre class="inline-code">def gerar_relatorio(nome, especie, exame, achado):
-    texto = f"""
-Relatório simplificado
+            <h3>Passo 2 — Entender a concentração do medicamento</h3>
 
-Paciente: {nome}
-Espécie: {especie}
-Exame: {exame}
-Achado principal: {achado}
+            <p>
+                A concentração em mg/mL indica quantos miligramas existem em 1 mL do produto.
+                No exemplo didático, vamos considerar:
+            </p>
 
-Observação: este texto é um exemplo educacional de automação.
-"""
-    return texto
+            <div class="formula-box">
+                <p><strong>500 mg/mL</strong></p>
+                <p>Isso significa que cada 1 mL contém 500 mg.</p>
+            </div>
 
-relatorio = gerar_relatorio(
-    nome="Mel",
-    especie="felina",
-    exame="ultrassonografia abdominal",
-    achado="bexiga com conteúdo anecoico e parede preservada"
-)
+            <h3>Passo 3 — Converter mL em gotas</h3>
 
-print(relatorio)</pre>
+            <p>
+                Para transformar mililitros em gotas, precisamos saber quantas gotas existem em 1 mL.
+                No exemplo didático, vamos usar:
+            </p>
+
+            <div class="formula-box">
+                <p><strong>20 gotas/mL</strong></p>
+                <p>Então: 500 mg/mL ÷ 20 gotas/mL = 25 mg por gota</p>
+            </div>
+
+            <h3>Passo 4 — Calcular quantas gotas</h3>
+
+            <p>
+                Depois de descobrir quantos mg existem em cada gota, dividimos a dose total pela quantidade de mg por gota.
+            </p>
+
+            <div class="formula-box">
+                <p><strong>Gotas = dose total em mg ÷ mg por gota</strong></p>
+                <p>Exemplo: 120 mg ÷ 25 mg/gota = 4,8 gotas</p>
+                <p>Resultado aproximado: 5 gotas.</p>
+            </div>
+
+            <h3>Passo 5 — Código em Python da calculadora</h3>
+
+            <pre class="inline-code">def calcular_dipirona_gotas(peso_kg):
+    dose_mg_por_kg = 12
+    concentracao_mg_por_ml = 500
+    gotas_por_ml = 20
+
+    dose_total_mg = peso_kg * dose_mg_por_kg
+    mg_por_gota = concentracao_mg_por_ml / gotas_por_ml
+    numero_de_gotas = dose_total_mg / mg_por_gota
+
+    return dose_total_mg, mg_por_gota, numero_de_gotas
+
+
+peso = 10
+
+dose_total, mg_gota, gotas = calcular_dipirona_gotas(peso)
+
+print(f"Peso do animal: {peso} kg")
+print(f"Dose total: {dose_total} mg")
+print(f"Cada gota possui aproximadamente: {mg_gota} mg")
+print(f"Número calculado de gotas: {gotas}")
+print(f"Número aproximado de gotas: {round(gotas)}")</pre>
+
+            <h3>Calculadora interativa</h3>
+
+            <p>
+                Agora teste o cálculo diretamente na página. Os campos de concentração e gotas por mL estão liberados
+                para você adaptar conforme o produto utilizado.
+            </p>
+
+            <div class="calculator">
+                <div class="calculator-grid">
+                    <div>
+                        <label for="pesoAnimal">Peso do animal em kg</label>
+                        <input id="pesoAnimal" type="number" step="0.1" min="0" value="10" />
+                    </div>
+
+                    <div>
+                        <label for="doseMgKg">Dose em mg/kg</label>
+                        <input id="doseMgKg" type="number" step="0.1" min="0" value="12" />
+                    </div>
+
+                    <div>
+                        <label for="concentracao">Concentração em mg/mL</label>
+                        <input id="concentracao" type="number" step="0.1" min="0" value="500" />
+                    </div>
+
+                    <div>
+                        <label for="gotasPorMl">Gotas por mL</label>
+                        <input id="gotasPorMl" type="number" step="1" min="1" value="20" />
+                    </div>
+                </div>
+
+                <button class="btn" onclick="calcularDose()">Calcular dose</button>
+
+                <div class="result-box" id="resultadoDose">
+                    <h3>Resultado do cálculo</h3>
+                    <div class="result-line" id="linha1"></div>
+                    <div class="result-line" id="linha2"></div>
+                    <div class="result-line" id="linha3"></div>
+                    <div class="result-line" id="linha4"></div>
+                    <div class="result-line" id="linha5"></div>
+                    <div class="result-line" id="linha6"></div>
+                </div>
+            </div>
+
+            <h3>Passo 6 — Como o JavaScript faz o mesmo cálculo na página</h3>
+
+            <pre class="inline-code">function calcularDose() {
+    const peso = Number(document.getElementById("pesoAnimal").value);
+    const doseMgKg = Number(document.getElementById("doseMgKg").value);
+    const concentracao = Number(document.getElementById("concentracao").value);
+    const gotasPorMl = Number(document.getElementById("gotasPorMl").value);
+
+    const doseTotalMg = peso * doseMgKg;
+    const volumeMl = doseTotalMg / concentracao;
+    const mgPorGota = concentracao / gotasPorMl;
+    const gotasCalculadas = doseTotalMg / mgPorGota;
+    const gotasArredondadas = Math.round(gotasCalculadas);
+}</pre>
 
             <div class="quiz-box">
-                <div class="quiz-question">Avaliação 4: Qual palavra-chave é usada para criar uma função em Python?</div>
+                <div class="quiz-question">Avaliação 4: Qual fórmula calcula a dose total em mg?</div>
                 <div id="opts-4">
-                    <button class="option-btn" onclick="selectOption(4, this, false)">A) function</button>
-                    <button class="option-btn" onclick="selectOption(4, this, true)">B) def</button>
-                    <button class="option-btn" onclick="selectOption(4, this, false)">C) create</button>
+                    <button class="option-btn" onclick="selectOption(4, this, true)">A) peso em kg × dose em mg/kg</button>
+                    <button class="option-btn" onclick="selectOption(4, this, false)">B) peso em kg ÷ dose em mg/kg</button>
+                    <button class="option-btn" onclick="selectOption(4, this, false)">C) concentração em mg/mL × gotas por mL</button>
                 </div>
                 <div id="feedback-4" class="feedback"></div>
                 <button class="btn" id="btn-next-4" style="display:none;" onclick="mostrarConclusao()">Finalizar curso</button>
@@ -623,14 +853,15 @@ print(relatorio)</pre>
                 <p style="margin-top: 32px;">Certificamos que</p>
                 <div class="cert-name" id="cert-name"></div>
                 <p>
-                    concluiu o curso <strong>Python Start Health: curso introdutório de programação para saúde, dados e automação</strong>.
+                    concluiu o curso <strong>Python Start Health: curso introdutório de programação para saúde, dados e automação</strong>,
+                    incluindo fundamentos de Python, lógica de programação, organização de dados e calculadora educacional de dose por peso.
                 </p>
                 <p id="cert-date"></p>
             </div>
         </section>
 
         <footer class="footer">
-            Python Start Health · Curso introdutório de programação para saúde, dados e automação
+            Python Start Health · Curso introdutório de programação para saúde, dados, automação e cálculo educacional de dose por peso
         </footer>
     </main>
 
@@ -695,6 +926,33 @@ print(relatorio)</pre>
                     feedback.style.display = "none";
                 }, 1200);
             }
+        }
+
+        function calcularDose() {
+            const peso = Number(document.getElementById("pesoAnimal").value);
+            const doseMgKg = Number(document.getElementById("doseMgKg").value);
+            const concentracao = Number(document.getElementById("concentracao").value);
+            const gotasPorMl = Number(document.getElementById("gotasPorMl").value);
+
+            if (!peso || !doseMgKg || !concentracao || !gotasPorMl || peso <= 0 || doseMgKg <= 0 || concentracao <= 0 || gotasPorMl <= 0) {
+                alert("Preencha todos os campos com valores maiores que zero.");
+                return;
+            }
+
+            const doseTotalMg = peso * doseMgKg;
+            const volumeMl = doseTotalMg / concentracao;
+            const mgPorGota = concentracao / gotasPorMl;
+            const gotasCalculadas = doseTotalMg / mgPorGota;
+            const gotasArredondadas = Math.round(gotasCalculadas);
+
+            document.getElementById("linha1").innerHTML = `<strong>1. Dose total:</strong> ${peso.toFixed(2)} kg × ${doseMgKg.toFixed(2)} mg/kg = ${doseTotalMg.toFixed(2)} mg`;
+            document.getElementById("linha2").innerHTML = `<strong>2. Concentração usada:</strong> ${concentracao.toFixed(2)} mg/mL`;
+            document.getElementById("linha3").innerHTML = `<strong>3. Volume em mL:</strong> ${doseTotalMg.toFixed(2)} mg ÷ ${concentracao.toFixed(2)} mg/mL = ${volumeMl.toFixed(3)} mL`;
+            document.getElementById("linha4").innerHTML = `<strong>4. mg por gota:</strong> ${concentracao.toFixed(2)} mg/mL ÷ ${gotasPorMl.toFixed(0)} gotas/mL = ${mgPorGota.toFixed(2)} mg/gota`;
+            document.getElementById("linha5").innerHTML = `<strong>5. Número de gotas:</strong> ${doseTotalMg.toFixed(2)} mg ÷ ${mgPorGota.toFixed(2)} mg/gota = ${gotasCalculadas.toFixed(2)} gotas`;
+            document.getElementById("linha6").innerHTML = `<strong>6. Resultado aproximado:</strong> ${gotasArredondadas} gotas. Conferir sempre bula, prescrição e orientação profissional.`;
+
+            document.getElementById("resultadoDose").style.display = "block";
         }
 
         function mostrarConclusao() {
