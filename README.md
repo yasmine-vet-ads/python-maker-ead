@@ -1,27 +1,70 @@
-# 🐍 Plataforma EAD Maker & Python Show
+# 🐍 Python Maker EAD
 
-Uma plataforma interativa de ensino à distância gamificada, focada em introduzir conceitos de Lógica de Programação, Python e Cultura Maker (com simulação de IoT e hardware).
+Plataforma online de cursos introdutórios de Python, com trilhas temáticas, atividades interativas, quizzes gamificados e emissão de certificado.
 
-[![Deploy Status](https://img.shields.io/badge/Deploy-Online_no_Render-success)](#) 
-[![Python Version](https://img.shields.io/badge/Python-3.10+-blue)](#)
+O projeto reúne duas experiências educacionais dentro do mesmo repositório:
 
-## 🎯 Sobre o Projeto
-Este projeto foi desenvolvido para revolucionar o aprendizado básico de tecnologia, saindo da teoria maçante e indo direto para a prática. Ele une conteúdo didático, simulação de hardware e gamificação.
-
-A experiência culmina no **Python Show**, uma sabatina interativa com design nostálgico e efeitos sonoros, que avalia o conhecimento do aluno e emite um certificado de conclusão dinâmico e personalizado.
-
-## 🚀 Como Acessar (Sem Instalação)
-O projeto está hospedado 100% na nuvem e pronto para uso em qualquer navegador.
-
-👉 **[CLIQUE AQUI PARA ACESSAR A PLATAFORMA ONLINE](https://python-maker-ead.onrender.com)**
-
-> **⚠️ Nota sobre o carregamento:** > Como a aplicação está hospedada na camada gratuita do *Render*, o servidor entra em modo de hibernação (sleep) após um período de inatividade para economizar recursos. **O primeiro acesso pode levar cerca de 40 a 50 segundos para "acordar" a plataforma.** Agradeço a compreensão!
-
-## 🛠️ Tecnologias Utilizadas
-* **Backend:** Python, FastAPI, Uvicorn.
-* **Frontend:** HTML5, CSS3, JavaScript Vanilla.
-* **Simulação Maker:** Design vetorial interativo (SVG) inspirado no Wokwi Simulator.
-* **Recursos Multimídia:** YouTube Iframe API e Canvas Confetti.
+1. **Python Maker** — curso original com lógica de programação, Python, cultura maker, simulação de hardware/IoT e Python Show Maker.
+2. **Python Start Health** — versão aplicada à saúde, medicina veterinária, dados clínicos, automação, cálculo educacional de dose por peso e Python Show Health.
 
 ---
 
+## 🚀 Acesso online
+
+A plataforma está publicada no Render:
+
+**Página principal:**
+
+https://python-maker-ead.onrender.com
+
+**Curso Python Maker:**
+
+https://python-maker-ead.onrender.com/python-maker
+
+**Python Show Maker:**
+
+https://python-maker-ead.onrender.com/python-show
+
+**Curso Python Start Health:**
+
+https://python-maker-ead.onrender.com/python-start-health
+
+**Python Show Health:**
+
+https://python-maker-ead.onrender.com/python-show-health
+
+> ⚠️ Observação: como a aplicação pode estar hospedada na camada gratuita do Render, o primeiro acesso pode demorar alguns segundos para carregar.
+
+---
+
+## 🎯 Objetivo do projeto
+
+O objetivo da plataforma é apresentar conceitos introdutórios de programação em Python de forma prática, visual e contextualizada.
+
+A proposta combina:
+
+- ensino básico de lógica de programação;
+- explicações com analogias;
+- exemplos aplicados;
+- quizzes de fixação;
+- gamificação;
+- emissão de certificado;
+- uso de rotas separadas para diferentes trilhas de aprendizagem.
+
+---
+
+## 🧭 Estrutura da plataforma
+
+### Página principal
+
+A página inicial apresenta as opções disponíveis e direciona o aluno para:
+
+- curso Python Maker;
+- Python Show Maker;
+- curso Python Start Health;
+- Python Show Health.
+
+Arquivo principal:
+
+```txt
+landing.html
