@@ -30,7 +30,9 @@
             --radius-sm: 10px;
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             margin: 0;
@@ -130,7 +132,9 @@
             font-weight: 600;
         }
 
-        .progress-container { margin-bottom: 30px; }
+        .progress-container {
+            margin-bottom: 30px;
+        }
 
         .module-nav {
             display: flex;
@@ -147,7 +151,9 @@
             cursor: pointer;
         }
 
-        .module-nav span:hover { color: var(--accent); }
+        .module-nav span:hover {
+            color: var(--accent);
+        }
 
         .progress-bar {
             width: 100%;
@@ -164,7 +170,9 @@
             transition: width 0.4s ease;
         }
 
-        .view { display: none; }
+        .view {
+            display: none;
+        }
 
         .view.active {
             display: block;
@@ -172,8 +180,14 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h2 {
@@ -193,7 +207,9 @@
             font-size: 16px;
         }
 
-        strong { color: #e2e8f0; }
+        strong {
+            color: #e2e8f0;
+        }
 
         code {
             font-family: "Fira Code", monospace;
@@ -313,7 +329,9 @@
             color: #cbd5e1;
         }
 
-        .result-line:last-child { border-bottom: none; }
+        .result-line:last-child {
+            border-bottom: none;
+        }
 
         .quiz-box {
             background: rgba(255,255,255,0.04);
@@ -330,7 +348,7 @@
             margin-bottom: 18px;
         }
 
-        .option-btn, .show-option {
+        .option-btn {
             width: 100%;
             display: block;
             text-align: left;
@@ -346,26 +364,26 @@
             font-family: inherit;
         }
 
-        .option-btn:hover, .show-option:hover {
+        .option-btn:hover {
             border-color: var(--accent);
             transform: translateX(4px);
         }
 
-        .option-btn.correct, .show-option.correct {
+        .option-btn.correct {
             background: rgba(34, 197, 94, 0.15);
             color: #86efac;
             border-color: var(--success);
             font-weight: 800;
         }
 
-        .option-btn.wrong, .show-option.wrong {
+        .option-btn.wrong {
             background: rgba(239, 68, 68, 0.15);
             color: #fca5a5;
             border-color: var(--danger);
             font-weight: 800;
         }
 
-        .feedback, .show-feedback {
+        .feedback {
             display: none;
             margin-top: 16px;
             padding: 13px;
@@ -384,6 +402,10 @@
             margin-top: 20px;
             transition: 0.2s;
             font-family: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn:hover {
@@ -391,55 +413,8 @@
             transform: translateY(-2px);
         }
 
-        .btn.secondary { background: #334155; }
-
-        .python-show {
-            background:
-                radial-gradient(circle at top, rgba(245, 158, 11, 0.12), transparent 48%),
-                rgba(2, 6, 23, 0.88);
-            border: 2px solid rgba(245, 158, 11, 0.28);
-            border-radius: var(--radius-lg);
-            padding: 26px;
-            margin-top: 34px;
-        }
-
-        .show-score {
-            color: #fde68a;
-            font-size: 15px;
-            font-weight: 800;
-            margin-bottom: 16px;
-        }
-
-        .certificate {
-            display: none;
-            text-align: center;
-            padding: 42px;
-            border-radius: var(--radius-lg);
-            border: 2px solid rgba(20, 184, 166, 0.35);
-            background: #0f172a;
-        }
-
-        .input-name {
-            width: 100%;
-            max-width: 420px;
-            background: #020617;
-            color: white;
-            border: 1px solid var(--border);
-            padding: 15px;
-            border-radius: var(--radius-sm);
-            text-align: center;
-            font-size: 16px;
-            margin-top: 18px;
-        }
-
-        .cert-name {
-            font-size: clamp(28px, 5vw, 44px);
-            color: white;
-            font-weight: 800;
-            border-bottom: 2px dashed rgba(94, 234, 212, 0.35);
-            padding-bottom: 12px;
-            margin: 28px auto;
-            max-width: 720px;
+        .btn.secondary {
+            background: #334155;
         }
 
         .footer {
@@ -453,11 +428,26 @@
         }
 
         @media (max-width: 780px) {
-            body { padding: 12px; }
-            .container { padding: 24px; }
-            .header { grid-template-columns: 1fr; }
-            .module-nav { display: grid; grid-template-columns: 1fr 1fr; }
-            .calculator-grid { grid-template-columns: 1fr; }
+            body {
+                padding: 12px;
+            }
+
+            .container {
+                padding: 24px;
+            }
+
+            .header {
+                grid-template-columns: 1fr;
+            }
+
+            .module-nav {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -570,19 +560,6 @@ exame = "ultrassonografia abdominal"
 ficha = f"Paciente {nome_paciente}, espécie {especie}, {idade} anos, {peso} kg. Exame: {exame}."
 print(ficha)</pre>
 
-            <h3>5. Mini exercício</h3>
-
-            <p>
-                Troque os dados abaixo por outro paciente e rode o código em um ambiente Python.
-            </p>
-
-            <pre class="inline-code">nome = "Rex"
-peso = 18.7
-exame = "hemograma"
-
-mensagem = f"O paciente {nome} pesa {peso} kg e realizará o exame: {exame}."
-print(mensagem)</pre>
-
             <div class="quiz-box">
                 <div class="quiz-question">Avaliação 1: Na analogia da saúde, uma variável em Python parece com:</div>
                 <div id="opts-1">
@@ -642,18 +619,7 @@ if idade >= 10 and creatinina > 1.8:
 else:
     print("Sem alerta automático pelos critérios definidos.")</pre>
 
-            <h3>4. Usando elif para mais de uma classificação</h3>
-
-            <pre class="inline-code">peso = 4.8
-
-if peso < 5:
-    print("Paciente de pequeno porte.")
-elif peso <= 20:
-    print("Paciente de médio porte.")
-else:
-    print("Paciente de grande porte.")</pre>
-
-            <h3>5. Validação de dados</h3>
+            <h3>4. Validação de dados</h3>
 
             <p>
                 Em sistemas de saúde, validar dados evita erros. Por exemplo: peso não pode ser negativo.
@@ -710,14 +676,7 @@ print(pacientes[0])</pre>
 for paciente in pacientes:
     print(f"Gerando ficha para: {paciente}")</pre>
 
-            <h3>3. Processando uma lista de pesos</h3>
-
-            <pre class="inline-code">pesos = [4.5, 8.2, 12.0, 23.5]
-
-for peso in pesos:
-    print(f"Peso registrado: {peso} kg")</pre>
-
-            <h3>4. Lista de dicionários: prontuários estruturados</h3>
+            <h3>3. Lista de dicionários: prontuários estruturados</h3>
 
             <p>
                 Um dicionário guarda informações em pares de chave e valor. É parecido com um prontuário estruturado.
@@ -733,7 +692,7 @@ for peso in pesos:
 print(paciente["nome"])
 print(paciente["peso"])</pre>
 
-            <h3>5. Vários prontuários em uma lista</h3>
+            <h3>4. Vários prontuários em uma lista</h3>
 
             <pre class="inline-code">pacientes = [
     {"nome": "Luna", "peso": 12.4},
@@ -743,20 +702,6 @@ print(paciente["peso"])</pre>
 
 for paciente in pacientes:
     print(f"{paciente['nome']} pesa {paciente['peso']} kg.")</pre>
-
-            <h3>6. Loop while: repetindo até uma condição mudar</h3>
-
-            <pre class="inline-code">pendencias = 3
-
-while pendencias > 0:
-    print(f"Há {pendencias} exames pendentes.")
-    pendencias = pendencias - 1
-
-print("Todas as pendências foram processadas.")</pre>
-
-            <div class="note">
-                No próximo módulo, vamos juntar variáveis, contas, funções, validação e interface para criar uma calculadora educacional de dose por peso.
-            </div>
 
             <div class="quiz-box">
                 <div class="quiz-question">Avaliação 3: Qual estrutura é ideal para percorrer uma lista de pacientes?</div>
@@ -904,21 +849,6 @@ print(f"Número aproximado de gotas: {round(gotas)}")</pre>
                 </div>
             </div>
 
-            <h3>5. Código JavaScript da calculadora da página</h3>
-
-            <pre class="inline-code">function calcularDose() {
-    const peso = Number(document.getElementById("pesoAnimal").value);
-    const doseMgKg = Number(document.getElementById("doseMgKg").value);
-    const concentracao = Number(document.getElementById("concentracao").value);
-    const gotasPorMl = Number(document.getElementById("gotasPorMl").value);
-
-    const doseTotalMg = peso * doseMgKg;
-    const volumeMl = doseTotalMg / concentracao;
-    const mgPorGota = concentracao / gotasPorMl;
-    const gotasCalculadas = doseTotalMg / mgPorGota;
-    const gotasArredondadas = Math.round(gotasCalculadas);
-}</pre>
-
             <div class="quiz-box">
                 <div class="quiz-question">Avaliação 4: Qual fórmula calcula a dose total em mg?</div>
                 <div id="opts-4">
@@ -927,53 +857,7 @@ print(f"Número aproximado de gotas: {round(gotas)}")</pre>
                     <button class="option-btn" onclick="selectOption(4, this, false)">C) concentração em mg/mL × gotas por mL</button>
                 </div>
                 <div id="feedback-4" class="feedback"></div>
-                <button class="btn" id="btn-next-4" style="display:none;" onclick="mostrarPythonShow()">Ir para o Python Show Health</button>
-            </div>
-
-            <section id="python-show-health" class="python-show" style="display:none;">
-                <div class="badge">🎤 Python Show Health</div>
-                <h2>Python Show Health — Revisão final</h2>
-                <p>
-                    Agora é hora de revisar o curso em formato de quiz. As perguntas conectam Python com situações
-                    da saúde, dados e automação.
-                </p>
-
-                <div class="show-score" id="show-score">Pontuação: 0 de 5</div>
-
-                <div id="show-question-area">
-                    <div class="quiz-question" id="show-question"></div>
-                    <div id="show-options"></div>
-                    <div class="show-feedback" id="show-feedback"></div>
-                    <button class="btn" id="show-next-btn" style="display:none;" onclick="proximaPerguntaShow()">Próxima pergunta</button>
-                </div>
-
-                <div id="show-final" style="display:none;">
-                    <h3>Resultado final</h3>
-                    <p id="show-final-text"></p>
-                    <button class="btn" onclick="mostrarConclusao()">Gerar certificado</button>
-                    <button class="btn secondary" onclick="reiniciarPythonShow()">Refazer Python Show Health</button>
-                </div>
-            </section>
-        </section>
-
-        <section id="certificate" class="certificate">
-            <h2>Certificado de Conclusão</h2>
-            <p>Informe seu nome para gerar uma declaração simples de conclusão do curso.</p>
-
-            <input class="input-name" id="student-name" type="text" placeholder="Digite seu nome completo" />
-
-            <button class="btn" onclick="gerarCertificado()">Gerar certificado</button>
-            <button class="btn secondary" onclick="reiniciarCurso()">Reiniciar curso</button>
-
-            <div id="certificate-output" style="display:none;">
-                <p style="margin-top: 32px;">Certificamos que</p>
-                <div class="cert-name" id="cert-name"></div>
-                <p>
-                    concluiu o curso <strong>Python Start Health: curso introdutório de programação para saúde, dados e automação</strong>,
-                    incluindo fundamentos de Python, analogias aplicadas à saúde, organização de dados,
-                    calculadora educacional de dose por peso e revisão final no Python Show Health.
-                </p>
-                <p id="cert-date"></p>
+                <a class="btn" id="btn-next-4" style="display:none;" href="/python-show-health">➔ IR PARA O PYTHON SHOW HEALTH 🎙️</a>
             </div>
         </section>
 
@@ -985,62 +869,6 @@ print(f"Número aproximado de gotas: {round(gotas)}")</pre>
     <script>
         let moduloAtual = 1;
         const totalModulos = 4;
-
-        const perguntasShow = [
-            {
-                pergunta: "Na analogia do curso, uma variável em Python é parecida com:",
-                opcoes: [
-                    "Um campo da ficha do paciente",
-                    "Um erro do sistema",
-                    "Um medicamento sem rótulo"
-                ],
-                correta: 0,
-                explicacao: "Variáveis guardam informações, assim como campos de uma ficha guardam nome, peso, idade ou exame."
-            },
-            {
-                pergunta: "Qual estrutura representa uma regra de triagem?",
-                opcoes: [
-                    "for",
-                    "if",
-                    "print"
-                ],
-                correta: 1,
-                explicacao: "O if permite testar uma condição e executar uma ação se ela for verdadeira."
-            },
-            {
-                pergunta: "Uma lista de pacientes pode ser percorrida com:",
-                opcoes: [
-                    "for",
-                    "else",
-                    "return"
-                ],
-                correta: 0,
-                explicacao: "O for percorre item por item de uma lista, como uma fila de pacientes."
-            },
-            {
-                pergunta: "Uma função em Python pode ser comparada a:",
-                opcoes: [
-                    "Um protocolo reutilizável",
-                    "Um dado perdido",
-                    "Uma tela vazia"
-                ],
-                correta: 0,
-                explicacao: "A função reúne passos em um bloco reutilizável, como um protocolo técnico."
-            },
-            {
-                pergunta: "Na calculadora didática, a dose total em mg é calculada por:",
-                opcoes: [
-                    "peso em kg × dose em mg/kg",
-                    "peso em kg ÷ concentração",
-                    "gotas por mL × idade"
-                ],
-                correta: 0,
-                explicacao: "A dose total em mg é calculada multiplicando o peso pela dose em mg/kg."
-            }
-        ];
-
-        let perguntaShowAtual = 0;
-        let pontuacaoShow = 0;
 
         function atualizarProgresso() {
             const progresso = (moduloAtual / totalModulos) * 100;
@@ -1054,8 +882,6 @@ print(f"Número aproximado de gotas: {round(gotas)}")</pre>
                 view.classList.remove("active");
             });
 
-            document.getElementById("certificate").style.display = "none";
-            document.getElementById("progress-section").style.display = "block";
             document.getElementById("mod" + numero).classList.add("active");
 
             atualizarProgresso();
@@ -1082,7 +908,15 @@ print(f"Número aproximado de gotas: {round(gotas)}")</pre>
                 feedback.style.background = "rgba(34, 197, 94, 0.12)";
                 feedback.style.color = "#86efac";
                 feedback.innerHTML = "✅ Correto! Você pode avançar.";
-                botaoAvancar.style.display = "inline-block";
+                botaoAvancar.style.display = "inline-flex";
+
+                if (typeof confetti === "function") {
+                    confetti({
+                        particleCount: 40,
+                        spread: 50,
+                        origin: { y: 0.75 }
+                    });
+                }
             } else {
                 botao.classList.add("wrong");
                 feedback.style.display = "block";
@@ -1126,184 +960,6 @@ print(f"Número aproximado de gotas: {round(gotas)}")</pre>
             document.getElementById("linha6").innerHTML = `<strong>6. Resultado aproximado:</strong> ${gotasArredondadas} gotas. Conferir sempre bula, prescrição e orientação profissional.`;
 
             document.getElementById("resultadoDose").style.display = "block";
-        }
-
-        function mostrarPythonShow() {
-            document.getElementById("python-show-health").style.display = "block";
-            reiniciarPythonShow(false);
-            document.getElementById("python-show-health").scrollIntoView({ behavior: "smooth" });
-        }
-
-        function carregarPerguntaShow() {
-            const pergunta = perguntasShow[perguntaShowAtual];
-            const areaPergunta = document.getElementById("show-question");
-            const areaOpcoes = document.getElementById("show-options");
-            const feedback = document.getElementById("show-feedback");
-            const nextBtn = document.getElementById("show-next-btn");
-
-            document.getElementById("show-score").innerText = `Pontuação: ${pontuacaoShow} de ${perguntasShow.length}`;
-            areaPergunta.innerText = pergunta.pergunta;
-            areaOpcoes.innerHTML = "";
-            feedback.style.display = "none";
-            nextBtn.style.display = "none";
-
-            pergunta.opcoes.forEach((opcao, index) => {
-                const botao = document.createElement("button");
-                botao.className = "show-option";
-                botao.innerText = `${String.fromCharCode(65 + index)}) ${opcao}`;
-                botao.onclick = function () {
-                    responderShow(index, botao);
-                };
-                areaOpcoes.appendChild(botao);
-            });
-        }
-
-        function responderShow(indice, botao) {
-            const pergunta = perguntasShow[perguntaShowAtual];
-            const botoes = document.querySelectorAll(".show-option");
-            const feedback = document.getElementById("show-feedback");
-            const nextBtn = document.getElementById("show-next-btn");
-
-            botoes.forEach((btn) => {
-                btn.disabled = true;
-                btn.style.cursor = "not-allowed";
-            });
-
-            if (indice === pergunta.correta) {
-                botao.classList.add("correct");
-                pontuacaoShow++;
-                feedback.style.display = "block";
-                feedback.style.background = "rgba(34, 197, 94, 0.12)";
-                feedback.style.color = "#86efac";
-                feedback.innerHTML = `✅ Correto! ${pergunta.explicacao}`;
-            } else {
-                botao.classList.add("wrong");
-                botoes[pergunta.correta].classList.add("correct");
-                feedback.style.display = "block";
-                feedback.style.background = "rgba(239, 68, 68, 0.12)";
-                feedback.style.color = "#fca5a5";
-                feedback.innerHTML = `❌ Resposta incorreta. ${pergunta.explicacao}`;
-            }
-
-            document.getElementById("show-score").innerText = `Pontuação: ${pontuacaoShow} de ${perguntasShow.length}`;
-            nextBtn.style.display = "inline-block";
-        }
-
-        function proximaPerguntaShow() {
-            perguntaShowAtual++;
-
-            if (perguntaShowAtual >= perguntasShow.length) {
-                finalizarPythonShow();
-            } else {
-                carregarPerguntaShow();
-            }
-        }
-
-        function finalizarPythonShow() {
-            document.getElementById("show-question-area").style.display = "none";
-            document.getElementById("show-final").style.display = "block";
-
-            const percentual = (pontuacaoShow / perguntasShow.length) * 100;
-            let mensagem = "";
-
-            if (percentual >= 80) {
-                mensagem = `Excelente! Você acertou ${pontuacaoShow} de ${perguntasShow.length}. Você compreendeu muito bem os conceitos do Python Start Health.`;
-            } else if (percentual >= 60) {
-                mensagem = `Bom resultado! Você acertou ${pontuacaoShow} de ${perguntasShow.length}. Revise alguns pontos e continue praticando.`;
-            } else {
-                mensagem = `Você acertou ${pontuacaoShow} de ${perguntasShow.length}. Releia os módulos com calma e refaça o Python Show Health.`;
-            }
-
-            document.getElementById("show-final-text").innerText = mensagem;
-
-            if (typeof confetti === "function" && percentual >= 60) {
-                confetti({
-                    particleCount: 120,
-                    spread: 80,
-                    origin: { y: 0.65 }
-                });
-            }
-        }
-
-        function reiniciarPythonShow(scroll = true) {
-            perguntaShowAtual = 0;
-            pontuacaoShow = 0;
-            document.getElementById("show-question-area").style.display = "block";
-            document.getElementById("show-final").style.display = "none";
-            carregarPerguntaShow();
-
-            if (scroll) {
-                document.getElementById("python-show-health").scrollIntoView({ behavior: "smooth" });
-            }
-        }
-
-        function mostrarConclusao() {
-            document.querySelectorAll(".view").forEach((view) => {
-                view.classList.remove("active");
-            });
-
-            document.getElementById("progress-section").style.display = "none";
-            document.getElementById("certificate").style.display = "block";
-
-            if (typeof confetti === "function") {
-                confetti({
-                    particleCount: 140,
-                    spread: 80,
-                    origin: { y: 0.65 }
-                });
-            }
-
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-
-        function gerarCertificado() {
-            const nome = document.getElementById("student-name").value.trim();
-
-            if (!nome) {
-                alert("Digite seu nome completo para gerar o certificado.");
-                return;
-            }
-
-            const data = new Date().toLocaleDateString("pt-BR");
-
-            document.getElementById("cert-name").innerText = nome;
-            document.getElementById("cert-date").innerText = "Data de conclusão: " + data;
-            document.getElementById("certificate-output").style.display = "block";
-
-            if (typeof confetti === "function") {
-                confetti({
-                    particleCount: 180,
-                    spread: 100,
-                    origin: { y: 0.6 }
-                });
-            }
-        }
-
-        function reiniciarCurso() {
-            document.querySelectorAll(".option-btn").forEach((botao) => {
-                botao.disabled = false;
-                botao.style.cursor = "pointer";
-                botao.classList.remove("correct", "wrong");
-            });
-
-            document.querySelectorAll(".feedback").forEach((feedback) => {
-                feedback.style.display = "none";
-            });
-
-            document.querySelectorAll(".quiz-box .btn").forEach((botao) => {
-                if (botao.id.startsWith("btn-next")) {
-                    botao.style.display = "none";
-                }
-            });
-
-            document.getElementById("certificate-output").style.display = "none";
-            document.getElementById("student-name").value = "";
-
-            if (document.getElementById("python-show-health")) {
-                document.getElementById("python-show-health").style.display = "none";
-            }
-
-            navegarParaModulo(1);
         }
 
         atualizarProgresso();
