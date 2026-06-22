@@ -30,9 +30,7 @@
             --radius-sm: 10px;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -51,7 +49,7 @@
 
         .container {
             width: 100%;
-            max-width: 1080px;
+            max-width: 1120px;
             max-height: 92vh;
             overflow-y: auto;
             background: rgba(15, 23, 42, 0.92);
@@ -86,7 +84,7 @@
 
         h1 {
             margin: 0;
-            font-size: clamp(32px, 5vw, 54px);
+            font-size: clamp(32px, 5vw, 56px);
             line-height: 1;
             letter-spacing: -0.05em;
         }
@@ -132,9 +130,7 @@
             font-weight: 600;
         }
 
-        .progress-container {
-            margin-bottom: 30px;
-        }
+        .progress-container { margin-bottom: 30px; }
 
         .module-nav {
             display: flex;
@@ -151,9 +147,7 @@
             cursor: pointer;
         }
 
-        .module-nav span:hover {
-            color: var(--accent);
-        }
+        .module-nav span:hover { color: var(--accent); }
 
         .progress-bar {
             width: 100%;
@@ -170,9 +164,7 @@
             transition: width 0.4s ease;
         }
 
-        .view {
-            display: none;
-        }
+        .view { display: none; }
 
         .view.active {
             display: block;
@@ -180,14 +172,8 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h2 {
@@ -207,9 +193,7 @@
             font-size: 16px;
         }
 
-        strong {
-            color: #e2e8f0;
-        }
+        strong { color: #e2e8f0; }
 
         code {
             font-family: "Fira Code", monospace;
@@ -252,6 +236,14 @@
             border-radius: var(--radius-md);
             padding: 18px;
             margin: 20px 0;
+        }
+
+        .analogy {
+            background: rgba(20, 184, 166, 0.08);
+            border: 1px solid rgba(20, 184, 166, 0.22);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            margin: 18px 0;
         }
 
         .formula-box {
@@ -321,9 +313,7 @@
             color: #cbd5e1;
         }
 
-        .result-line:last-child {
-            border-bottom: none;
-        }
+        .result-line:last-child { border-bottom: none; }
 
         .quiz-box {
             background: rgba(255,255,255,0.04);
@@ -340,7 +330,7 @@
             margin-bottom: 18px;
         }
 
-        .option-btn {
+        .option-btn, .show-option {
             width: 100%;
             display: block;
             text-align: left;
@@ -356,26 +346,26 @@
             font-family: inherit;
         }
 
-        .option-btn:hover {
+        .option-btn:hover, .show-option:hover {
             border-color: var(--accent);
             transform: translateX(4px);
         }
 
-        .option-btn.correct {
+        .option-btn.correct, .show-option.correct {
             background: rgba(34, 197, 94, 0.15);
             color: #86efac;
             border-color: var(--success);
             font-weight: 800;
         }
 
-        .option-btn.wrong {
+        .option-btn.wrong, .show-option.wrong {
             background: rgba(239, 68, 68, 0.15);
             color: #fca5a5;
             border-color: var(--danger);
             font-weight: 800;
         }
 
-        .feedback {
+        .feedback, .show-feedback {
             display: none;
             margin-top: 16px;
             padding: 13px;
@@ -401,8 +391,23 @@
             transform: translateY(-2px);
         }
 
-        .btn.secondary {
-            background: #334155;
+        .btn.secondary { background: #334155; }
+
+        .python-show {
+            background:
+                radial-gradient(circle at top, rgba(245, 158, 11, 0.12), transparent 48%),
+                rgba(2, 6, 23, 0.88);
+            border: 2px solid rgba(245, 158, 11, 0.28);
+            border-radius: var(--radius-lg);
+            padding: 26px;
+            margin-top: 34px;
+        }
+
+        .show-score {
+            color: #fde68a;
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 16px;
         }
 
         .certificate {
@@ -448,26 +453,11 @@
         }
 
         @media (max-width: 780px) {
-            body {
-                padding: 12px;
-            }
-
-            .container {
-                padding: 24px;
-            }
-
-            .header {
-                grid-template-columns: 1fr;
-            }
-
-            .module-nav {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .calculator-grid {
-                grid-template-columns: 1fr;
-            }
+            body { padding: 12px; }
+            .container { padding: 24px; }
+            .header { grid-template-columns: 1fr; }
+            .module-nav { display: grid; grid-template-columns: 1fr 1fr; }
+            .calculator-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -479,24 +469,23 @@
                 <div class="badge">🩺 Python aplicado à saúde, dados e automação</div>
                 <h1><span class="gradient">Python Start Health</span></h1>
                 <p class="subtitle">
-                    Curso introdutório de programação para quem deseja aprender Python com exemplos práticos em saúde,
-                    medicina veterinária, dados, laudos, automação e inovação digital.
+                    Curso introdutório de programação para quem deseja aprender Python com analogias da saúde,
+                    medicina veterinária, dados clínicos, laudos, automação e inovação digital.
                 </p>
             </div>
 
             <div class="health-card">
-                <h3>O que você vai construir?</h3>
+                <h3>Como você vai aprender?</h3>
                 <p>
-                    Pequenos códigos para organizar fichas, criar alertas, percorrer listas de pacientes,
-                    automatizar cálculos e desenvolver uma calculadora educacional de dose por peso.
+                    Cada conceito de Python será comparado com uma rotina da saúde:
+                    ficha do paciente, triagem, fila de atendimento e protocolos automatizados.
                 </p>
                 <div class="tags">
                     <span class="tag">Python básico</span>
                     <span class="tag">Dados</span>
                     <span class="tag">Automação</span>
                     <span class="tag">Calculadora de dose</span>
-                    <span class="tag">HealthTech</span>
-                    <span class="tag">VetTech</span>
+                    <span class="tag">Python Show Health</span>
                 </div>
             </div>
         </section>
@@ -514,7 +503,12 @@
         </section>
 
         <section id="mod1" class="view active">
-            <h2>Módulo 1 — Primeiros passos em Python aplicado à saúde</h2>
+            <h2>Módulo 1 — Python como ficha do paciente</h2>
+
+            <div class="analogy">
+                <strong>Analogia central:</strong> uma variável em Python é como um campo da ficha do paciente.
+                Cada campo guarda uma informação: nome, idade, peso, espécie, exame ou observação.
+            </div>
 
             <p>
                 Programar é criar uma sequência de instruções para que o computador resolva uma tarefa.
@@ -522,15 +516,19 @@
                 e reduzir tarefas repetitivas.
             </p>
 
-            <h3>Primeiro comando: print()</h3>
+            <h3>1. O primeiro comando: print()</h3>
+
+            <p>
+                O comando <code>print()</code> mostra uma informação na tela. Pense nele como uma forma de
+                “imprimir” uma mensagem, um alerta ou uma ficha simples.
+            </p>
 
             <pre class="inline-code">print("Olá! Bem-vindo ao Python Start Health.")</pre>
 
-            <h3>Variáveis: guardando informações</h3>
+            <h3>2. Variáveis: campos da ficha</h3>
 
             <p>
-                Variáveis são nomes usados para guardar informações. Em um sistema de saúde, elas podem armazenar
-                nome do paciente, peso, espécie, idade, exame solicitado ou resultado de uma conta.
+                Variáveis guardam informações. Na saúde, podemos imaginar cada variável como um campo do prontuário.
             </p>
 
             <pre class="inline-code">nome_paciente = "Luna"
@@ -542,7 +540,26 @@ print(nome_paciente)
 print(idade)
 print(peso)</pre>
 
-            <h3>Aplicação prática: ficha simples de paciente</h3>
+            <h3>3. Tipos de dados: tipo de informação registrada</h3>
+
+            <ul>
+                <li><span class="highlight">str:</span> texto, como nome, espécie e exame.</li>
+                <li><span class="highlight">int:</span> número inteiro, como idade.</li>
+                <li><span class="highlight">float:</span> número decimal, como peso.</li>
+                <li><span class="highlight">bool:</span> verdadeiro ou falso, como <code>tem_febre = True</code>.</li>
+            </ul>
+
+            <pre class="inline-code">nome = "Luna"          # str
+idade = 8              # int
+peso = 12.4            # float
+tem_febre = False      # bool</pre>
+
+            <h3>4. f-string: montando uma ficha automaticamente</h3>
+
+            <p>
+                A <code>f-string</code> permite misturar texto com variáveis. É muito útil para gerar mensagens,
+                fichas, relatórios e textos padronizados.
+            </p>
 
             <pre class="inline-code">nome_paciente = "Luna"
 especie = "canina"
@@ -553,20 +570,25 @@ exame = "ultrassonografia abdominal"
 ficha = f"Paciente {nome_paciente}, espécie {especie}, {idade} anos, {peso} kg. Exame: {exame}."
 print(ficha)</pre>
 
-            <h3>Tipos de dados usados nesse exemplo</h3>
+            <h3>5. Mini exercício</h3>
 
-            <ul>
-                <li><span class="highlight">str:</span> texto, como nome, espécie e exame.</li>
-                <li><span class="highlight">int:</span> número inteiro, como idade.</li>
-                <li><span class="highlight">float:</span> número decimal, como peso.</li>
-            </ul>
+            <p>
+                Troque os dados abaixo por outro paciente e rode o código em um ambiente Python.
+            </p>
+
+            <pre class="inline-code">nome = "Rex"
+peso = 18.7
+exame = "hemograma"
+
+mensagem = f"O paciente {nome} pesa {peso} kg e realizará o exame: {exame}."
+print(mensagem)</pre>
 
             <div class="quiz-box">
-                <div class="quiz-question">Avaliação 1: Qual função é usada para exibir uma mensagem na tela em Python?</div>
+                <div class="quiz-question">Avaliação 1: Na analogia da saúde, uma variável em Python parece com:</div>
                 <div id="opts-1">
-                    <button class="option-btn" onclick="selectOption(1, this, false)">A) mostrar("Texto")</button>
-                    <button class="option-btn" onclick="selectOption(1, this, true)">B) print("Texto")</button>
-                    <button class="option-btn" onclick="selectOption(1, this, false)">C) tela("Texto")</button>
+                    <button class="option-btn" onclick="selectOption(1, this, false)">A) Um medicamento pronto</button>
+                    <button class="option-btn" onclick="selectOption(1, this, true)">B) Um campo da ficha do paciente</button>
+                    <button class="option-btn" onclick="selectOption(1, this, false)">C) Uma sala de espera</button>
                 </div>
                 <div id="feedback-1" class="feedback"></div>
                 <button class="btn" id="btn-next-1" style="display:none;" onclick="nextModule(2)">Avançar para o Módulo 2</button>
@@ -574,14 +596,19 @@ print(ficha)</pre>
         </section>
 
         <section id="mod2" class="view">
-            <h2>Módulo 2 — Decisões e alertas com estruturas condicionais</h2>
+            <h2>Módulo 2 — Python como triagem</h2>
+
+            <div class="analogy">
+                <strong>Analogia central:</strong> o <code>if</code> funciona como uma regra de triagem.
+                Se uma condição for verdadeira, uma ação acontece. Caso contrário, o código segue outro caminho.
+            </div>
 
             <p>
-                Em Python, usamos <code>if</code>, <code>elif</code> e <code>else</code> para criar regras simples.
+                Em Python, usamos <code>if</code>, <code>elif</code> e <code>else</code> para criar decisões.
                 Isso é útil para transformar critérios em mensagens automáticas.
             </p>
 
-            <h3>Exemplo básico de alerta</h3>
+            <h3>1. Estrutura básica</h3>
 
             <pre class="inline-code">temperatura = 39.4
 
@@ -590,7 +617,22 @@ if temperatura >= 39.2:
 else:
     print("Temperatura dentro do intervalo esperado.")</pre>
 
-            <h3>Exemplo com duas condições</h3>
+            <h3>2. Comparações</h3>
+
+            <ul>
+                <li><code>==</code> compara igualdade.</li>
+                <li><code>!=</code> verifica diferença.</li>
+                <li><code>></code> maior que.</li>
+                <li><code><</code> menor que.</li>
+                <li><code>>=</code> maior ou igual.</li>
+                <li><code><=</code> menor ou igual.</li>
+            </ul>
+
+            <h3>3. Operadores lógicos</h3>
+
+            <p>
+                Podemos combinar condições com <code>and</code> e <code>or</code>.
+            </p>
 
             <pre class="inline-code">idade = 13
 creatinina = 2.1
@@ -600,20 +642,37 @@ if idade >= 10 and creatinina > 1.8:
 else:
     print("Sem alerta automático pelos critérios definidos.")</pre>
 
-            <h3>Aplicação em automação</h3>
+            <h3>4. Usando elif para mais de uma classificação</h3>
+
+            <pre class="inline-code">peso = 4.8
+
+if peso < 5:
+    print("Paciente de pequeno porte.")
+elif peso <= 20:
+    print("Paciente de médio porte.")
+else:
+    print("Paciente de grande porte.")</pre>
+
+            <h3>5. Validação de dados</h3>
 
             <p>
-                Esse tipo de lógica pode ser usado em dashboards, sistemas de laudos, organização de exames
-                e ferramentas de apoio ao raciocínio. A regra programada não substitui o profissional;
-                ela apenas ajuda a chamar atenção para uma condição definida.
+                Em sistemas de saúde, validar dados evita erros. Por exemplo: peso não pode ser negativo.
             </p>
 
-            <div class="note">
-                Estes exemplos são educacionais e não substituem avaliação profissional.
+            <pre class="inline-code">peso = -2
+
+if peso <= 0:
+    print("Erro: o peso precisa ser maior que zero.")
+else:
+    print("Peso registrado com sucesso.")</pre>
+
+            <div class="warning">
+                <strong>Atenção:</strong> regras automáticas em sistemas de saúde servem para organizar e alertar.
+                Elas não substituem avaliação profissional.
             </div>
 
             <div class="quiz-box">
-                <div class="quiz-question">Avaliação 2: Qual estrutura permite executar código apenas se uma condição for verdadeira?</div>
+                <div class="quiz-question">Avaliação 2: Qual estrutura representa uma regra de triagem em Python?</div>
                 <div id="opts-2">
                     <button class="option-btn" onclick="selectOption(2, this, true)">A) if</button>
                     <button class="option-btn" onclick="selectOption(2, this, false)">B) print</button>
@@ -625,44 +684,78 @@ else:
         </section>
 
         <section id="mod3" class="view">
-            <h2>Módulo 3 — Listas, repetições e organização de dados</h2>
+            <h2>Módulo 3 — Python como fila de atendimento</h2>
+
+            <div class="analogy">
+                <strong>Analogia central:</strong> uma lista em Python é como uma fila ou relação de pacientes.
+                O <code>for</code> percorre essa fila e executa uma ação para cada item.
+            </div>
 
             <p>
                 Listas e repetições ajudam a processar vários registros automaticamente.
                 Em saúde, isso pode ser usado para percorrer pacientes, exames, imagens, laudos ou resultados.
             </p>
 
-            <h3>Listas</h3>
+            <h3>1. Listas</h3>
 
             <pre class="inline-code">pacientes = ["Luna", "Rex", "Mel", "Thor"]
 
 print(pacientes)
 print(pacientes[0])</pre>
 
-            <h3>Loop for</h3>
+            <h3>2. Loop for: percorrendo a fila</h3>
 
             <pre class="inline-code">pacientes = ["Luna", "Rex", "Mel", "Thor"]
 
 for paciente in pacientes:
     print(f"Gerando ficha para: {paciente}")</pre>
 
-            <h3>Exemplo: processar uma lista de pesos</h3>
+            <h3>3. Processando uma lista de pesos</h3>
 
             <pre class="inline-code">pesos = [4.5, 8.2, 12.0, 23.5]
 
 for peso in pesos:
     print(f"Peso registrado: {peso} kg")</pre>
 
-            <h3>Loop while</h3>
+            <h3>4. Lista de dicionários: prontuários estruturados</h3>
 
-            <pre class="inline-code">tentativas = 1
+            <p>
+                Um dicionário guarda informações em pares de chave e valor. É parecido com um prontuário estruturado.
+            </p>
 
-while tentativas <= 3:
-    print(f"Tentativa de envio do relatório: {tentativas}")
-    tentativas = tentativas + 1</pre>
+            <pre class="inline-code">paciente = {
+    "nome": "Luna",
+    "especie": "canina",
+    "idade": 8,
+    "peso": 12.4
+}
+
+print(paciente["nome"])
+print(paciente["peso"])</pre>
+
+            <h3>5. Vários prontuários em uma lista</h3>
+
+            <pre class="inline-code">pacientes = [
+    {"nome": "Luna", "peso": 12.4},
+    {"nome": "Rex", "peso": 18.7},
+    {"nome": "Mel", "peso": 4.8}
+]
+
+for paciente in pacientes:
+    print(f"{paciente['nome']} pesa {paciente['peso']} kg.")</pre>
+
+            <h3>6. Loop while: repetindo até uma condição mudar</h3>
+
+            <pre class="inline-code">pendencias = 3
+
+while pendencias > 0:
+    print(f"Há {pendencias} exames pendentes.")
+    pendencias = pendencias - 1
+
+print("Todas as pendências foram processadas.")</pre>
 
             <div class="note">
-                No próximo módulo, vamos juntar variáveis, contas, funções e interface para criar uma calculadora educacional de dose por peso.
+                No próximo módulo, vamos juntar variáveis, contas, funções, validação e interface para criar uma calculadora educacional de dose por peso.
             </div>
 
             <div class="quiz-box">
@@ -678,7 +771,12 @@ while tentativas <= 3:
         </section>
 
         <section id="mod4" class="view">
-            <h2>Módulo 4 — Funções, automação e calculadora de dose por peso</h2>
+            <h2>Módulo 4 — Python como protocolo automatizado</h2>
+
+            <div class="analogy">
+                <strong>Analogia central:</strong> uma função em Python é como um protocolo.
+                Você define uma sequência de passos uma vez e reutiliza sempre que precisar.
+            </div>
 
             <div class="warning">
                 <strong>Aviso importante:</strong> este módulo é um exemplo educacional de programação.
@@ -686,9 +784,19 @@ while tentativas <= 3:
                 contraindicações, concentração real do produto, condição do paciente ou orientação profissional.
             </div>
 
+            <h3>1. Funções: protocolos reutilizáveis</h3>
+
+            <pre class="inline-code">def gerar_ficha(nome, especie, idade, peso):
+    ficha = f"Paciente {nome}, espécie {especie}, {idade} anos, {peso} kg."
+    return ficha
+
+resultado = gerar_ficha("Luna", "canina", 8, 12.4)
+print(resultado)</pre>
+
+            <h3>2. Projeto do módulo: calculadora educacional de dose por peso</h3>
+
             <p>
-                Neste módulo, vamos usar Python para criar uma calculadora didática de dose por peso.
-                O exemplo usado será:
+                Agora vamos criar uma calculadora didática. O exemplo usado será:
             </p>
 
             <ul>
@@ -698,55 +806,36 @@ while tentativas <= 3:
                 <li><strong>Conversão exemplo:</strong> 20 gotas/mL.</li>
             </ul>
 
-            <h3>Passo 1 — Entender a dose em mg/kg</h3>
-
-            <p>
-                A dose em mg/kg significa quantos miligramas serão calculados para cada quilograma de peso.
-                Se a dose é <span class="highlight">12 mg/kg</span>, um animal de 10 kg teria:
-            </p>
+            <h3>Passo 1 — Dose total em mg</h3>
 
             <div class="formula-box">
                 <p><strong>Dose total em mg = peso do animal × dose em mg/kg</strong></p>
                 <p>Exemplo: 10 kg × 12 mg/kg = 120 mg</p>
             </div>
 
-            <h3>Passo 2 — Entender a concentração do medicamento</h3>
-
-            <p>
-                A concentração em mg/mL indica quantos miligramas existem em 1 mL do produto.
-                No exemplo didático, vamos considerar:
-            </p>
+            <h3>Passo 2 — Concentração do medicamento</h3>
 
             <div class="formula-box">
-                <p><strong>500 mg/mL</strong></p>
+                <p><strong>Concentração exemplo: 500 mg/mL</strong></p>
                 <p>Isso significa que cada 1 mL contém 500 mg.</p>
             </div>
 
             <h3>Passo 3 — Converter mL em gotas</h3>
 
-            <p>
-                Para transformar mililitros em gotas, precisamos saber quantas gotas existem em 1 mL.
-                No exemplo didático, vamos usar:
-            </p>
-
             <div class="formula-box">
                 <p><strong>20 gotas/mL</strong></p>
-                <p>Então: 500 mg/mL ÷ 20 gotas/mL = 25 mg por gota</p>
+                <p>500 mg/mL ÷ 20 gotas/mL = 25 mg por gota</p>
             </div>
 
-            <h3>Passo 4 — Calcular quantas gotas</h3>
-
-            <p>
-                Depois de descobrir quantos mg existem em cada gota, dividimos a dose total pela quantidade de mg por gota.
-            </p>
+            <h3>Passo 4 — Calcular número de gotas</h3>
 
             <div class="formula-box">
                 <p><strong>Gotas = dose total em mg ÷ mg por gota</strong></p>
-                <p>Exemplo: 120 mg ÷ 25 mg/gota = 4,8 gotas</p>
+                <p>120 mg ÷ 25 mg/gota = 4,8 gotas</p>
                 <p>Resultado aproximado: 5 gotas.</p>
             </div>
 
-            <h3>Passo 5 — Código em Python da calculadora</h3>
+            <h3>3. Código em Python</h3>
 
             <pre class="inline-code">def calcular_dipirona_gotas(peso_kg):
     dose_mg_por_kg = 12
@@ -754,27 +843,29 @@ while tentativas <= 3:
     gotas_por_ml = 20
 
     dose_total_mg = peso_kg * dose_mg_por_kg
+    volume_ml = dose_total_mg / concentracao_mg_por_ml
     mg_por_gota = concentracao_mg_por_ml / gotas_por_ml
     numero_de_gotas = dose_total_mg / mg_por_gota
 
-    return dose_total_mg, mg_por_gota, numero_de_gotas
+    return dose_total_mg, volume_ml, mg_por_gota, numero_de_gotas
 
 
 peso = 10
 
-dose_total, mg_gota, gotas = calcular_dipirona_gotas(peso)
+dose_total, volume, mg_gota, gotas = calcular_dipirona_gotas(peso)
 
 print(f"Peso do animal: {peso} kg")
 print(f"Dose total: {dose_total} mg")
+print(f"Volume calculado: {volume:.3f} mL")
 print(f"Cada gota possui aproximadamente: {mg_gota} mg")
-print(f"Número calculado de gotas: {gotas}")
+print(f"Número calculado de gotas: {gotas:.2f}")
 print(f"Número aproximado de gotas: {round(gotas)}")</pre>
 
-            <h3>Calculadora interativa</h3>
+            <h3>4. Calculadora interativa</h3>
 
             <p>
-                Agora teste o cálculo diretamente na página. Os campos de concentração e gotas por mL estão liberados
-                para você adaptar conforme o produto utilizado.
+                Teste o cálculo diretamente na página. Os campos de concentração e gotas por mL estão liberados
+                para você adaptar conforme o produto usado no exemplo educacional.
             </p>
 
             <div class="calculator">
@@ -813,7 +904,7 @@ print(f"Número aproximado de gotas: {round(gotas)}")</pre>
                 </div>
             </div>
 
-            <h3>Passo 6 — Como o JavaScript faz o mesmo cálculo na página</h3>
+            <h3>5. Código JavaScript da calculadora da página</h3>
 
             <pre class="inline-code">function calcularDose() {
     const peso = Number(document.getElementById("pesoAnimal").value);
@@ -836,8 +927,33 @@ print(f"Número aproximado de gotas: {round(gotas)}")</pre>
                     <button class="option-btn" onclick="selectOption(4, this, false)">C) concentração em mg/mL × gotas por mL</button>
                 </div>
                 <div id="feedback-4" class="feedback"></div>
-                <button class="btn" id="btn-next-4" style="display:none;" onclick="mostrarConclusao()">Finalizar curso</button>
+                <button class="btn" id="btn-next-4" style="display:none;" onclick="mostrarPythonShow()">Ir para o Python Show Health</button>
             </div>
+
+            <section id="python-show-health" class="python-show" style="display:none;">
+                <div class="badge">🎤 Python Show Health</div>
+                <h2>Python Show Health — Revisão final</h2>
+                <p>
+                    Agora é hora de revisar o curso em formato de quiz. As perguntas conectam Python com situações
+                    da saúde, dados e automação.
+                </p>
+
+                <div class="show-score" id="show-score">Pontuação: 0 de 5</div>
+
+                <div id="show-question-area">
+                    <div class="quiz-question" id="show-question"></div>
+                    <div id="show-options"></div>
+                    <div class="show-feedback" id="show-feedback"></div>
+                    <button class="btn" id="show-next-btn" style="display:none;" onclick="proximaPerguntaShow()">Próxima pergunta</button>
+                </div>
+
+                <div id="show-final" style="display:none;">
+                    <h3>Resultado final</h3>
+                    <p id="show-final-text"></p>
+                    <button class="btn" onclick="mostrarConclusao()">Gerar certificado</button>
+                    <button class="btn secondary" onclick="reiniciarPythonShow()">Refazer Python Show Health</button>
+                </div>
+            </section>
         </section>
 
         <section id="certificate" class="certificate">
@@ -854,7 +970,8 @@ print(f"Número aproximado de gotas: {round(gotas)}")</pre>
                 <div class="cert-name" id="cert-name"></div>
                 <p>
                     concluiu o curso <strong>Python Start Health: curso introdutório de programação para saúde, dados e automação</strong>,
-                    incluindo fundamentos de Python, lógica de programação, organização de dados e calculadora educacional de dose por peso.
+                    incluindo fundamentos de Python, analogias aplicadas à saúde, organização de dados,
+                    calculadora educacional de dose por peso e revisão final no Python Show Health.
                 </p>
                 <p id="cert-date"></p>
             </div>
@@ -868,6 +985,62 @@ print(f"Número aproximado de gotas: {round(gotas)}")</pre>
     <script>
         let moduloAtual = 1;
         const totalModulos = 4;
+
+        const perguntasShow = [
+            {
+                pergunta: "Na analogia do curso, uma variável em Python é parecida com:",
+                opcoes: [
+                    "Um campo da ficha do paciente",
+                    "Um erro do sistema",
+                    "Um medicamento sem rótulo"
+                ],
+                correta: 0,
+                explicacao: "Variáveis guardam informações, assim como campos de uma ficha guardam nome, peso, idade ou exame."
+            },
+            {
+                pergunta: "Qual estrutura representa uma regra de triagem?",
+                opcoes: [
+                    "for",
+                    "if",
+                    "print"
+                ],
+                correta: 1,
+                explicacao: "O if permite testar uma condição e executar uma ação se ela for verdadeira."
+            },
+            {
+                pergunta: "Uma lista de pacientes pode ser percorrida com:",
+                opcoes: [
+                    "for",
+                    "else",
+                    "return"
+                ],
+                correta: 0,
+                explicacao: "O for percorre item por item de uma lista, como uma fila de pacientes."
+            },
+            {
+                pergunta: "Uma função em Python pode ser comparada a:",
+                opcoes: [
+                    "Um protocolo reutilizável",
+                    "Um dado perdido",
+                    "Uma tela vazia"
+                ],
+                correta: 0,
+                explicacao: "A função reúne passos em um bloco reutilizável, como um protocolo técnico."
+            },
+            {
+                pergunta: "Na calculadora didática, a dose total em mg é calculada por:",
+                opcoes: [
+                    "peso em kg × dose em mg/kg",
+                    "peso em kg ÷ concentração",
+                    "gotas por mL × idade"
+                ],
+                correta: 0,
+                explicacao: "A dose total em mg é calculada multiplicando o peso pela dose em mg/kg."
+            }
+        ];
+
+        let perguntaShowAtual = 0;
+        let pontuacaoShow = 0;
 
         function atualizarProgresso() {
             const progresso = (moduloAtual / totalModulos) * 100;
@@ -955,6 +1128,115 @@ print(f"Número aproximado de gotas: {round(gotas)}")</pre>
             document.getElementById("resultadoDose").style.display = "block";
         }
 
+        function mostrarPythonShow() {
+            document.getElementById("python-show-health").style.display = "block";
+            reiniciarPythonShow(false);
+            document.getElementById("python-show-health").scrollIntoView({ behavior: "smooth" });
+        }
+
+        function carregarPerguntaShow() {
+            const pergunta = perguntasShow[perguntaShowAtual];
+            const areaPergunta = document.getElementById("show-question");
+            const areaOpcoes = document.getElementById("show-options");
+            const feedback = document.getElementById("show-feedback");
+            const nextBtn = document.getElementById("show-next-btn");
+
+            document.getElementById("show-score").innerText = `Pontuação: ${pontuacaoShow} de ${perguntasShow.length}`;
+            areaPergunta.innerText = pergunta.pergunta;
+            areaOpcoes.innerHTML = "";
+            feedback.style.display = "none";
+            nextBtn.style.display = "none";
+
+            pergunta.opcoes.forEach((opcao, index) => {
+                const botao = document.createElement("button");
+                botao.className = "show-option";
+                botao.innerText = `${String.fromCharCode(65 + index)}) ${opcao}`;
+                botao.onclick = function () {
+                    responderShow(index, botao);
+                };
+                areaOpcoes.appendChild(botao);
+            });
+        }
+
+        function responderShow(indice, botao) {
+            const pergunta = perguntasShow[perguntaShowAtual];
+            const botoes = document.querySelectorAll(".show-option");
+            const feedback = document.getElementById("show-feedback");
+            const nextBtn = document.getElementById("show-next-btn");
+
+            botoes.forEach((btn) => {
+                btn.disabled = true;
+                btn.style.cursor = "not-allowed";
+            });
+
+            if (indice === pergunta.correta) {
+                botao.classList.add("correct");
+                pontuacaoShow++;
+                feedback.style.display = "block";
+                feedback.style.background = "rgba(34, 197, 94, 0.12)";
+                feedback.style.color = "#86efac";
+                feedback.innerHTML = `✅ Correto! ${pergunta.explicacao}`;
+            } else {
+                botao.classList.add("wrong");
+                botoes[pergunta.correta].classList.add("correct");
+                feedback.style.display = "block";
+                feedback.style.background = "rgba(239, 68, 68, 0.12)";
+                feedback.style.color = "#fca5a5";
+                feedback.innerHTML = `❌ Resposta incorreta. ${pergunta.explicacao}`;
+            }
+
+            document.getElementById("show-score").innerText = `Pontuação: ${pontuacaoShow} de ${perguntasShow.length}`;
+            nextBtn.style.display = "inline-block";
+        }
+
+        function proximaPerguntaShow() {
+            perguntaShowAtual++;
+
+            if (perguntaShowAtual >= perguntasShow.length) {
+                finalizarPythonShow();
+            } else {
+                carregarPerguntaShow();
+            }
+        }
+
+        function finalizarPythonShow() {
+            document.getElementById("show-question-area").style.display = "none";
+            document.getElementById("show-final").style.display = "block";
+
+            const percentual = (pontuacaoShow / perguntasShow.length) * 100;
+            let mensagem = "";
+
+            if (percentual >= 80) {
+                mensagem = `Excelente! Você acertou ${pontuacaoShow} de ${perguntasShow.length}. Você compreendeu muito bem os conceitos do Python Start Health.`;
+            } else if (percentual >= 60) {
+                mensagem = `Bom resultado! Você acertou ${pontuacaoShow} de ${perguntasShow.length}. Revise alguns pontos e continue praticando.`;
+            } else {
+                mensagem = `Você acertou ${pontuacaoShow} de ${perguntasShow.length}. Releia os módulos com calma e refaça o Python Show Health.`;
+            }
+
+            document.getElementById("show-final-text").innerText = mensagem;
+
+            if (typeof confetti === "function" && percentual >= 60) {
+                confetti({
+                    particleCount: 120,
+                    spread: 80,
+                    origin: { y: 0.65 }
+                });
+            }
+        }
+
+        function reiniciarPythonShow(scroll = true) {
+            perguntaShowAtual = 0;
+            pontuacaoShow = 0;
+            document.getElementById("show-question-area").style.display = "block";
+            document.getElementById("show-final").style.display = "none";
+            carregarPerguntaShow();
+
+            if (scroll) {
+                document.getElementById("python-show-health").scrollIntoView({ behavior: "smooth" });
+            }
+        }
+
         function mostrarConclusao() {
             document.querySelectorAll(".view").forEach((view) => {
                 view.classList.remove("active");
@@ -1016,6 +1298,10 @@ print(f"Número aproximado de gotas: {round(gotas)}")</pre>
 
             document.getElementById("certificate-output").style.display = "none";
             document.getElementById("student-name").value = "";
+
+            if (document.getElementById("python-show-health")) {
+                document.getElementById("python-show-health").style.display = "none";
+            }
 
             navegarParaModulo(1);
         }
