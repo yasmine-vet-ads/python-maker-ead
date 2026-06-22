@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Start Health</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #07111f;
+            --card: #0f172a;
+            --card-soft: #162033;
+            --primary: #14b8a6;
+            --primary-hover: #0d9488;
+            --accent: #38bdf8;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.10);
+            --radius-lg: 22px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 24px;
+            font-family: "Inter", system-ui, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(20, 184, 166, 0.20), transparent 34%),
+                radial-gradient(circle at top right, rgba(56, 189, 248, 0.16), transparent 32%),
+                linear-gradient(135deg, #020617 0%, var(--bg) 55%, #0f172a 100%);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1040px;
+            max-height: 92vh;
+            overflow-y: auto;
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+            padding: 42px;
+            backdrop-filter: blur(18px);
+        }
+
+        .header {
+            display: grid;
+            grid-template-columns: 1.4fr 0.8fr;
+            gap: 28px;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 28px;
+            margin-bottom: 28px;
+        }
+
+        .badge {
+            display: inline-flex;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(20, 184, 166, 0.12);
+            color: #5eead4;
+            border: 1px solid rgba(20, 184, 166, 0.25);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(32px, 5vw, 54px);
+            line-height: 1;
+            letter-spacing: -0.05em;
+        }
+
+        .gradient {
+            background: linear-gradient(135deg, #ffffff 20%, #67e8f9 55%, #5eead4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: #cbd5e1;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .health-card {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.14), rgba(56, 189, 248, 0.08));
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 22px;
+        }
+
+        .health-card h3 {
+            margin-top: 0;
+            color: #e0f2fe;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .tag {
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.06);
+            color: #cbd5e1;
+            border: 1px solid var(--border);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .module-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .module-nav span {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .module-nav span:hover {
+            color: var(--accent);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: #1e293b;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 25%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.4s ease;
+        }
+
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+            animation: fadeIn 0.35s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            font-size: 28px;
+            margin: 26px 0 14px;
+        }
+
+        h3 {
+            font-size: 19px;
+            color: #e2e8f0;
+            margin-top: 28px;
+        }
+
+        p, li {
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: 16px;
+        }
+
+        strong {
+            color: #e2e8f0;
+        }
+
+        code {
+            font-family: "Fira Code", monospace;
+            color: #5eead4;
+        }
+
+        .highlight {
+            color: #ffffff;
+            background: rgba(20, 184, 166, 0.15);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        pre.inline-code {
+            background: #020617;
+            color: #86efac;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            overflow-x: auto;
+            font-family: "Fira Code", monospace;
+            font-size: 14px;
+            line-height: 1.65;
+            white-space: pre-wrap;
+        }
+
+        .note {
+            background: rgba(56, 189, 248, 0.10);
+            border: 1px solid rgba(56, 189, 248, 0.20);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            margin: 20px 0;
+        }
+
+        .quiz-box {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-top: 32px;
+        }
+
+        .quiz-question {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        .option-btn {
+            width: 100%;
+            display: block;
+            text-align: left;
+            background: var(--card-soft);
+            color: #e2e8f0;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 15px 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .option-btn.correct {
+            background: rgba(34, 197, 94, 0.15);
+            color: #86efac;
+            border-color: var(--success);
+            font-weight: 800;
+        }
+
+        .option-btn.wrong {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border-color: var(--danger);
+            font-weight: 800;
+        }
+
+        .feedback {
+            display: none;
+            margin-top: 16px;
+            padding: 13px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+        }
+
+        .btn {
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 14px 24px;
+            background: var(--primary);
+            color: white;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn.secondary {
+            background: #334155;
+        }
+
+        .certificate {
+            display: none;
+            text-align: center;
+            padding: 42px;
+            border-radius: var(--radius-lg);
+            border: 2px solid rgba(20, 184, 166, 0.35);
+            background: #0f172a;
+        }
+
+        .input-name {
+            width: 100%;
+            max-width: 420px;
+            background: #020617;
+            color: white;
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 16px;
+            margin-top: 18px;
+        }
+
+        .cert-name {
+            font-size: clamp(28px, 5vw, 44px);
+            color: white;
+            font-weight: 800;
+            border-bottom: 2px dashed rgba(94, 234, 212, 0.35);
+            padding-bottom: 12px;
+            margin: 28px auto;
+            max-width: 720px;
+        }
+
+        .footer {
+            border-top: 1px solid var(--border);
+            margin-top: 34px;
+            padding-top: 18px;
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 780px) {
+            body {
+                padding: 12px;
+            }
+
+            .container {
+                padding: 24px;
+            }
+
+            .header {
+                grid-template-columns: 1fr;
+            }
+
+            .module-nav {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <section class="header">
+            <div>
+                <div class="badge">🩺 Python aplicado à saúde, dados e automação</div>
+                <h1><span class="gradient">Python Start Health</span></h1>
+                <p class="subtitle">
+                    Curso introdutório de programação para quem deseja aprender Python com exemplos práticos em saúde,
+                    medicina veterinária, dados, laudos, automação e inovação digital.
+                </p>
+            </div>
+
+            <div class="health-card">
+                <h3>O que você vai construir?</h3>
+                <p>
+                    Pequenos códigos para organizar fichas, criar alertas, percorrer listas de pacientes,
+                    automatizar cálculos e gerar mensagens técnicas simples.
+                </p>
+                <div class="tags">
+                    <span class="tag">Python básico</span>
+                    <span class="tag">Dados</span>
+                    <span class="tag">Automação</span>
+                    <span class="tag">HealthTech</span>
+                    <span class="tag">VetTech</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="progress-container" id="progress-section">
+            <div class="module-nav">
+                <span onclick="navegarParaModulo(1)">MÓDULO 1</span>
+                <span onclick="navegarParaModulo(2)">MÓDULO 2</span>
+                <span onclick="navegarParaModulo(3)">MÓDULO 3</span>
+                <span onclick="navegarParaModulo(4)">MÓDULO 4</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-bar"></div>
+            </div>
+        </section>
+
+        <section id="mod1" class="view active">
+            <h2>Módulo 1 — Primeiros passos em Python aplicado à saúde</h2>
+
+            <p>
+                Programar é criar uma sequência de instruções para que o computador resolva uma tarefa.
+                Na área da saúde, isso pode ajudar a organizar dados, calcular indicadores, padronizar textos
+                e reduzir tarefas repetitivas.
+            </p>
+
+            <h3>Primeiro comando: print()</h3>
+
+            <pre class="inline-code">print("Olá! Bem-vindo ao Python Start Health.")</pre>
+
+            <h3>Variáveis: guardando informações</h3>
+
+            <pre class="inline-code">nome_paciente = "Luna"
+especie = "canina"
+idade = 8
+peso = 12.4
+
+print(nome_paciente)
+print(idade)
+print(peso)</pre>
+
+            <h3>Aplicação prática: ficha simples de paciente</h3>
+
+            <pre class="inline-code">nome_paciente = "Luna"
+especie = "canina"
+idade = 8
+peso = 12.4
+exame = "ultrassonografia abdominal"
+
+ficha = f"Paciente {nome_paciente}, espécie {especie}, {idade} anos, {peso} kg. Exame: {exame}."
+print(ficha)</pre>
+
+            <div class="quiz-box">
+                <div class="quiz-question">Avaliação 1: Qual função é usada para exibir uma mensagem na tela em Python?</div>
+                <div id="opts-1">
+                    <button class="option-btn" onclick="selectOption(1, this, false)">A) mostrar("Texto")</button>
+                    <button class="option-btn" onclick="selectOption(1, this, true)">B) print("Texto")</button>
+                    <button class="option-btn" onclick="selectOption(1, this, false)">C) tela("Texto")</button>
+                </div>
+                <div id="feedback-1" class="feedback"></div>
+                <button class="btn" id="btn-next-1" style="display:none;" onclick="nextModule(2)">Avançar para o Módulo 2</button>
+            </div>
+        </section>
+
+        <section id="mod2" class="view">
+            <h2>Módulo 2 — Decisões e alertas com estruturas condicionais</h2>
+
+            <p>
+                Em Python, usamos <code>if</code>, <code>elif</code> e <code>else</code> para criar regras simples.
+            </p>
+
+            <h3>Exemplo básico</h3>
+
+            <pre class="inline-code">temperatura = 39.4
+
+if temperatura >= 39.2:
+    print("Alerta: temperatura elevada.")
+else:
+    print("Temperatura dentro do intervalo esperado.")</pre>
+
+            <h3>Exemplo com duas condições</h3>
+
+            <pre class="inline-code">idade = 13
+creatinina = 2.1
+
+if idade >= 10 and creatinina > 1.8:
+    print("Atenção: paciente geriátrico com alteração renal.")
+else:
+    print("Sem alerta automático pelos critérios definidos.")</pre>
+
+            <div class="note">
+                Estes exemplos são educacionais e não substituem avaliação profissional.
+            </div>
+
+            <div class="quiz-box">
+                <div class="quiz-question">Avaliação 2: Qual estrutura permite executar código apenas se uma condição for verdadeira?</div>
+                <div id="opts-2">
+                    <button class="option-btn" onclick="selectOption(2, this, true)">A) if</button>
+                    <button class="option-btn" onclick="selectOption(2, this, false)">B) print</button>
+                    <button class="option-btn" onclick="selectOption(2, this, false)">C) input</button>
+                </div>
+                <div id="feedback-2" class="feedback"></div>
+                <button class="btn" id="btn-next-2" style="display:none;" onclick="nextModule(3)">Avançar para o Módulo 3</button>
+            </div>
+        </section>
+
+        <section id="mod3" class="view">
+            <h2>Módulo 3 — Listas, repetições e organização de dados</h2>
+
+            <p>
+                Listas e repetições ajudam a processar vários registros automaticamente.
+            </p>
+
+            <h3>Listas</h3>
+
+            <pre class="inline-code">pacientes = ["Luna", "Rex", "Mel", "Thor"]
+
+print(pacientes)
+print(pacientes[0])</pre>
+
+            <h3>Loop for</h3>
+
+            <pre class="inline-code">pacientes = ["Luna", "Rex", "Mel", "Thor"]
+
+for paciente in pacientes:
+    print(f"Gerando ficha para: {paciente}")</pre>
+
+            <h3>Loop while</h3>
+
+            <pre class="inline-code">tentativas = 1
+
+while tentativas <= 3:
+    print(f"Tentativa de envio do relatório: {tentativas}")
+    tentativas = tentativas + 1</pre>
+
+            <div class="quiz-box">
+                <div class="quiz-question">Avaliação 3: Qual estrutura é ideal para percorrer uma lista de pacientes?</div>
+                <div id="opts-3">
+                    <button class="option-btn" onclick="selectOption(3, this, false)">A) if</button>
+                    <button class="option-btn" onclick="selectOption(3, this, true)">B) for</button>
+                    <button class="option-btn" onclick="selectOption(3, this, false)">C) import</button>
+                </div>
+                <div id="feedback-3" class="feedback"></div>
+                <button class="btn" id="btn-next-3" style="display:none;" onclick="nextModule(4)">Avançar para o Módulo 4</button>
+            </div>
+        </section>
+
+        <section id="mod4" class="view">
+            <h2>Módulo 4 — Funções e automação de relatórios simples</h2>
+
+            <p>
+                Funções permitem reaproveitar blocos de código e automatizar pequenas rotinas.
+            </p>
+
+            <h3>Função com parâmetros</h3>
+
+            <pre class="inline-code">def gerar_ficha(nome, especie, idade, peso):
+    ficha = f"Paciente {nome}, espécie {especie}, {idade} anos, {peso} kg."
+    return ficha
+
+resultado = gerar_ficha("Luna", "canina", 8, 12.4)
+print(resultado)</pre>
+
+            <h3>Projeto integrador: relatório automatizado</h3>
+
+            <pre class="inline-code">def gerar_relatorio(nome, especie, exame, achado):
+    texto = f"""
+Relatório simplificado
+
+Paciente: {nome}
+Espécie: {especie}
+Exame: {exame}
+Achado principal: {achado}
+
+Observação: este texto é um exemplo educacional de automação.
+"""
+    return texto
+
+relatorio = gerar_relatorio(
+    nome="Mel",
+    especie="felina",
+    exame="ultrassonografia abdominal",
+    achado="bexiga com conteúdo anecoico e parede preservada"
+)
+
+print(relatorio)</pre>
+
+            <div class="quiz-box">
+                <div class="quiz-question">Avaliação 4: Qual palavra-chave é usada para criar uma função em Python?</div>
+                <div id="opts-4">
+                    <button class="option-btn" onclick="selectOption(4, this, false)">A) function</button>
+                    <button class="option-btn" onclick="selectOption(4, this, true)">B) def</button>
+                    <button class="option-btn" onclick="selectOption(4, this, false)">C) create</button>
+                </div>
+                <div id="feedback-4" class="feedback"></div>
+                <button class="btn" id="btn-next-4" style="display:none;" onclick="mostrarConclusao()">Finalizar curso</button>
+            </div>
+        </section>
+
+        <section id="certificate" class="certificate">
+            <h2>Certificado de Conclusão</h2>
+            <p>Informe seu nome para gerar uma declaração simples de conclusão do curso.</p>
+
+            <input class="input-name" id="student-name" type="text" placeholder="Digite seu nome completo" />
+
+            <button class="btn" onclick="gerarCertificado()">Gerar certificado</button>
+            <button class="btn secondary" onclick="reiniciarCurso()">Reiniciar curso</button>
+
+            <div id="certificate-output" style="display:none;">
+                <p style="margin-top: 32px;">Certificamos que</p>
+                <div class="cert-name" id="cert-name"></div>
+                <p>
+                    concluiu o curso <strong>Python Start Health: curso introdutório de programação para saúde, dados e automação</strong>.
+                </p>
+                <p id="cert-date"></p>
+            </div>
+        </section>
+
+        <footer class="fo
