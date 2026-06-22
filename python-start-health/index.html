@@ -629,4 +629,140 @@ print(relatorio)</pre>
             </div>
         </section>
 
-        <footer class="fo
+        <footer class="footer">
+            Python Start Health · Curso introdutório de programação para saúde, dados e automação
+        </footer>
+    </main>
+
+    <script>
+        let moduloAtual = 1;
+        const totalModulos = 4;
+
+        function atualizarProgresso() {
+            const progresso = (moduloAtual / totalModulos) * 100;
+            document.getElementById("progress-bar").style.width = progresso + "%";
+        }
+
+        function navegarParaModulo(numero) {
+            moduloAtual = numero;
+
+            document.querySelectorAll(".view").forEach((view) => {
+                view.classList.remove("active");
+            });
+
+            document.getElementById("certificate").style.display = "none";
+            document.getElementById("progress-section").style.display = "block";
+            document.getElementById("mod" + numero).classList.add("active");
+
+            atualizarProgresso();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function nextModule(numero) {
+            navegarParaModulo(numero);
+        }
+
+        function selectOption(modulo, botao, correta) {
+            const opcoes = document.querySelectorAll("#opts-" + modulo + " .option-btn");
+            const feedback = document.getElementById("feedback-" + modulo);
+            const botaoAvancar = document.getElementById("btn-next-" + modulo);
+
+            opcoes.forEach((opcao) => {
+                opcao.disabled = true;
+                opcao.style.cursor = "not-allowed";
+            });
+
+            if (correta) {
+                botao.classList.add("correct");
+                feedback.style.display = "block";
+                feedback.style.background = "rgba(34, 197, 94, 0.12)";
+                feedback.style.color = "#86efac";
+                feedback.innerHTML = "✅ Correto! Você pode avançar.";
+                botaoAvancar.style.display = "inline-block";
+            } else {
+                botao.classList.add("wrong");
+                feedback.style.display = "block";
+                feedback.style.background = "rgba(239, 68, 68, 0.12)";
+                feedback.style.color = "#fca5a5";
+                feedback.innerHTML = "❌ Quase! Revise o conteúdo e tente novamente.";
+
+                setTimeout(() => {
+                    opcoes.forEach((opcao) => {
+                        opcao.disabled = false;
+                        opcao.style.cursor = "pointer";
+                        opcao.classList.remove("wrong");
+                    });
+                    feedback.style.display = "none";
+                }, 1200);
+            }
+        }
+
+        function mostrarConclusao() {
+            document.querySelectorAll(".view").forEach((view) => {
+                view.classList.remove("active");
+            });
+
+            document.getElementById("progress-section").style.display = "none";
+            document.getElementById("certificate").style.display = "block";
+
+            if (typeof confetti === "function") {
+                confetti({
+                    particleCount: 140,
+                    spread: 80,
+                    origin: { y: 0.65 }
+                });
+            }
+
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function gerarCertificado() {
+            const nome = document.getElementById("student-name").value.trim();
+
+            if (!nome) {
+                alert("Digite seu nome completo para gerar o certificado.");
+                return;
+            }
+
+            const data = new Date().toLocaleDateString("pt-BR");
+
+            document.getElementById("cert-name").innerText = nome;
+            document.getElementById("cert-date").innerText = "Data de conclusão: " + data;
+            document.getElementById("certificate-output").style.display = "block";
+
+            if (typeof confetti === "function") {
+                confetti({
+                    particleCount: 180,
+                    spread: 100,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        function reiniciarCurso() {
+            document.querySelectorAll(".option-btn").forEach((botao) => {
+                botao.disabled = false;
+                botao.style.cursor = "pointer";
+                botao.classList.remove("correct", "wrong");
+            });
+
+            document.querySelectorAll(".feedback").forEach((feedback) => {
+                feedback.style.display = "none";
+            });
+
+            document.querySelectorAll(".quiz-box .btn").forEach((botao) => {
+                if (botao.id.startsWith("btn-next")) {
+                    botao.style.display = "none";
+                }
+            });
+
+            document.getElementById("certificate-output").style.display = "none";
+            document.getElementById("student-name").value = "";
+
+            navegarParaModulo(1);
+        }
+
+        atualizarProgresso();
+    </script>
+</body>
+</html>
