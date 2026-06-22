@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Show Health</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #07111f;
+            --card: #0f172a;
+            --card-soft: #162033;
+            --primary: #14b8a6;
+            --primary-hover: #0d9488;
+            --accent: #38bdf8;
+            --gold: #f59e0b;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --border: rgba(255,255,255,0.10);
+            --radius-lg: 22px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 24px;
+            font-family: "Inter", system-ui, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(20, 184, 166, 0.18), transparent 34%),
+                radial-gradient(circle at top right, rgba(245, 158, 11, 0.16), transparent 32%),
+                linear-gradient(135deg, #020617 0%, var(--bg) 55%, #0f172a 100%);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #youtube-player {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        #btn-som {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: #10b981;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 14px 35px rgba(0,0,0,0.35);
+        }
+
+        .app {
+            width: 100%;
+            max-width: 840px;
+            background: rgba(15, 23, 42, 0.94);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+            padding: 38px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(245, 158, 11, 0.12);
+            color: #fde68a;
+            border: 1px solid rgba(245, 158, 11, 0.28);
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(32px, 5vw, 54px);
+            letter-spacing: -0.05em;
+            background: linear-gradient(135deg, #ffffff 10%, #67e8f9 55%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin: 12px 0;
+        }
+
+        p {
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.35s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn {
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 14px 24px;
+            background: var(--primary);
+            color: white;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.2s;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn.secondary {
+            background: #334155;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: #1e293b;
+            overflow: hidden;
+            margin: 22px 0;
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+            transition: 0.35s;
+        }
+
+        .counter {
+            color: #cbd5e1;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .quiz-layout {
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 18px;
+            align-items: center;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .host-avatar {
+            width: 100px;
+            height: 100px;
+            animation: falarBoneco 0.55s ease-in-out infinite alternate;
+            filter: drop-shadow(0 10px 18px rgba(0,0,0,0.45));
+        }
+
+        @keyframes falarBoneco {
+            from {
+                transform: translateY(0) scale(1);
+            }
+
+            to {
+                transform: translateY(-6px) scale(1.02);
+            }
+        }
+
+        .question-box {
+            background: #020617;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            min-height: 92px;
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            width: 100%;
+            background: var(--card-soft);
+            color: #e2e8f0;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px 18px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.2s;
+            font-family: inherit;
+            font-weight: 600;
+        }
+
+        .option-btn:hover {
+            border-color: var(--gold);
+            transform: scale(1.01);
+        }
+
+        .option-btn span {
+            color: #fde68a;
+            font-weight: 900;
+            margin-right: 10px;
+        }
+
+        .option-btn.correct {
+            background: rgba(34, 197, 94, 0.16);
+            border-color: var(--success);
+            color: #86efac;
+        }
+
+        .option-btn.wrong {
+            background: rgba(239, 68, 68, 0.16);
+            border-color: var(--danger);
+            color: #fca5a5;
+        }
+
+        .score {
+            font-size: 58px;
+            font-weight: 900;
+            color: white;
+            margin: 12px 0;
+        }
+
+        .status {
+            display: inline-flex;
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .passed {
+            background: rgba(34, 197, 94, 0.15);
+            color: #86efac;
+            border: 1px solid rgba(34, 197, 94, 0.35);
+        }
+
+        .failed {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.35);
+        }
+
+        .input-name {
+            width: 100%;
+            max-width: 420px;
+            background: #020617;
+            color: white;
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 16px;
+            margin-top: 16px;
+            font-family: inherit;
+        }
+
+        .certificate-paper {
+            display: none;
+            background: #ffffff;
+            color: #0f172a;
+            border: 10px solid #14b8a6;
+            border-radius: 18px;
+            padding: 46px;
+            margin: 32px auto 0;
+            max-width: 900px;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.30);
+        }
+
+        .certificate-paper h2 {
+            color: #0f172a;
+            font-size: 34px;
+            margin: 0 0 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .cert-subtitle {
+            color: #475569;
+            font-size: 15px;
+            margin-bottom: 26px;
+        }
+
+        .cert-name-print {
+            color: #0f172a;
+            font-size: clamp(30px, 5vw, 48px);
+            font-weight: 800;
+            border-bottom: 2px solid #14b8a6;
+            padding-bottom: 12px;
+            margin: 28px auto;
+            max-width: 760px;
+        }
+
+        .cert-text {
+            color: #334155;
+            font-size: 17px;
+            line-height: 1.8;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .cert-footer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 26px;
+            margin-top: 44px;
+            color: #334155;
+            font-size: 14px;
+        }
+
+        .signature-line {
+            border-top: 1px solid #94a3b8;
+            padding-top: 10px;
+        }
+
+        .links {
+            margin-top: 22px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 12px;
+            }
+
+            .app {
+                padding: 24px;
+            }
+
+            .quiz-layout {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .host-avatar {
+                margin: 0 auto;
+            }
+
+            .cert-footer {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+                display: block !important;
+            }
+
+            body * {
+                visibility: hidden !important;
+            }
+
+            #certificate-paper,
+            #certificate-paper * {
+                visibility: visible !important;
+            }
+
+            #certificate-paper {
+                display: block !important;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                max-width: none !important;
+                min-height: 100vh !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                border: 12px solid #14b8a6 !important;
+                padding: 60px 44px !important;
+            }
+
+            @page {
+                size: A4 landscape;
+                margin: 12mm;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="youtube-player"></div>
+    <button id="btn-som" onclick="acionarBotaoSom()">🎵 Som: ON</button>
+
+    <main class="app">
+        <section id="screen-start" class="screen active">
+            <div class="badge">🎙️ Python Show Health</div>
+            <h1>Python Show Health</h1>
+            <p>
+                Você concluiu a trilha Python Start Health. Agora é hora da prova final em formato de game show,
+                com música, perguntas aplicadas à saúde, dados e automação.
+            </p>
+            <p>
+                Responda <strong>10 perguntas</strong>. Para emitir o certificado, acerte pelo menos <strong>7</strong>.
+            </p>
+
+            <button class="btn" onclick="iniciarJogo()">Começar o Python Show Health 🚀</button>
+
+            <div class="links">
+                <a class="btn secondary" href="/python-start-health">Voltar ao curso Saúde</a>
+                <a class="btn secondary" href="/">Página inicial</a>
+            </div>
+        </section>
+
+        <section id="screen-quiz" class="screen">
+            <div class="progress-bar-bg">
+                <div id="progress-fill-game" class="progress-bar-fill"></div>
+            </div>
+
+            <div class="counter" id="question-counter">Pergunta 1 de 10</div>
+
+            <div class="quiz-layout">
+                <svg viewBox="0 0 100 100" class="host-avatar">
+                    <path d="M 10 100 Q 50 40 90 100 Z" fill="#1e293b" stroke="#14b8a6" stroke-width="2"/>
+                    <path d="M 35 70 L 50 95 L 65 70 Z" fill="#ffffff"/>
+                    <path d="M 45 75 L 50 100 L 55 75 Z" fill="#14b8a6"/>
+                    <circle cx="50" cy="40" r="28" fill="#fcd3a1"/>
+                    <path d="M 18 40 Q 25 5 50 5 Q 75 5 82 40 Q 88 20 50 0 Q 12 20 18 40 Z" fill="#4a3018"/>
+                    <circle cx="38" cy="35" r="7" fill="none" stroke="#222" stroke-width="2"/>
+                    <circle cx="62" cy="35" r="7" fill="none" stroke="#222" stroke-width="2"/>
+                    <path d="M 45 35 L 55 35" stroke="#222" stroke-width="2"/>
+                    <circle cx="38" cy="35" r="3" fill="#000"/>
+                    <circle cx="62" cy="35" r="3" fill="#000"/>
+                    <path d="M 32 50 Q 50 68 68 50 Q 50 58 32 50 Z" fill="#ffffff" stroke="#000" stroke-width="1"/>
+                    <rect x="47" y="60" width="6" height="20" fill="#94a3b8" rx="2"/>
+                    <circle cx="50" cy="58" r="6" fill="#111827"/>
+                </svg>
+
+                <div class="question-box" id="texto-pergunta">Carregando pergunta...</div>
+            </div>
+
+            <div class="options" id="grid-alternativas"></div>
+        </section>
+
+        <section id="screen-result" class="screen">
+            <div class="badge">Resultado final</div>
+            <h2>Sua nota foi:</h2>
+            <div id="nota-final" class="score">0 / 10</div>
+            <div id="status-badge" class="status passed">APROVADO</div>
+
+            <div id="painel-emissao">
+                <p>
+                    Parabéns! Você foi aprovado no Python Show Health.
+                    Digite seu nome completo para emitir o certificado.
+                </p>
+
+                <input type="text" id="nome-estudante" class="input-name" placeholder="Seu nome completo" />
+
+                <div class="links">
+                    <button class="btn" onclick="emitirCertificado()">Gerar certificado 📜</button>
+                    <button class="btn secondary" onclick="baixarCertificadoPDF()">Salvar em PDF</button>
+                </div>
+            </div>
+
+            <div id="painel-reprovado" style="display: none;">
+                <p>
+                    Não foi dessa vez. Você precisa acertar pelo menos 7 perguntas.
+                    Revise o curso e tente novamente.
+                </p>
+
+                <div class="links">
+                    <button class="btn" onclick="resetarJogo()">Tentar novamente 🔄</button>
+                    <a class="btn secondary" href="/python-start-health">Voltar ao curso Saúde</a>
+                </div>
+            </div>
+
+            <article id="certificate-paper" class="certificate-paper">
+                <h2>Certificado</h2>
+                <p class="cert-subtitle">Python Start Health · Curso introdutório de programação para saúde, dados e automação</p>
+
+                <p class="cert-text">Certificamos que</p>
+
+                <div class="cert-name-print" id="cert-name-print">Nome do aluno</div>
+
+                <p class="cert-text">
+                    concluiu o curso <strong>Python Start Health</strong>, com estudos introdutórios em linguagem Python,
+                    pensamento computacional, analogias aplicadas à saúde, organização de dados, automação de rotinas,
+                    calculadora educacional de dose por peso e aprovação no <strong>Python Show Health</strong>.
+                </p>
+
+                <p class="cert-text" id="cert-score-print" style="margin-top: 18px;"></p>
+
+                <div class="cert-footer">
+                    <div>
+                        <div class="signature-line">Yasmine Santos</div>
+                        <p>Responsável pelo projeto educacional</p>
+                    </div>
+
+                    <div>
+                        <div class="signature-line" id="cert-date-print">Data de conclusão</div>
+                        <p>Emitido digitalmente pela plataforma</p>
+                    </div>
+                </div>
+            </article>
+
+            <div class="links">
+                <a class="btn secondary" href="/">Página inicial</a>
+                <a class="btn secondary" href="/python-start-health">Voltar ao curso Saúde</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function safeConfetti(options) {
+            if (typeof confetti === "function") {
+                confetti(options);
+            }
+        }
+
+        const bancoPerguntas = [
+            {
+                p: "Na analogia do curso, uma variável em Python se parece com qual item da rotina em saúde?",
+                o: [
+                    "Um campo da ficha do paciente",
+                    "Uma sala de cirurgia",
+                    "Um antibiótico",
+                    "Um aparelho de ultrassom"
+                ],
+                c: 0
+            },
+            {
+                p: "Qual tipo de dado é mais adequado para armazenar o peso 12.4 kg de um paciente?",
+                o: [
+                    "str",
+                    "float",
+                    "bool",
+                    "list"
+                ],
+                c: 1
+            },
+            {
+                p: "Em Python, qual estrutura é mais parecida com uma regra de triagem?",
+                o: [
+                    "print",
+                    "if",
+                    "return",
+                    "import"
+                ],
+                c: 1
+            },
+            {
+                p: "Qual estrutura permite percorrer uma lista de pacientes um por um?",
+                o: [
+                    "for",
+                    "def",
+                    "else",
+                    "float"
+                ],
+                c: 0
+            },
+            {
+                p: "Em um prontuário estruturado, qual estrutura de Python pode guardar chave e valor, como nome, espécie e peso?",
+                o: [
+                    "tuple",
+                    "dicionário",
+                    "comentário",
+                    "operador"
+                ],
+                c: 1
+            },
+            {
+                p: "Na calculadora educacional de dose, como calculamos a dose total em mg?",
+                o: [
+                    "peso em kg × dose em mg/kg",
+                    "peso em kg ÷ gotas por mL",
+                    "idade × concentração",
+                    "dose em mg/kg ÷ concentração"
+                ],
+                c: 0
+            },
+            {
+                p: "Se uma solução tem 500 mg/mL e usamos 20 gotas/mL, aproximadamente quantos mg há em cada gota?",
+                o: [
+                    "5 mg/gota",
+                    "10 mg/gota",
+                    "25 mg/gota",
+                    "100 mg/gota"
+                ],
+                c: 2
+            },
+            {
+                p: "Qual palavra-chave cria uma função, ou seja, um protocolo reutilizável no Python?",
+                o: [
+                    "function",
+                    "def",
+                    "make",
+                    "new"
+                ],
+                c: 1
+            },
+            {
+                p: "Qual comando mostra uma mensagem, ficha ou alerta na tela?",
+                o: [
+                    "input()",
+                    "print()",
+                    "alerta()",
+                    "show_health()"
+                ],
+                c: 1
+            },
+            {
+                p: "Por que a calculadora de dose do curso deve ser apresentada como exemplo educacional?",
+                o: [
+                    "Porque substitui a avaliação profissional",
+                    "Porque elimina a necessidade de bula",
+                    "Porque ensina lógica de programação, mas não substitui prescrição",
+                    "Porque sempre calcula qualquer medicamento automaticamente"
+                ],
+                c: 2
+            }
+        ];
+
+        let perguntaAtual = 0;
+        let acertos = 0;
+        let respondido = false;
+
+        const BrowserAudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+        let player;
+        let somPronto = false;
+        let somHabilitado = true;
+
+        var tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName("script")[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player("youtube-player", {
+                height: "10",
+                width: "10",
+                videoId: "wbFxNbLWaRo",
+                playerVars: {
+                    autoplay: 0,
+                    controls: 0,
+                    disablekb: 1,
+                    loop: 1,
+                    playlist: "wbFxNbLWaRo"
+                },
+                events: {
+                    onReady: function () {
+                        somPronto = true;
+                    }
+                }
+            });
+        }
+
+        setTimeout(() => {
+            somPronto = true;
+        }, 5000);
+
+        function initAudio() {
+            if (!audioCtx && BrowserAudioContext) {
+                audioCtx = new BrowserAudioContext();
+            }
+
+            if (audioCtx && audioCtx.state === "suspended") {
+                audioCtx.resume();
+            }
+        }
+
+        function acionarBotaoSom() {
+            if (somHabilitado) {
+                if (player && typeof player.pauseVideo === "function") {
+                    player.pauseVideo();
+                }
+
+                somHabilitado = false;
+                document.getElementById("btn-som").innerText = "🎵 Som: OFF";
+                document.getElementById("btn-som").style.background = "#334155";
+            } else {
+                if (player && typeof player.playVideo === "function") {
+                    player.playVideo();
+                }
+
+                somHabilitado = true;
+                document.getElementById("btn-som").innerText = "🎵 Som: ON";
+                document.getElementById("btn-som").style.background = "#10b981";
+            }
+        }
+
+        function tocarEfeitoAcerto() {
+            if (!somHabilitado || !audioCtx) return;
+
+            const tempo = audioCtx.currentTime;
+
+            [261.63, 329.63, 392.00, 523.25].forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(freq, tempo + (i * 0.08));
+
+                gain.gain.setValueAtTime(0.1, tempo + (i * 0.08));
+                gain.gain.exponentialRampToValueAtTime(0.001, tempo + (i * 0.08) + 0.3);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(tempo + (i * 0.08));
+                osc.stop(tempo + (i * 0.08) + 0.3);
+            });
+        }
+
+        function tocarEfeitoErro() {
+            if (!somHabilitado || !audioCtx) return;
+
+            const tempo = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = "sawtooth";
+            osc.frequency.setValueAtTime(140, tempo);
+            osc.frequency.linearRampToValueAtTime(60, tempo + 0.5);
+
+            gain.gain.setValueAtTime(0.15, tempo);
+            gain.gain.exponentialRampToValueAtTime(0.001, tempo + 0.5);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(tempo);
+            osc.stop(tempo + 0.5);
+        }
+
+        function mudarTela(idTela) {
+            document.querySelectorAll(".screen").forEach((screen) => {
+                screen.classList.remove("active");
+            });
+
+            document.getElementById(idTela).classList.add("active");
+        }
+
+        function iniciarJogo() {
+            perguntaAtual = 0;
+            acertos = 0;
+            respondido = false;
+
+            document.getElementById("btn-som").style.display = "block";
+
+            if (somPronto && player && typeof player.playVideo === "function") {
+                try {
+                    player.unMute();
+                    player.setVolume(35);
+                    player.playVideo();
+                    somHabilitado = true;
+                    document.getElementById("btn-som").innerText = "🎵 Som: ON";
+                    document.getElementById("btn-som").style.background = "#10b981";
+                } catch (error) {}
+            }
+
+            initAudio();
+
+            mudarTela("screen-quiz");
+            carregarPergunta();
+        }
+
+        function carregarPergunta() {
+            respondido = false;
+
+            const dados = bancoPerguntas[perguntaAtual];
+
+            document.getElementById("progress-fill-game").style.width = ((perguntaAtual / bancoPerguntas.length) * 100) + "%";
+            document.getElementById("question-counter").innerText = `Pergunta ${perguntaAtual + 1} de ${bancoPerguntas.length}`;
+            document.getElementById("texto-pergunta").innerText = dados.p;
+
+            const grid = document.getElementById("grid-alternativas");
+            grid.innerHTML = "";
+
+            const letras = ["A", "B", "C", "D"];
+
+            dados.o.forEach((opcao, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "option-btn";
+                btn.innerHTML = `<span>${letras[idx]})</span> ${opcao}`;
+                btn.onclick = function () {
+                    verificarResposta(idx, btn);
+                };
+
+                grid.appendChild(btn);
+            });
+        }
+
+        function verificarResposta(indiceEscolhido, elementoBotao) {
+            if (respondido) return;
+
+            respondido = true;
+
+            const correta = bancoPerguntas[perguntaAtual].c;
+            const botoes = document.getElementById("grid-alternativas").getElementsByTagName("button");
+
+            if (indiceEscolhido === correta) {
+                elementoBotao.classList.add("correct");
+                acertos++;
+                tocarEfeitoAcerto();
+            } else {
+                elementoBotao.classList.add("wrong");
+                botoes[correta].classList.add("correct");
+                tocarEfeitoErro();
+            }
+
+            setTimeout(() => {
+                perguntaAtual++;
+
+                if (perguntaAtual < bancoPerguntas.length) {
+                    carregarPergunta();
+                } else {
+                    mostrarResultadoFinal();
+                }
+            }, 1700);
+        }
+
+        function mostrarResultadoFinal() {
+            mudarTela("screen-result");
+
+            document.getElementById("progress-fill-game").style.width = "100%";
+            document.getElementById("nota-final").innerText = `${acertos} / ${bancoPerguntas.length}`;
+
+            const badge = document.getElementById("status-badge");
+
+            if (acertos >= 7) {
+                badge.innerText = "APROVADO ✔️";
+                badge.className = "status passed";
+                document.getElementById("painel-emissao").style.display = "block";
+                document.getElementById("painel-reprovado").style.display = "none";
+                tocarEfeitoAcerto();
+                dispararConfetes();
+            } else {
+                badge.innerText = "REPROVADO ❌";
+                badge.className = "status failed";
+                document.getElementById("painel-emissao").style.display = "none";
+                document.getElementById("painel-reprovado").style.display = "block";
+            }
+        }
+
+        function dispararConfetes() {
+            const duration = 4 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                safeConfetti({
+                    particleCount: 6,
+                    angle: 60,
+                    spread: 60,
+                    origin: { x: 0 },
+                    colors: ["#14b8a6", "#ffffff", "#f59e0b", "#38bdf8"]
+                });
+
+                safeConfetti({
+                    particleCount: 6,
+                    angle: 120,
+                    spread: 60,
+                    origin: { x: 1 },
+                    colors: ["#14b8a6", "#ffffff", "#f59e0b", "#38bdf8"]
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+        function resetarJogo() {
+            perguntaAtual = 0;
+            acertos = 0;
+            respondido = false;
+
+            document.getElementById("progress-fill-game").style.width = "0%";
+            document.getElementById("grid-alternativas").innerHTML = "";
+            document.getElementById("texto-pergunta").innerText = "Carregando pergunta...";
+            document.getElementById("question-counter").innerText = `Pergunta 1 de ${bancoPerguntas.length}`;
+            document.getElementById("certificate-paper").style.display = "none";
+            document.getElementById("nome-estudante").value = "";
+
+            mudarTela("screen-start");
+        }
+
+        function emitirCertificado() {
+            const nome = document.getElementById("nome-estudante").value.trim();
+
+            if (!nome) {
+                alert("Digite seu nome completo para gerar o certificado.");
+                return;
+            }
+
+            const data = new Date().toLocaleDateString("pt-BR");
+
+            document.getElementById("cert-name-print").innerText = nome;
+            document.getElementById("cert-date-print").innerText = "Concluído em " + data;
+            document.getElementById("cert-score-print").innerText = `Pontuação obtida no Python Show Health: ${acertos} de ${bancoPerguntas.length}.`;
+
+            document.getElementById("certificate-paper").style.display = "block";
+
+            safeConfetti({
+                particleCount: 180,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
+        }
+
+        function baixarCertificadoPDF() {
+            const nome = document.getElementById("nome-estudante").value.trim();
+
+            if (!nome) {
+                alert("Digite seu nome completo e clique em gerar certificado antes de salvar em PDF.");
+                return;
+            }
+
+            emitirCertificado();
+
+            setTimeout(() => {
+                window.print();
+            }, 300);
+        }
+    </script>
+</body>
+</html>
