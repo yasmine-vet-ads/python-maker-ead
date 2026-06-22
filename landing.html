@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Maker EAD | Escolha seu curso</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #07111f;
+            --card: #0f172a;
+            --primary: #14b8a6;
+            --maker: #f59e0b;
+            --health: #38bdf8;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.10);
+            --radius-lg: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 24px;
+            font-family: "Inter", system-ui, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(20, 184, 166, 0.18), transparent 34%),
+                radial-gradient(circle at top right, rgba(245, 158, 11, 0.16), transparent 32%),
+                linear-gradient(135deg, #020617 0%, var(--bg) 55%, #0f172a 100%);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        main {
+            width: 100%;
+            max-width: 1120px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 34px;
+        }
+
+        .badge {
+            display: inline-flex;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(20, 184, 166, 0.12);
+            color: #5eead4;
+            border: 1px solid rgba(20, 184, 166, 0.25);
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(34px, 5vw, 64px);
+            line-height: 1;
+            letter-spacing: -0.06em;
+            background: linear-gradient(135deg, #ffffff 10%, #67e8f9 50%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            max-width: 760px;
+            margin: 18px auto 0;
+            color: #cbd5e1;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .courses {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .course-card {
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+            transition: 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255,255,255,0.22);
+        }
+
+        .course-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        .maker::before {
+            background: radial-gradient(circle at top right, var(--maker), transparent 45%);
+        }
+
+        .health::before {
+            background: radial-gradient(circle at top right, var(--health), transparent 45%);
+        }
+
+        .icon {
+            font-size: 42px;
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            margin: 0 0 12px;
+            font-size: 28px;
+        }
+
+        p {
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 18px 0 24px;
+        }
+
+        .tag {
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.06);
+            color: #cbd5e1;
+            border: 1px solid var(--border);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            font-weight: 800;
+            border-radius: 12px;
+            padding: 14px 20px;
+            transition: 0.2s;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .button-maker {
+            background: var(--maker);
+        }
+
+        .button-health {
+            background: var(--primary);
+        }
+
+        .button-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+        }
+
+        footer {
+            margin-top: 34px;
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 820px) {
+            body {
+                padding: 14px;
+            }
+
+            .courses {
+                grid-template-columns: 1fr;
+            }
+
+            .course-card {
+                padding: 24px;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <section class="hero">
+            <div class="badge">🐍 Plataforma EAD de Python</div>
+            <h1>Escolha seu curso</h1>
+            <p class="subtitle">
+                Aprenda Python por caminhos diferentes: uma trilha Maker com lógica, simulação e cultura mão na massa,
+                ou uma trilha aplicada à saúde, dados, automação e rotinas profissionais.
+            </p>
+        </section>
+
+        <section class="courses">
+            <article class="course-card maker">
+                <div class="icon">🛠️</div>
+                <h2>Python Maker</h2>
+                <p>
+                    Curso original com introdução à lógica de programação, Python, cultura maker,
+                    simulação de hardware e Python Show.
+                </p>
+
+                <div class="tags">
+                    <span class="tag">Python básico</span>
+                    <span class="tag">Maker</span>
+                    <span class="tag">IoT</span>
+                    <span class="tag">Simulação</span>
+                    <span class="tag">Python Show</span>
+                </div>
+
+                <a class="button button-maker" href="/python-maker">Acessar curso Maker</a>
+                <a class="button button-outline" href="/python-show">Ir ao Python Show Maker</a>
+            </article>
+
+            <article class="course-card health">
+                <div class="icon">🩺</div>
+                <h2>Python Start Health</h2>
+                <p>
+                    Versão aplicada à saúde, medicina veterinária, dados clínicos, automação,
+                    calculadora educacional de dose por peso e Python Show Health.
+                </p>
+
+                <div class="tags">
+                    <span class="tag">HealthTech</span>
+                    <span class="tag">VetTech</span>
+                    <span class="tag">Dados</span>
+                    <span class="tag">Automação</span>
+                    <span class="tag">Certificado PDF</span>
+                </div>
+
+                <a class="button button-health" href="/python-start-health">Acessar curso Saúde</a>
+                <a class="button button-outline" href="/python-show-health">Ir ao Python Show Health</a>
+            </article>
+        </section>
+
+        <footer>
+            Python Maker EAD · Plataforma educacional desenvolvida por Yasmine Santos<br />
+            Tecnologia, saúde, dados, automação e aprendizagem prática.
+        </footer>
+    </main>
+</body>
+</html>
